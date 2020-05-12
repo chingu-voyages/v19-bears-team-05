@@ -1,0 +1,44 @@
+@startuml
+actor Patron
+participant "Patron UI"
+participant "Shopping Cart"
+participant "Auth Service"
+participant "Confirmation Page"
+database Database
+participant "Transaction Handler"
+actor "Payment Provider"
+actor "Vendor Messaging"
+actor "Delivery Service"
+
+Patron -> "Patron UI"
+"Patron UI" -> "Patron UI": location?
+"Patron UI" -> Database: fetchMenuItems()
+alt items fetched
+Database --> "Patron UI": menu items
+loop adding items
+"Patron UI" -> "Shopping Cart": addToOrder(menuItem)
+"Shopping Cart" --> "Patron UI": update UI
+end
+"Patron UI" -> "Auth Service": login()
+"Auth Service" -> "Patron UI": setToken(token)
+"Patron UI" -> Database: createCustomerOrder(transactionID, token)
+"Patron UI" --> "Confirmation Page": redirect(transactionID)
+"Confirmation Page" -> Database: fetchCustomerOrder()
+Database --> "Confirmation Page": Customer Order Returned
+"Confirmation Page" -> "Payment Provider": redirectToCheckout( orderItems[])
+"Payment Provider" -> "Transaction Handler": returnToken(token)
+alt transaction success
+"Transaction Handler" -> Database: updateTransaction(paymentId)
+Database --> "Transaction Handler": Confirmation
+"Transaction Handler" --> "Patron UI": Confirmation
+"Transaction Handler" -> "Vendor Messaging": sendMessage(customerOrder)
+"Transaction Handler" -> "Delivery Service": sendMessage(customerOrder)
+else transaction failure
+"Transaction Handler" --> "Patron UI": Error Message
+end
+
+else error fetching
+Database --> "Patron UI": error message
+end
+
+@enduml
