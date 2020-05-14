@@ -1,0 +1,43 @@
+@startuml chowpronto data
+class MenuItem {
+  String name
+  String description
+  Integer unitPrice
+  boolean inStock
+}
+
+class OrderItem {
+  Integer quantity
+}
+
+class Vendor {
+  String name
+  String location
+  String description
+  String logoUrl
+}
+
+class OpeningTime {
+  DAY day
+  Date startTime
+  Date endTime
+}
+note left: Date just refers to a time
+
+class User {
+  String username
+  String password
+  String primaryAddress
+}
+
+class Order {
+  Date deliveryDate  
+}
+
+Vendor "1" -- "1..*" MenuItem
+Vendor "1" -- "1..*" OpeningTime
+Order "1" -- "1..*" OrderItem
+OrderItem "1" -- "1..*" MenuItem
+User "1" -- "1..*" Order
+
+@enduml
