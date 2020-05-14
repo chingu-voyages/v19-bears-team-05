@@ -1,4 +1,5 @@
 import React from "react";
+import "./menu.css";
 import MenuSidebar from "./components/MenuSidebar";
 import MenuMain from "./components/MenuMain";
 

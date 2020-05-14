@@ -1,13 +1,16 @@
 import React from "react";
 import MenuItem from "./MenuItem";
+import useMenuItems from "../../../../hooks/useMenuItems";
 
 const MenuMain = (props) => {
-  let menuItems = [];
+  const menuItems = useMenuItems();
   return (
     <>
-      {menuItems.map((v) => (
-        <MenuItem {...v} />
-      ))}
+      <div className="menu-main">
+        {menuItems.map((v) => (
+          <MenuItem {...v} />
+        ))}
+      </div>
     </>
   );
 };
