@@ -35,6 +35,7 @@ function useMenuItems(location) {
 class MenuItem {
   constructor(name, description, price, vendor) {
     this.name = name;
+    this.id = Math.floor(Math.random()*100000000);
     this.description = description;
     this.price = price;
     this.vendor = vendor;

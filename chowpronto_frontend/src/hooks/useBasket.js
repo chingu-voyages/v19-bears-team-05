@@ -1,10 +1,12 @@
 import { useReducer } from "react";
 
-function useBasketItems() {
-  const basketItems = [
-    { quantity: 1, itemId: 1981919191, name: "Burger", unitCost: 950 },
-    { quantity: 2, itemId: 7575757575, name: "Pizza", unitCost: 1125 },
-  ];
+function useBasket() {
+  let current = new Date();
+  const initialState = {
+    id: Math.floor(Math.random() * 100000000),
+    basketItems: [],
+    deliveryDate: current.setMinutes(current.getMinutes + 30),
+  };
 
   function reducer(state, action) {
     switch (action.type) {
@@ -20,11 +22,15 @@ function useBasketItems() {
         ];
       case "remove_item":
         return state.filter((val) => val.id !== action.itemId);
+      case "set_delivery_time":
+        let newDeliveryDate = state.deliveryDate.setHours(
+          action.time.getHours()
+        );
       default:
         return state;
     }
   }
-  const [state, dispatch] = useReducer(reducer, basketItems);
+  const [state, dispatch] = useReducer(reducer, initialState);
   return [state, dispatch];
 }
 
@@ -37,4 +43,4 @@ class BasketItem {
   }
 }
 
-export default useBasketItems;
+export default useBasket;

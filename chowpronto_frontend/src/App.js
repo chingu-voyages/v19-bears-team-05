@@ -5,6 +5,7 @@ import MenuPage from "./patron/pages/menu";
 import ConfirmOrderPage from "./patron/pages/confirmOrder";
 import RegisterPage from "./patron/pages/register";
 import LandingPage from "./patron/pages/landing";
+import DeliverySelect from "./patron/components/DeliverySelect";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path="/menu">
             <MenuPage />
+            <Route path="/menu/deliverySelect">
+              <DeliverySelect />
+            </Route>
           </Route>
           <Route path="/confirmOrder">
             <ConfirmOrderPage />

@@ -6,10 +6,10 @@ const Filter = (props) => {
     <div className="filter">
       <fieldset>
         <ul>
-          {mockFilter.map((v) => (
+          {mockFilter.map((v, i) => (
             <li key={v}>
-              <label for={v}></label>
-              <input type="checkbox" name="v" id="v" />
+              <input type="checkbox" name={v} id={v} />
+              <label htmlFor={v}>{v}</label>
             </li>
           ))}
           <li>more options</li>

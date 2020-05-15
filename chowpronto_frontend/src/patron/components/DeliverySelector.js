@@ -1,5 +1,6 @@
 import React from "react";
 import ChowButton from "../../shared_components/ChowButton.js";
+import { Link } from "react-router-dom";
 
 const DeliverySelector = (props) => {
   return (
@@ -9,7 +10,9 @@ const DeliverySelector = (props) => {
         <span className="day-describer">today</span>
         <span className="time">15:30</span>
       </div>
-      <ChowButton />
+      <Link to={(location) => location.pathname + "/deliverySelect"}>
+        <ChowButton title="change this" />
+      </Link>
     </div>
   );
 };

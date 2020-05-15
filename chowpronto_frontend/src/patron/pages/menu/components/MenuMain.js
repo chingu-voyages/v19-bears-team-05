@@ -8,7 +8,7 @@ const MenuMain = (props) => {
     <>
       <div className="menu-main">
         {menuItems.map((v) => (
-          <MenuItem {...v} />
+          <MenuItem {...v} key={v.id} />
         ))}
       </div>
     </>
