@@ -28,6 +28,16 @@
 
 - Sometimes after the server has been restarted some times, it crashes with the error _Multiple text records not allowed_. I haven't figured out why it happens. Usually closing erasing the terminal and starting a new one and running `npm run server` or `npm start` from there works.
 
+## Useful git commands - not project-specific
+
+### Delete branch locally
+
+> `git branch -d localBranchName`
+
+### Delete branch remotely
+
+> `git push origin --delete remoteBranchName`
+
 ```
 
 ```
