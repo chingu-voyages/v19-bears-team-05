@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useDelivery from "../../hooks/useDelivery";
 import useBasket from "../../hooks/useBasket";
 
@@ -12,6 +13,9 @@ const DeliverySelect = (props) => {
   return (
     <div className="delivery-select modal-page">
       <div className="modal-message">
+        <Link to={(location) => console.log("location", location)}>
+          <button>close</button>
+        </Link>
         <h1>Select Delivery Slot</h1>
         <div className="time-select">
           {availableSlots.map((v) => (
@@ -26,6 +30,8 @@ const DeliverySelect = (props) => {
               {v}
             </div>
           ))}
+          <button>okay</button>
+          <button>cancel</button>
         </div>
       </div>
     </div>

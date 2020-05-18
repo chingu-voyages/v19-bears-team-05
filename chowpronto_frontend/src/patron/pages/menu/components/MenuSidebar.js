@@ -28,7 +28,7 @@ const MenuSidebar = (props) => {
             <Link
               to={(location) => {
                 logout();
-                return `${location.pathname}#login`;
+                return `${location.pathname}?loginModal=true`;
               }}
             >
               Not me?

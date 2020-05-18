@@ -1,0 +1,14 @@
+@startuml
+actor Menu
+participant Cart
+database DB
+
+
+Menu -> DB : fetchItems()
+DB --> Menu : items returned
+Menu -> Cart : addItem(itemId)
+Cart -> DB : fetchItemById(id)
+DB --> Cart : item by id()
+Cart -> Cart : createBasketItem()
+Cart -> DB : checkout(basketItem[])
+@enduml

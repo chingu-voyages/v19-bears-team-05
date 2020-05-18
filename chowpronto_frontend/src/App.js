@@ -17,9 +17,6 @@ function App() {
           </Route>
           <Route path="/menu">
             <MenuPage />
-            <Route path="/menu/deliverySelect">
-              <DeliverySelect />
-            </Route>
           </Route>
           <Route path="/confirmOrder">
             <ConfirmOrderPage />

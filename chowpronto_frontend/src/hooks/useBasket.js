@@ -21,11 +21,13 @@ function useBasket() {
           ),
         ];
       case "remove_item":
+        // takes itemId as action
         return state.filter((val) => val.id !== action.itemId);
       case "set_delivery_time":
         let newDeliveryDate = state.deliveryDate.setHours(
           action.time.getHours()
         );
+        break;
       default:
         return state;
     }

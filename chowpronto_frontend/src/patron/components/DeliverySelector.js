@@ -10,7 +10,7 @@ const DeliverySelector = (props) => {
         <span className="day-describer">today</span>
         <span className="time">15:30</span>
       </div>
-      <Link to={(location) => location.pathname + "/deliverySelect"}>
+      <Link to={(location) => location.pathname + "?deliverySelect=true"}>
         <ChowButton title="change this" />
       </Link>
     </div>
