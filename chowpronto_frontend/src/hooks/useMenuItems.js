@@ -1,12 +1,12 @@
 function useMenuItems(location) {
   // takes an object with filters as key value pairs
-  let filteredFoods = dummyItems.
+  let filteredFoods = dummyItems;
 }
 
 class MenuItem {
   constructor(name, description, price, vendor) {
     this.name = name;
-    this.id = Math.floor(Math.random()*100000000);
+    this.id = Math.floor(Math.random() * 100000000);
     this.description = description;
     this.price = price;
     this.vendor = vendor;
