@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import useBasket from "../../../../hooks/useBasket";
 import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
+import AddIcon from "../../../../shared_components/AddIcon";
+import ChowButton from "../../../../shared_components/ChowButton";
 
 const MenuItem = (props) => {
   const [basketState, updateBasket] = useBasket();
@@ -16,14 +18,13 @@ const MenuItem = (props) => {
         </HeaderRight>
       </HeaderBar>
       <Description>{props.about}</Description>
-      <HeaderBar>
+      <FooterBar>
         <Availability>Available : 5pm - 7pm</Availability>
-        <HeaderRight>
-          <button onClick={() => updateBasket({ type: "add_item" })}>
-            Add
-          </button>
-        </HeaderRight>
-      </HeaderBar>
+        <HeaderRight></HeaderRight>
+      </FooterBar>
+      <ClearButton onClick={() => updateBasket({ type: "add_item" })}>
+        <AddIcon />
+      </ClearButton>
     </StyledMenuItem>
   );
 };
@@ -64,9 +65,22 @@ const Vendor = styled(StyledHeader)`
 const Description = styled.p`
   color: ${({ theme }) => theme.colors.focusSecondary};
   font-size: ${({ theme }) => theme.fz300};
+  margin-bottom: ${({ theme }) => theme.mg200};
 `;
+
+const FooterBar = styled(HeaderBar)``;
 
 const Availability = styled(Description)`
   margin: 0;
   font-size: ${({ theme }) => theme.fz200};
+`;
+
+const ClearButton = styled.button`
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 `;
