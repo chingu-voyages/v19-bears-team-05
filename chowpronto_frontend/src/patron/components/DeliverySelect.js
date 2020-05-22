@@ -9,7 +9,7 @@ const DeliverySelect = (props) => {
   useEffect(() => {
     getAvailable().then((data) => setAvailableSlots(data));
   }, []);
-  const [basket, updateBasket] = useBasket();
+  const [_, updateBasket] = useBasket();
   return (
     <div className="delivery-select modal-page">
       <div className="modal-message">

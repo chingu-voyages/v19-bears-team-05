@@ -1,10 +1,11 @@
 import React from "react";
+import OptionListBox from "./OptionListBox";
 
 const Filter = (props) => {
   const mockFilter = ["vegetarian", "gluten-free", "kids", "desert"];
   return (
     <div className="filter">
-      <fieldset>
+      {/* <fieldset>
         <ul>
           {mockFilter.map((v, i) => (
             <li key={v}>
@@ -14,7 +15,12 @@ const Filter = (props) => {
           ))}
           <li>more options</li>
         </ul>
-      </fieldset>
+      </fieldset> */}
+      <OptionListBox
+        title="filter"
+        onChange={(e) => console.log("e", e)}
+        allFilters={mockFilter}
+      />
     </div>
   );
 };
