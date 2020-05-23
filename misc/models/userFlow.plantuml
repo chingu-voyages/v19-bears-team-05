@@ -19,14 +19,17 @@ loop adding items
 "Patron UI" -> "Shopping Cart": addToOrder(menuItem)
 "Shopping Cart" --> "Patron UI": update UI
 end
-"Patron UI" -> "Auth Service": login()
-"Auth Service" -> "Patron UI": setToken(token)
-"Patron UI" -> Database: createCustomerOrder(transactionID, token)
-"Patron UI" --> "Confirmation Page": redirect(transactionID)
-"Confirmation Page" -> Database: fetchCustomerOrder()
-Database --> "Confirmation Page": Customer Order Returned
-"Confirmation Page" -> "Payment Provider": redirectToCheckout( orderItems[])
-"Payment Provider" -> "Transaction Handler": returnToken(token)
+"Patron UI" -> Database: Checkout createOrder([{basketItemId, quantity}])
+"Database" -> "Confirmation Page": orderId, orderItems
+"Patron UI" --> "Confirmation Page": redirect()
+opt log in
+"Confirmation Page" -> "Auth Service": login(email, password)
+"Auth Service" -> "Confirmation Page": setToken(token)
+end
+"Confirmation Page" -> "Database": SubmitOrder(orderId, token?, orderDetails, password?)
+"Database" -> "Payment Provider" : newPayment(...)
+"Payment Provider" -> "Database" : token???
+"Database" -> "Confirmation Page" : redirect(transactionId)
 alt transaction success
 "Transaction Handler" -> Database: updateTransaction(paymentId)
 Database --> "Transaction Handler": Confirmation

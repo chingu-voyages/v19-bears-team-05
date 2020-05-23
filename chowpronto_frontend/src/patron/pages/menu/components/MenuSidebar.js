@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
 import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
 import ChowButton from "../../../../shared_components/ChowButton";
-import DeliverySelector from "../../../components/DeliverySelector";
+import DeliveryTime from "../../../components/DeliveryTime";
 import useBasket from "../../../../hooks/useBasket";
 import useAuth from "../../../../hooks/useAuth";
+import DeliveryAddress from "../../../components/DeliveryAddress";
+import BasketSummary from "./BasketSummary";
 
 const MenuSidebar = (props) => {
   const [basket] = useBasket();
@@ -20,8 +23,8 @@ const MenuSidebar = (props) => {
     getUser().then((data) => setUser(data));
   }, []);
   return (
-    <div className="menu-sidebar">
-      <div className="welcome">
+    <StyledMenuHeader>
+      <UserBanner>
         {user ? (
           <span>
             Welcome back <span>{user.name}</span>{" "}
@@ -37,23 +40,41 @@ const MenuSidebar = (props) => {
         ) : (
           <Link to="/login">Login</Link>
         )}
-      </div>
+      </UserBanner>
       <Logo />
-      <DeliverySelector />
-      <Search />
+      <DeliveryAddress
+        onChange={() => console.log("go to delivery address change")}
+      />
+      <DeliveryTime
+        onChange={() => console.log("go to delivery time change")}
+      />
+      <Search value="" onChange={() => console.log("Search bar change")} />
       <Filter />
+      <BasketSummary />
+
       <ChowButton
-        title={`Basket ${basketQuantity} item${
-          basketQuantity !== 1 ? "s" : ""
-        }`}
-        onClick={() => console.log("Button Pressed")}
-      />
-      <ChowButton
-        title="Place Order >"
+        title="Proceed To Checkout"
         onClick={() => console.log("Place Order Pressed")}
+        primary
+        elevated
+        style={{ position: "fixed", border: "solid red 2px" }}
       />
-    </div>
+    </StyledMenuHeader>
   );
 };
+
+export const StyledMenuHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  border-right: ${({ theme }) => theme.bd200u};
+  padding: ${({ theme }) => theme.pd900};
+`;
+
+const UserBanner = styled.div`
+  margin-bottom: ${({ theme }) => theme.mg600};
+  font-size: ${({ theme }) => theme.fz300};
+`;
 
 export default MenuSidebar;
