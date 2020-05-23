@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import BoxContainer from "./BoxContainer";
+import { AdditionalActionButton } from "./AdditionalActionButton";
 
 export default function InputBox(props) {
   const [active, setActive] = useState(false);
@@ -18,7 +19,7 @@ export default function InputBox(props) {
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
       />
-      <ChangeButton>change</ChangeButton>
+      <AdditionalActionButton>change</AdditionalActionButton>
     </BoxContainer>
   );
 }
@@ -31,16 +32,6 @@ const TextInput = styled.input`
   height: 100%;
   background: transparent;
   font-family: inherit;
-`;
-
-const ChangeButton = styled.button`
-  border: none;
-  outline: none;
-  font-family: inherit;
-  padding: 0;
-  &:active {
-    color: ${({ theme }) => theme.colors.active};
-  }
 `;
 
 InputBox.propTypes = {

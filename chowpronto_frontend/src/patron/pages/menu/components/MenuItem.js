@@ -81,6 +81,6 @@ const ClearButton = styled.button`
   background: transparent;
   padding: 0;
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: ${({ theme }) => theme.pd600};
+  bottom: ${({ theme }) => theme.pd600};
 `;

@@ -26,6 +26,9 @@ export const StyledBoxContainer = styled.div`
   display: flex;
   border: ${({ theme, active }) => (active ? theme.bd200f : theme.bd200u)};
   border-radius: ${({ theme }) => theme.br100};
+  &:hover {
+    background-color: #00000005;
+  }
 `;
 
 const Title = styled.span`
