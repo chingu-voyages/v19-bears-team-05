@@ -4,7 +4,6 @@ import OptionListBox from "./OptionListBox";
 const Filter = (props) => {
   const mockFilter = ["vegetarian", "gluten-free", "kids", "desert"];
   const [filters, setFilters] = useState([]);
-  console.log("filters", filters);
   return (
     <div className="filter">
       <OptionListBox

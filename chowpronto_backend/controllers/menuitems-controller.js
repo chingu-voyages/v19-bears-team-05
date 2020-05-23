@@ -6,9 +6,7 @@ const getMenuItems = async (req, res) => {
       .toLowerCase()
       .split(" ")
       .filter((v) => v !== "");
-    console.log(searchParam);
     const queryParams = req.query.tags.split(" ").filter((v) => v !== "");
-    console.log(queryParams);
 
     let allMenuItems = await MenuItem.find({ inStock: true }).populate(
       "byVendor",
