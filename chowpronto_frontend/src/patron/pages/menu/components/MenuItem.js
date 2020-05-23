@@ -7,7 +7,6 @@ import ChowButton from "../../../../shared_components/ChowButton";
 
 const MenuItem = (props) => {
   const [basketState, updateBasket] = useBasket();
-  console.log("props", props);
   return (
     <StyledMenuItem active>
       <HeaderBar>

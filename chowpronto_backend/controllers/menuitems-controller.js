@@ -6,6 +6,7 @@ const getMenuItems = async (req, res) => {
       "byVendor",
       "name"
     );
+    console.log(allMenuItems);
     res.send(allMenuItems);
   } catch (err) {
     console.error(err.message);
