@@ -9,7 +9,16 @@ const Filter = (props) => {
     <div className="filter">
       <OptionListBox
         title="filter"
-        onChange={(e) => setFilters([...filters, e])}
+        onChange={(e) => {
+          let newArray;
+          const foundIndex = filters.findIndex((item) => item === e);
+          if (foundIndex >= 0) {
+            newArray = filters.filter((val, ind) => ind !== foundIndex);
+          } else {
+            newArray = [...filters, e];
+          }
+          setFilters(newArray);
+        }}
         allListItem={mockFilter}
         selectedListItem={filters}
       />
