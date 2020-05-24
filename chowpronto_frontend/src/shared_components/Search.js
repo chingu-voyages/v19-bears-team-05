@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import TextInputBox from "./TextInputBox";
 import styled from "styled-components";
+import { MenuContext } from "../state/MenuContext";
 
 const Search = (props) => {
+  const { state, dispatch } = useContext(MenuContext);
+
+  console.log("state", state);
   return (
     <TextInputBox
       title="search"
-      value={props.value}
-      onChange={props.onChange}
+      value={state.search}
+      onChange={(e) => {
+        dispatch({ type: "set_search", search: e });
+      }}
     />
   );
 };
