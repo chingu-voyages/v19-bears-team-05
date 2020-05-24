@@ -5,8 +5,6 @@ import { MenuContext } from "../state/MenuContext";
 
 const Search = (props) => {
   const { state, dispatch } = useContext(MenuContext);
-
-  console.log("state", state);
   return (
     <TextInputBox
       title="search"
