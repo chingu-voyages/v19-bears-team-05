@@ -1,0 +1,25 @@
+{
+  "name": "v19-bears-team-05",
+  "version": "1.0.0",
+  "description": "Add-project-description-here | Voyage-19 | https://chingu.io/",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd chowpronto_frontend && npm start",
+    "server": "cd chowpronto_backend && nodemon server.js",
+    "start": "concurrently -n 'server,client' -c 'red,green'  \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v19-bears-team-05.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v19-bears-team-05/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v19-bears-team-05#readme",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
