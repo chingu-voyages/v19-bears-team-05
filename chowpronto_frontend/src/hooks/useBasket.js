@@ -11,15 +11,10 @@ function useBasket() {
   function reducer(state, action) {
     switch (action.type) {
       case "add_item":
-        return [
+        return {
           ...state,
-          new BasketItem(
-            action.quantity,
-            action.itemId,
-            action.name,
-            action.unitCost
-          ),
-        ];
+          basketItems: [...state.basketItems, { ...action.item, quantity: 1 }],
+        };
       case "remove_item":
         // takes itemId as action
         return state.filter((val) => val.id !== action.itemId);

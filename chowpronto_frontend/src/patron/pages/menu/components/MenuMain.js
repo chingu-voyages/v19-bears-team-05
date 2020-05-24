@@ -10,7 +10,7 @@ const MenuMain = (props) => {
     <>
       <StyledMenuMain>
         {menuItems.map((v) => (
-          <MenuItem {...v} key={v.id} />
+          <MenuItem {...v} key={v._id} />
         ))}
       </StyledMenuMain>
     </>

@@ -5,16 +5,14 @@ import BoxContainer from "./BoxContainer";
 import { AdditionalActionButton } from "./AdditionalActionButton";
 
 export default function InputBox(props) {
-  const [active, setActive] = useState(false);
   return (
-    <BoxContainer active={active} title={props.title}>
+    <BoxContainer
+      title={props.title}
+      active={props.selectedListItem.length > 0 || false}
+    >
       <form
         action="POST"
         onChange={({ target }) => props.onChange(target.name)}
-        onFocus={() => setActive(true)}
-        // todo set focus only when > 0 items are checked
-        // todo add/remove item from checked list
-        // todo handle calling function.
       >
         <ul style={{ padding: 0 }}>
           {props.allListItem.map((v) => (
@@ -24,10 +22,12 @@ export default function InputBox(props) {
                 name={v}
                 id={v}
                 key={v}
-                value={props.selectedListItem.find((item) => item === v)}
-                checked={props.selectedListItem.find((item) => item === v)}
+                value={v}
+                checked={
+                  props.selectedListItem.find((item) => item === v) || false
+                }
                 onChange={(e) => {
-                  props.onChange(e.target.name);
+                  props.onChange(e.target.value);
                 }}
               />
               <label htmlFor={v}>{v}</label>

@@ -7,7 +7,6 @@ import ChowButton from "../../../../shared_components/ChowButton";
 
 const MenuItem = (props) => {
   const [basketState, updateBasket] = useBasket();
-  console.log("props", props);
   return (
     <StyledMenuItem active>
       <HeaderBar>
@@ -22,7 +21,9 @@ const MenuItem = (props) => {
         <Availability>Available : 5pm - 7pm</Availability>
         <HeaderRight></HeaderRight>
       </FooterBar>
-      <ClearButton onClick={() => updateBasket({ type: "add_item" })}>
+      <ClearButton
+        onClick={() => updateBasket({ type: "add_item", item: props })}
+      >
         <AddIcon />
       </ClearButton>
     </StyledMenuItem>
