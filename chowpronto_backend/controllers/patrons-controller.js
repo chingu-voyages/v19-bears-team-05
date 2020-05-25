@@ -35,4 +35,25 @@ const signup = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  const patron = await Patron.findOne({ email: req.body.email });
+  if (!patron)
+    return res.status(400).send("User with this email doesn't exist");
+
+  const validPassword = await bcrypt.compare(
+    req.body.password,
+    patron.password
+  );
+  if (!validPassword) return res.status(400).send("invalid password");
+
+  const token = jwt.sign({ _id: patron._id }, process.env.TOKEN_SECRET, {
+    expiresIn: "240h",
+  });
+  res.header("auth-token", token).send({
+    token,
+    patron: { _id: patron._id, name: patron.name, emil: patron.email },
+  });
+};
+
 exports.signup = signup;
+exports.login = login;
