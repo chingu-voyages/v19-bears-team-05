@@ -1,15 +1,19 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const dotenv = require("dotenv");
 
 const app = express();
 
 // Connect Database
 connectDB();
 
+app.use(express.json());
+dotenv.config();
+
 app.get("/", (req, res) => res.send("API running"));
 
 // Define Routes
-app.use("/api/users", require("./routes/api/users"));
+app.use("/api/patrons", require("./routes/api/patrons"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/vendors", require("./routes/api/vendors"));
