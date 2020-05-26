@@ -1,10 +1,20 @@
 const bcrypt = require("bcryptjs");
 const Patron = require("../models/Patron");
 const jwt = require("jsonwebtoken");
+const { validate } = require("./validation");
 
 const signup = async (req, res) => {
-  console.log(req.body);
   const { name, email, password } = req.body;
+  if (!email || !password || !name) {
+    return res
+      .status(403)
+      .send("Signing up failed, please fill in all form fields.");
+  }
+
+  const errorMessages = validate(name, email, password);
+  if (errorMessages.length !== 0) {
+    return res.status(400).send(errorMessages);
+  }
 
   const existingUser = await Patron.findOne({ email });
   if (existingUser) {
@@ -18,6 +28,8 @@ const signup = async (req, res) => {
     email,
     password: hashedPassword,
   });
+
+  delete password;
 
   try {
     const savedPatron = await newPatron.save();
@@ -36,20 +48,25 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const patron = await Patron.findOne({ email: req.body.email });
-  if (!patron)
-    return res.status(400).send("User with this email doesn't exist");
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res
+      .status(403)
+      .send("Signing up failed, please fill in all form fields.");
+  }
 
-  const validPassword = await bcrypt.compare(
-    req.body.password,
-    patron.password
-  );
-  if (!validPassword) return res.status(400).send("invalid password");
+  const patron = await Patron.findOne({ email });
+  if (!patron)
+    return res.status(400).send("User with given credentials doesn't exist");
+
+  const validPassword = await bcrypt.compare(password, patron.password);
+  if (!validPassword)
+    return res.status(400).send("User with given credentials doesn't exist");
 
   const token = jwt.sign({ _id: patron._id }, process.env.TOKEN_SECRET, {
     expiresIn: "240h",
   });
-  res.header("auth-token", token).send({
+  res.send({
     token,
     patron: { _id: patron._id, name: patron.name, emil: patron.email },
   });
