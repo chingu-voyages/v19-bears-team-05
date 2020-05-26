@@ -32,4 +32,20 @@ const getMenuItems = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+const getMenuItemById = async (req, res) => {
+  try {
+    const menuItemId = req.params.id;
+    const menuItem = await MenuItem.findOne({ _id: menuItemId }).populate(
+      "byVendor",
+      "name"
+    );
+    res.json(menuItem);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("No menu item with this Id");
+  }
+};
+
 exports.getMenuItems = getMenuItems;
+exports.getMenuItemById = getMenuItemById;
