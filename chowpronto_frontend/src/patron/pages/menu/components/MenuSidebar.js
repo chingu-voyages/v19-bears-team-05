@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -6,22 +6,20 @@ import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
 import ChowButton from "../../../../shared_components/ChowButton";
 import DeliveryTime from "../../../components/DeliveryTime";
-import useBasket from "../../../../hooks/useBasket";
 import useAuth from "../../../../hooks/useAuth";
 import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
+import useCheckout from "../../../../hooks/useCheckout";
+import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuSidebar = (props) => {
-  const [basket] = useBasket();
   const { getUser, logout } = useAuth();
   const [user, setUser] = useState(null);
-  // const basketQuantity = basket.basketItems.reduce(
-  //   (acc, val) => acc + val.quantity,
-  //   0
-  // );
   useEffect(() => {
     getUser().then((data) => setUser(data));
   }, []);
+  const { state, dispatch } = useContext(MenuContext);
+  const checkout = useCheckout();
   return (
     <StyledMenuHeader>
       <UserBanner>
@@ -54,7 +52,7 @@ const MenuSidebar = (props) => {
 
       <CheckoutButton
         title="Proceed To Checkout"
-        onClick={() => console.log("Place Order Pressed")}
+        onClick={() => checkout(state.basketItems)}
         primary
         elevated
       />
