@@ -15,10 +15,10 @@ const MenuSidebar = (props) => {
   const [basket] = useBasket();
   const { getUser, logout } = useAuth();
   const [user, setUser] = useState(null);
-  const basketQuantity = basket.basketItems.reduce(
-    (acc, val) => acc + val.quantity,
-    0
-  );
+  // const basketQuantity = basket.basketItems.reduce(
+  //   (acc, val) => acc + val.quantity,
+  //   0
+  // );
   useEffect(() => {
     getUser().then((data) => setUser(data));
   }, []);
