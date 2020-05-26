@@ -19,15 +19,18 @@ function passwordValidate(password) {
   return password.length >= 8;
 }
 
-const validate = (name, email, password) => {
+const validate = (firstName, secondName, email, password) => {
   const errorMessages = [];
 
   if (!emailValidate(email)) {
     errorMessages.push("The email format is incorrect");
   }
 
-  if (!nameValidate(name)) {
-    errorMessages.push("Name is required");
+  if (!nameValidate(firstName)) {
+    errorMessages.push("First name is required");
+  }
+  if (!nameValidate(secondName)) {
+    errorMessages.push("Second name is required");
   }
 
   if (!passwordValidate(password)) {

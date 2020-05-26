@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
 
 const Patron = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+    min: 6,
+    max: 255,
+  },
+
+  secondName: {
     type: String,
     required: true,
     min: 6,
@@ -17,16 +24,12 @@ const Patron = new mongoose.Schema({
     max: 1024,
     min: 6,
   },
-  // phone: {
-  //   type: String,
-  // },
-  // address: {
-  //   type: String,
-  // },
-  // inStock: {
-  //   type: Boolean,
-  //   required: true,
-  // },
+  phone: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
 
   // orders: { type: mongoose.Schema.ObjectId, ref: "Order" },
 });
