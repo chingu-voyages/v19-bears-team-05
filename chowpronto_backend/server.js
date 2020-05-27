@@ -6,6 +6,8 @@ const app = express();
 // Connect Database
 connectDB();
 
+app.use(express.json());
+
 app.get("/", (req, res) => res.send("API running"));
 
 // Define Routes
@@ -14,6 +16,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/vendors", require("./routes/api/vendors"));
 app.use("/api/menuitems", require("./routes/api/menuitems"));
+app.use("/api/orders", require("./routes/api/orders"));
 
 // When you put four parameters express knows that is an error handling middleware function - they are only executed when an error is thrown from a request, if an error was sent from the previous middlewares
 app.use((error, req, res, next) => {
