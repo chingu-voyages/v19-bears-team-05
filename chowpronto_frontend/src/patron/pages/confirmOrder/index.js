@@ -29,9 +29,7 @@ const ConfirmOrderPage = (props) => {
 
 const SubmitButton = styled(ChowButton)`
   max-width: 150px;
-  position: fixed;
-  bottom: ${({ theme }) => theme.pd900};
-  right: ${({ theme }) => theme.pd900};
+  align-self: flex-end;
 `;
 
 export default ConfirmOrderPage;

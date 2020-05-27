@@ -62,4 +62,5 @@ const StyledOrderDetails = styled.div`
       margin: 0;
     }
   }
+  flex: 2;
 `;

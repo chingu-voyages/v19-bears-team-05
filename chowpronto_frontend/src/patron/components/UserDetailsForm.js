@@ -110,6 +110,7 @@ const StyledInputContainer = styled(StyledBoxContainer)`
     width: 100%;
     height: 100%;
     font-family: inherit;
+    font-size: ${({ theme }) => theme.fz300};
     border: none;
     outline: none;
     background: transparent;

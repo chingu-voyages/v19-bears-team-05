@@ -17,4 +17,5 @@ const Divider = styled(StyledBoxContainer)`
   border-top: ${({ theme }) => theme.bd200u};
   flex-direction: column;
   border-radius: 0;
+  flex: 1;
 `;
