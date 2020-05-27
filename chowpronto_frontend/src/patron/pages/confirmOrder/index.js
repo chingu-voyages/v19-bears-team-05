@@ -1,7 +1,37 @@
 import React from "react";
+import styled from "styled-components";
+import { PageLayout } from "../../components/PageLayout";
+import { StyledSidebar } from "../../components/StyledSidebar";
+import { StyledPageMain } from "../../components/StyledPageMain";
+import ChowButton from "../../../shared_components/ChowButton";
+import OrderDetails from "./components/OrderDetails";
+import Login from "./components/Login";
+import UserDetailsForm from "../../components/UserDetailsForm";
 
 const ConfirmOrderPage = (props) => {
-  return <h1>Confirm Order Page</h1>;
+  return (
+    <PageLayout>
+      <StyledSidebar style={{ flex: 1.5 }}>
+        <OrderDetails />
+        <Login />
+      </StyledSidebar>
+      <StyledPageMain>
+        <UserDetailsForm />
+        <SubmitButton
+          title="submit"
+          primary
+          onClick={() => console.log("Clicked!")}
+        />
+      </StyledPageMain>
+    </PageLayout>
+  );
 };
+
+const SubmitButton = styled(ChowButton)`
+  max-width: 150px;
+  position: fixed;
+  bottom: ${({ theme }) => theme.pd900};
+  right: ${({ theme }) => theme.pd900};
+`;
 
 export default ConfirmOrderPage;

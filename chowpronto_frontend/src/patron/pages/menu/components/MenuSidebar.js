@@ -10,6 +10,7 @@ import useBasket from "../../../../hooks/useBasket";
 import useAuth from "../../../../hooks/useAuth";
 import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
+import { StyledSidebar } from "../../../components/StyledSidebar";
 
 const MenuSidebar = (props) => {
   const [basket] = useBasket();
@@ -23,7 +24,7 @@ const MenuSidebar = (props) => {
     getUser().then((data) => setUser(data));
   }, []);
   return (
-    <StyledMenuHeader>
+    <StyledSidebar>
       <UserBanner>
         {user ? (
           <span>
@@ -59,18 +60,9 @@ const MenuSidebar = (props) => {
         elevated
         style={{ position: "fixed", border: "solid red 2px" }}
       />
-    </StyledMenuHeader>
+    </StyledSidebar>
   );
 };
-
-export const StyledMenuHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex: 1;
-  border-right: ${({ theme }) => theme.bd200u};
-  padding: ${({ theme }) => theme.pd900};
-`;
 
 const UserBanner = styled.div`
   margin-bottom: ${({ theme }) => theme.mg600};
