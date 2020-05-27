@@ -42,10 +42,39 @@ function LocationSearch() {
 }
 function Search({ input, onChange }) {
   return (
-    <InputParent>
-      <Input placeholder="Location" value={input} onChange={onChange} />
-      <Label>Location</Label>
-    </InputParent>
+    <ElevatedContainer>
+      <Flex>
+        <InputParent>
+          <Input placeholder="Location" value={input} onChange={onChange} />
+          <Label>Location</Label>
+        </InputParent>
+        <Grid>
+          <SearchSVG />
+          <SearchButton>Search</SearchButton>
+        </Grid>
+      </Flex>
+      <div
+        style={{
+          gridRow: "3",
+          alignSelf: "center",
+          justifySelf: "flex-start",
+          paddingLeft: "1.54em",
+        }}
+      >
+        Are you in{" "}
+        <span
+          style={{
+            color: "#3949AB",
+            letterSpacing: "0.02em",
+            fontWeight: 500,
+            fontSize: 17,
+            cursor: "pointer",
+          }}
+        >
+          Berlin?
+        </span>
+      </div>
+    </ElevatedContainer>
   );
 }
 
@@ -165,8 +194,80 @@ const Layout = styled.main`
   max-width: 1200px;
   margin: 0 auto;
 `;
+
 // ---------------------------------
 // Location Search Styled-Components
+
+// Container for Search elements
+const ElevatedContainer = styled.div`
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  height: 180px;
+  width: 540px;
+`;
+
+// Button SVG ICON
+function SearchSVG() {
+  return (
+    <svg
+      style={{
+        zIndex: 1,
+        alignSelf: "center",
+        paddingLeft: ".6em",
+        pointerEvents: "none",
+      }}
+      width="17"
+      height="17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.64 11.417L15.221 16M12.77 6.885a5.885 5.885 0 11-11.77 0 5.885 5.885 0 0111.77 0z"
+        stroke="#E2E5FA"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.28 6.885a5.395 5.395 0 11-10.79 0 5.395 5.395 0 0110.79 0z"
+        fill="#DCE1FF"
+      />
+    </svg>
+  );
+}
+// OverLays button and SVG on same level with grid-area: 1 / 1;
+const Grid = styled.div`
+  display: grid;
+  > * {
+    grid-area: 1 / 1;
+  }
+`;
+
+// Aligns button and input
+const Flex = styled.div`
+  grid-row: 2;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const SearchButton = styled.div`
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  background: #3949ab;
+  border-radius: 3px;
+  padding: 0.71em 2em;
+  color: white;
+  cursor: pointer;
+`;
 
 const InputParent = styled.div`
   width: 340px;
