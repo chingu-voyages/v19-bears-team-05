@@ -82,7 +82,7 @@ const login = async (req, res) => {
     return res.status(400).send("User with given credentials doesn't exist");
 
   const token = jwt.sign({ _id: patron._id }, process.env.TOKEN_SECRET, {
-    expiresIn: "240h",
+    expiresIn: "720h",
   });
   res.send({
     token,
