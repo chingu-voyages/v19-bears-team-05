@@ -15,10 +15,10 @@ const MenuSidebar = (props) => {
   const [basket] = useBasket();
   const { getUser, logout } = useAuth();
   const [user, setUser] = useState(null);
-  const basketQuantity = basket.basketItems.reduce(
-    (acc, val) => acc + val.quantity,
-    0
-  );
+  // const basketQuantity = basket.basketItems.reduce(
+  //   (acc, val) => acc + val.quantity,
+  //   0
+  // );
   useEffect(() => {
     getUser().then((data) => setUser(data));
   }, []);
@@ -52,12 +52,11 @@ const MenuSidebar = (props) => {
       <Filter />
       <BasketSummary />
 
-      <ChowButton
+      <CheckoutButton
         title="Proceed To Checkout"
         onClick={() => console.log("Place Order Pressed")}
         primary
         elevated
-        style={{ position: "fixed", border: "solid red 2px" }}
       />
     </StyledMenuHeader>
   );
@@ -75,6 +74,10 @@ export const StyledMenuHeader = styled.div`
 const UserBanner = styled.div`
   margin-bottom: ${({ theme }) => theme.mg600};
   font-size: ${({ theme }) => theme.fz300};
+`;
+
+const CheckoutButton = styled(ChowButton)`
+  border: solid red 2px;
 `;
 
 export default MenuSidebar;
