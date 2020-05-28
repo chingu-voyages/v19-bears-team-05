@@ -20,7 +20,6 @@ const MenuSidebar = (props) => {
   }, []);
   const { state, dispatch } = useContext(MenuContext);
   const checkout = useCheckout();
-  console.log("state", state.basketItems);
   return (
     <StyledMenuHeader>
       <UserBanner>

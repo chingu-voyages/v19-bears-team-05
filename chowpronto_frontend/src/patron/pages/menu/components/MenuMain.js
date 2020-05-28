@@ -8,7 +8,7 @@ import { MenuContext } from "../../../../state/MenuContext";
 const MenuMain = (props) => {
   const context = useContext(MenuContext);
   const { state } = context;
-  const [menuItems, fetchItems] = useMenuItems(state);
+  const { menuItems } = useMenuItems(state);
   return (
     <>
       <StyledMenuMain>
