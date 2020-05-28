@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import useBasket from "../../../../hooks/useBasket";
 import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
 import AddIcon from "../../../../shared_components/AddIcon";
 import ChowButton from "../../../../shared_components/ChowButton";
+import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuItem = (props) => {
-  const [basketState, updateBasket] = useBasket();
+  const { state, dispatch } = useContext(MenuContext);
   return (
     <StyledMenuItem active>
       <HeaderBar>
@@ -22,7 +23,7 @@ const MenuItem = (props) => {
         <HeaderRight></HeaderRight>
       </FooterBar>
       <ClearButton
-        onClick={() => updateBasket({ type: "add_item", item: props })}
+        onClick={() => dispatch({ type: "add_item_to_basket", item: props })}
       >
         <AddIcon />
       </ClearButton>

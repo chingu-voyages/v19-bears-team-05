@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import MenuItem from "./MenuItem";
 import useMenuItems from "../../../../hooks/useMenuItems";
 import styled from "styled-components";
 import { StyledMenuHeader } from "./MenuSidebar";
+import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuMain = (props) => {
-  const menuItems = useMenuItems();
+  const context = useContext(MenuContext);
+  const { state } = context;
+  const [menuItems, fetchItems] = useMenuItems(state);
   return (
     <>
       <StyledMenuMain>
