@@ -10,19 +10,68 @@
 
 - nodemon >Constantly watches our server so that we do not have to run it every time we make a change to the code
 
-## routes/api helper comments
+## API endpoints
 
-// @route GET api/users
+`Create a new vendor` [POST api/signup](###POST-api/signup) <br/>
+`Login` [POST api/login](###POST-api/login) <br/>
 
-> Describes the request type and the exact endpoint that needs to be hit
+### POST api/signup
 
-// @desc Test route
+To create a new vendor this endpoint requires following data to be passed in request body:
 
-> Describes what the route does/what is served when you hit it
+```
+{
+	"email" : "new_vendor@gmail.com",
+	"name": "New Vendor",
+	"password" : "12345678",
+	"phone": "+12-3457-8910",
+	"address":"123 Flat, 12 Hope Street, Faith City, Wanderland",
+	"postcode" : "W 765 HS"
+}
+```
 
-// @access Public
+As a response client will receive
 
-> if you need to be authenticated to access that endpoint, then the @access is Private. If not, it's Public.
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNmOGIyOTAwODM5MTNjMDAzMzFiYTkiLCJpYXQiOjE1OTA2NTk4ODF9.ljKOQ22y-eH2Rk51-QiyC2arHJYHEnxYbU9JpUtDv3s",
+    "patron": {
+        "_id": "5ecf8b290083913c00331ba9",
+        "name": "New Vendor",
+        "email": "new_vendor@gmail.com",
+        "phone": "+12-3457-8910",
+        "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
+        "postcode": "W 765 HS"
+    }
+}
+```
+
+### POST api/login
+
+To log in into existing account client has to provide next data:
+
+```
+{
+	"email" : "new_vendor@gmail.com",
+	"password" : "12345678"
+}
+```
+
+Response sent from backend :
+
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNmOGIyOTAwODM5MTNjMDAzMzFiYTkiLCJpYXQiOjE1OTA2NjAwNjUsImV4cCI6MTU5MTUyNDA2NX0.AhIx6zi2Hj9Abkm4bNnrJIljntrOj4v16qmR1l-FenM",
+    "patron": {
+        "_id": "5ecf8b290083913c00331ba9",
+        "name": "New Vendor",
+        "emil": "new_vendor@gmail.com",
+        "phone": "+12-3457-8910",
+        "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
+        "postcode": "W 765 HS"
+    }
+}
+```
 
 ## Errors
 
