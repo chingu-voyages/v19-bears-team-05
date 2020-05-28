@@ -1,40 +1,54 @@
-function emailValidate(email) {
+const emailValidate = (email) => {
   var expression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (expression.test(email.toLowerCase())) {
-    return true;
-  } else {
-    return false;
-  }
-}
+  return expression.test(email.toLowerCase());
+};
 
-function nameValidate(name) {
-  if (name == null || name.length == 0) {
-    return false;
-  } else {
-    return true;
-  }
-}
+const phoneValidate = (phone) => {
+  const expression = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+  return expression.test(phone);
+};
 
-function passwordValidate(password) {
+const nameValidate = (name) => {
+  return !name || name.length < 2 ? false : true;
+};
+
+const addressValidate = (address) => {
+  return !address || address.length < 10 ? false : true;
+};
+
+const postcodeValidate = (postcode) => {
+  return !postcode || postcode.length < 5 ? false : true;
+};
+
+const passwordValidate = (password) => {
   return password.length >= 8;
-}
+};
 
-const validate = (firstName, secondName, email, password) => {
+const validate = (name, email, password, phone, address, postcode) => {
   const errorMessages = [];
 
   if (!emailValidate(email)) {
     errorMessages.push("The email format is incorrect");
   }
 
-  if (!nameValidate(firstName)) {
-    errorMessages.push("First name is required");
+  if (!nameValidate(name)) {
+    errorMessages.push("Name is required");
   }
-  if (!nameValidate(secondName)) {
-    errorMessages.push("Second name is required");
+  if (!addressValidate(address)) {
+    errorMessages.push("Address is required");
   }
 
   if (!passwordValidate(password)) {
     errorMessages.push("The password must have at least 8 characters");
+  }
+
+  if (!phoneValidate(phone)) {
+    errorMessages.push(
+      "Phone number should be \n +XX-XXXX-XXXX \n +XX.XXXX.XXXX \n +XX XXXX XXXX"
+    );
+  }
+  if (!postcodeValidate(postcode)) {
+    errorMessages.push("Please provide valid postcode");
   }
 
   return errorMessages.join(", \n ");

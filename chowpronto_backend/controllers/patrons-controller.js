@@ -4,33 +4,43 @@ const jwt = require("jsonwebtoken");
 const { validate } = require("./validation");
 
 const signup = async (req, res) => {
-  const { firstName, secondName, email, password } = req.body;
-  if (!email || !password || !firstName || !secondName) {
+  const { name, email, password, phone, address, postcode } = req.body;
+  if (!name || !email || !password || !phone || !address || !postcode) {
     return res
       .status(403)
       .send("Signing up failed, please fill in all form fields.");
   }
 
-  const errorMessages = validate(firstName, secondName, email, password);
+  const errorMessages = validate(
+    name,
+    email,
+    password,
+    phone,
+    address,
+    postcode
+  );
   if (errorMessages.length !== 0) {
     return res.status(400).send(errorMessages);
   }
 
   const existingUser = await Patron.findOne({ email });
   if (existingUser) {
-    return res.status(500).send("User with given id already exists");
+    return res.status(500).send("User with given credentials already exists");
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
   const newPatron = new Patron({
-    firstName,
-    secondName,
+    name,
     email,
     password: hashedPassword,
+    phone,
+    address,
+    postcode,
   });
 
   delete password;
+  delete salt;
 
   try {
     const savedPatron = await newPatron.save();
@@ -43,9 +53,11 @@ const signup = async (req, res) => {
       token,
       patron: {
         _id: savedPatron._id,
-        firstName: savedPatron.firstName,
-        secondName: savedPatron.secondName,
+        name: savedPatron.name,
         email: savedPatron.email,
+        phone: savedPatron.phone,
+        address: savedPatron.address,
+        postcode: savedPatron.postcode,
       },
     });
   } catch (err) {
@@ -76,9 +88,11 @@ const login = async (req, res) => {
     token,
     patron: {
       _id: patron._id,
-      firstName: patron.firstName,
-      secondName: patron.secondName,
+      name: patron.name,
       emil: patron.email,
+      phone: patron.phone,
+      address: patron.address,
+      postcode: patron.postcode,
     },
   });
 };
