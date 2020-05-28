@@ -12,17 +12,17 @@
 
 ## API endpoints
 
-`Create a new vendor` [POST api/signup](###POST-api/signup) <br/>
+`Create a new patron` [POST api/signup](###POST-api/signup) <br/>
 `Login` [POST api/login](###POST-api/login) <br/>
 
 ### POST api/signup
 
-To create a new vendor this endpoint requires following data to be passed in request body:
+To create a new patron this endpoint requires following data to be passed in request body:
 
 ```
 {
-	"email" : "new_vendor@gmail.com",
-	"name": "New Vendor",
+	"email" : "new_patron@gmail.com",
+	"name": "New patron",
 	"password" : "12345678",
 	"phone": "+12-3457-8910",
 	"address":"123 Flat, 12 Hope Street, Faith City, Wanderland",
@@ -37,8 +37,8 @@ As a response client will receive
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNmOGIyOTAwODM5MTNjMDAzMzFiYTkiLCJpYXQiOjE1OTA2NTk4ODF9.ljKOQ22y-eH2Rk51-QiyC2arHJYHEnxYbU9JpUtDv3s",
     "patron": {
         "_id": "5ecf8b290083913c00331ba9",
-        "name": "New Vendor",
-        "email": "new_vendor@gmail.com",
+        "name": "New Patron",
+        "email": "new_patron@gmail.com",
         "phone": "+12-3457-8910",
         "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
         "postcode": "W 765 HS"
@@ -52,7 +52,7 @@ To log in into existing account client has to provide next data:
 
 ```
 {
-	"email" : "new_vendor@gmail.com",
+	"email" : "new_patron@gmail.com",
 	"password" : "12345678"
 }
 ```
@@ -64,8 +64,8 @@ Response sent from backend :
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNmOGIyOTAwODM5MTNjMDAzMzFiYTkiLCJpYXQiOjE1OTA2NjAwNjUsImV4cCI6MTU5MTUyNDA2NX0.AhIx6zi2Hj9Abkm4bNnrJIljntrOj4v16qmR1l-FenM",
     "patron": {
         "_id": "5ecf8b290083913c00331ba9",
-        "name": "New Vendor",
-        "emil": "new_vendor@gmail.com",
+        "name": "New Patron",
+        "emil": "new_patron@gmail.com",
         "phone": "+12-3457-8910",
         "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
         "postcode": "W 765 HS"
