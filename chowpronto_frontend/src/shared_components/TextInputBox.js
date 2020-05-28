@@ -12,7 +12,7 @@ export default function InputBox(props) {
         name={props.title}
         id={props.title}
         value={props.value}
-        onChange={(e) => props.onChange}
+        onChange={(e) => props.onChange(e.target.value)}
         placeholder={props.placeholder || props.title}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}

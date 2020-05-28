@@ -19,6 +19,8 @@ app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/vendors", require("./routes/api/vendors"));
 app.use("/api/menuitems", require("./routes/api/menuitems"));
 
+app.use("/api/tags", require("./routes/api/tags"));
+
 // When you put four parameters express knows that is an error handling middleware function - they are only executed when an error is thrown from a request, if an error was sent from the previous middlewares
 app.use((error, req, res, next) => {
   // Checking if somehow we've already sent out a message
