@@ -20,18 +20,13 @@ const Order = new mongoose.Schema({
   patronId: { type: mongoose.Schema.ObjectId, ref: "Patron" },
 
   deliveryDetails: {
-    firstName: {
+    name: {
       type: String,
       required: true,
       min: 6,
       max: 255,
     },
-    secondName: {
-      type: String,
-      required: true,
-      min: 6,
-      max: 255,
-    },
+
     email: {
       type: String,
       required: true,
@@ -39,6 +34,10 @@ const Order = new mongoose.Schema({
       min: 6,
     },
     phone: {
+      type: String,
+      required: true,
+    },
+    postcode: {
       type: String,
       required: true,
     },

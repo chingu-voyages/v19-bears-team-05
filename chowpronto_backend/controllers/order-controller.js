@@ -14,26 +14,31 @@ const dataFromClientSide = {
     phone: "24255222244",
     address: "1/2 flat, 20 Hope Street, Glasqow, UK",
   },
+  patronID: "5ed0f412cd1c6b40fabc0fa2"
 };
 */
 
 const createOrder = async (req, res) => {
-  const { cart, deliveryDetails } = req.body;
+  const { cart, deliveryDetails, patronId } = req.body;
   if (!cart || cart.length === 0) {
     return res.status(400).send("Your cart is empty");
   }
   if (
     !deliveryDetails ||
-    !deliveryDetails.phone ||
+    !deliveryDetails.name ||
     !deliveryDetails.email ||
-    !deliveryDetails.firstName ||
-    !deliveryDetails.secondName
+    !deliveryDetails.phone ||
+    !deliveryDetails.address ||
+    !deliveryDetails.postcode
   ) {
-    return res.status(400).send("Please, provide delivery details");
+    return res.status(400).send("Please, provide all delivery details");
+  }
+  if (!patronId) {
+    return res.status(400).send("Something went wrong");
   }
 
   try {
-    const newOrder = Order({ deliveryDetails });
+    const newOrder = Order({ deliveryDetails, patronId });
     cart.forEach((menuItem) => newOrder.cart.push(menuItem));
     newOrder.save();
     res.send({ orderId: newOrder._id });
@@ -52,7 +57,6 @@ const getOrderById = async (req, res) => {
       select: ["name", "unitPrice"],
       populate: { path: "byVendor", model: "Vendor", select: "name" },
     });
-
     res.json(order);
   } catch (err) {
     console.error(err.message);
