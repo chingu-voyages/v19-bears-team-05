@@ -24,7 +24,7 @@ const passwordValidate = (password) => {
   return password.length >= 8;
 };
 
-const validate = (name, email, password, phone, address, postcode) => {
+const validate = (name, email, password, phone, address, postcode, role) => {
   const errorMessages = [];
 
   if (!emailValidate(email)) {
@@ -38,7 +38,7 @@ const validate = (name, email, password, phone, address, postcode) => {
     errorMessages.push("Address is required");
   }
 
-  if (!passwordValidate(password)) {
+  if (role === "REGISTER" && !passwordValidate(password)) {
     errorMessages.push("The password must have at least 8 characters");
   }
 
