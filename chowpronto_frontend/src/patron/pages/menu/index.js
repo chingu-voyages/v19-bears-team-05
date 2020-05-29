@@ -12,16 +12,13 @@ import { PageLayout } from "../../components/PageLayout";
 
 const MenuPage = (props) => {
   const location = useLocation();
-  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <MenuContext.Provider value={{ state, dispatch }}>
-      <PageLayout>
-        <MenuSidebar {...location} />
-        <MenuMain />
-        {location.search === "?loginModal=true" && <LoginModal />}
-        {location.search === "?deliverySelect=true" && <DeliverySelect />}
-      </PageLayout>
-    </MenuContext.Provider>
+    <PageLayout>
+      <MenuSidebar {...location} />
+      <MenuMain />
+      {location.search === "?loginModal=true" && <LoginModal />}
+      {location.search === "?deliverySelect=true" && <DeliverySelect />}
+    </PageLayout>
   );
 };
 

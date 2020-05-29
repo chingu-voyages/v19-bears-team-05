@@ -1,19 +1,13 @@
-import { useReducer } from "react";
+import { useReducer, useContext } from "react";
+import MenuContext from "../state/MenuContext";
 
 function useBasket() {
-  let current = new Date();
-  const initialState = {
-    id: Math.floor(Math.random() * 100000000),
-    basketItems: [],
-    deliveryDate: current.setMinutes(current.getMinutes + 30),
-  };
-
   function reducer(state, action) {
     switch (action.type) {
       case "add_item":
         return {
           ...state,
-          basketItems: [...state.basketItems, { ...action.item, quantity: 1 }],
+          basketItems: [...state.basketItems, action.item],
         };
       case "remove_item":
         // takes itemId as action
@@ -27,6 +21,7 @@ function useBasket() {
         return state;
     }
   }
+  const initialState = {};
   const [state, dispatch] = useReducer(reducer, initialState);
   return [state, dispatch];
 }

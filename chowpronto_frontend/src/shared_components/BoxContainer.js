@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const BoxContainer = ({ active, children, title }) => {
+const BoxContainer = (props) => {
+  const { active, children, title } = props;
   return (
-    <StyledBoxContainer active={active}>
+    <StyledBoxContainer {...props}>
       {title && <Title active={active}>{title}</Title>}
       {children}
     </StyledBoxContainer>

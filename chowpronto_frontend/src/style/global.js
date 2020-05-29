@@ -27,5 +27,5 @@ export const theme = {
   fz300: "12px",
   fz400: "14px",
   fz600: "18px",
-  sh400: "box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25)", // shadow
+  sh400: "0px 5px 10px rgba(0, 0, 0, 0.50)", // shadow
 };

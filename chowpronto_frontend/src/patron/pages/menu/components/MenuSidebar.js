@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -6,23 +6,21 @@ import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
 import ChowButton from "../../../../shared_components/ChowButton";
 import DeliveryTime from "../../../components/DeliveryTime";
-import useBasket from "../../../../hooks/useBasket";
 import useAuth from "../../../../hooks/useAuth";
 import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
+import useCheckout from "../../../../hooks/useCheckout";
+import { MenuContext } from "../../../../state/MenuContext";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 
 const MenuSidebar = (props) => {
-  const [basket] = useBasket();
   const { getUser, logout } = useAuth();
   const [user, setUser] = useState(null);
-  const basketQuantity = basket.basketItems.reduce(
-    (acc, val) => acc + val.quantity,
-    0
-  );
   useEffect(() => {
     getUser().then((data) => setUser(data));
   }, []);
+  // const { state, dispatch } = useContext(MenuContext);
+  const checkout = useCheckout();
   return (
     <StyledSidebar>
       <UserBanner>
@@ -52,14 +50,14 @@ const MenuSidebar = (props) => {
       <Search value="" onChange={() => console.log("Search bar change")} />
       <Filter />
       <BasketSummary />
-
-      <ChowButton
-        title="Proceed To Checkout"
-        onClick={() => console.log("Place Order Pressed")}
-        primary
-        elevated
-        style={{ position: "fixed", border: "solid red 2px" }}
-      />
+      <Link
+        to={(location) => {
+          logout();
+          return `/confirmOrder`;
+        }}
+      >
+        <CheckoutButton title="Proceed To Checkout" primary elevated />
+      </Link>
     </StyledSidebar>
   );
 };
@@ -67,6 +65,17 @@ const MenuSidebar = (props) => {
 const UserBanner = styled.div`
   margin-bottom: ${({ theme }) => theme.mg600};
   font-size: ${({ theme }) => theme.fz300};
+`;
+
+const CheckoutButton = styled(ChowButton)`
+  position: fixed;
+  bottom: ${({ theme }) => theme.pd900};
+  right: ${({ theme }) => theme.pd900};
+  font-size: ${({ theme }) => theme.fz400};
+  padding: ${({ theme }) => theme.pd600};
+  backdrop-filter: blur(2px);
+  z-index: 10;
+  opacity: 0.9;
 `;
 
 export default MenuSidebar;

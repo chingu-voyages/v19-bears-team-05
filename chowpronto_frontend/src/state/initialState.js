@@ -1,13 +1,10 @@
+const now = new Date();
+
+const nowPlus30 = now.setMinutes(now.getMinutes() + 30);
+
 export const initialState = {
   tags: [],
   search: "",
-  first_name: "",
-  surname: "",
-  address_line_1: "",
-  address_line_2: "",
-  town: "",
-  county: "",
-  postcode: "",
-  mobile_number: "",
-  email_address: "",
+  basketItems: [],
+  deliveryDate: nowPlus30,
 };
