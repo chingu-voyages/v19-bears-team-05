@@ -42,12 +42,20 @@ const MenuSidebar = (props) => {
         )}
       </UserBanner>
       <Logo />
-      <DeliveryAddress
-        onChange={() => console.log("go to delivery address change")}
-      />
-      <DeliveryTime
-        onChange={() => console.log("go to delivery time change")}
-      />
+      <Link
+        to={(location) => {
+          return `${location.pathname}?deliverySelect=true`;
+        }}
+      >
+        <DeliveryAddress />
+      </Link>
+      <Link
+        to={(location) => {
+          return `${location.pathname}?deliverySelect=true`;
+        }}
+      >
+        <DeliveryTime />
+      </Link>
       <Search value="" onChange={() => console.log("Search bar change")} />
       <Filter />
       <BasketSummary />

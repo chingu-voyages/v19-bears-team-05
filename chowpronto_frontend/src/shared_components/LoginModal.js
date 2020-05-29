@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import styled from "styled-components";
+import { ClearButton } from "./ClearButton";
 
 const LoginModal = (props) => {
   const [formState, setFormState] = useState({ name: "", email: "" });
@@ -11,7 +13,7 @@ const LoginModal = (props) => {
 
   return (
     <div className="modal-page">
-      <div className="modal-message">
+      <StyledModalMessage>
         <form
           action="POST"
           onSubmit={(e) => {
@@ -21,7 +23,7 @@ const LoginModal = (props) => {
         >
           <h1>Login</h1>
           <Link to={(location) => location.pathname}>
-            <button>close</button>
+            <CloseButton className="close">close</CloseButton>
           </Link>
           <label htmlFor="email">email</label>
           <input
@@ -44,9 +46,23 @@ const LoginModal = (props) => {
             checkout
           </p>
         </form>
-      </div>
+      </StyledModalMessage>
     </div>
   );
 };
 
+const StyledModalMessage = styled.div`
+  background: white;
+  width: 50vw;
+  min-width: 300px;
+  position: relative;
+`;
+
+const CloseButton = styled(ClearButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+`;
 export default LoginModal;

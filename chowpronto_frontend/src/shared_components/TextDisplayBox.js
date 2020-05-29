@@ -10,16 +10,15 @@ export default function InputBox(props) {
     <BoxContainer active={active} title={props.title}>
       <TextInput
         type="text"
-        name={props.title}
-        id={props.title}
-        value={props.value}
+        {...props}
         readOnly
-        onChange={(e) => props.onChange}
         placeholder={props.placeholder || props.title}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
       />
-      <AdditionalActionButton>change</AdditionalActionButton>
+      <AdditionalActionButton onClick={() => props.additionalAction()}>
+        change
+      </AdditionalActionButton>
     </BoxContainer>
   );
 }
@@ -37,6 +36,7 @@ const TextInput = styled.input`
 InputBox.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  additionalAction: PropTypes.func,
   placeholder: PropTypes.string,
 };
