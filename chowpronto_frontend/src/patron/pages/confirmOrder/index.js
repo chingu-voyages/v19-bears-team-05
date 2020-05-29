@@ -15,6 +15,33 @@ const ConfirmOrderPage = (props) => {
   const user = false;
   const { state, dispatch } = useContext(MenuContext);
   const [userData, setUserData] = useState({});
+  function saveOrder(returnedData) {
+    console.log("returnedData arguments to function", returnedData);
+    fetch("/api/orders/order", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cart: [
+          { menuItemId: "5ec0180b61361e716d8bf4a2", quantity: 5 },
+          { menuItemId: "5ec0180b61361e716d8bf4ba", quantity: 2 },
+          { menuItemId: "5ec0180b61361e716d8bf4cf", quantity: 3 },
+        ],
+        deliveryDetails: {
+          email: "kosenchiha@gmail.com",
+          name: "hjkhkg",
+          phone: "24255222244",
+          address: "1/2 flat, 20 Hope Street, Glasqow, UK",
+          postcode: "hjkhkg",
+        },
+        patronId: returnedData.patron._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("returned from createOrder", data));
+  }
   function handleSubmit(e) {
     e.preventDefault();
     if (!user) {
@@ -24,7 +51,7 @@ const ConfirmOrderPage = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "abc@gmail.com",
+          email: "def@gmail.com",
           name: "New Patron",
           password: "12345678",
           phone: "+12-3457-8910",
@@ -34,18 +61,22 @@ const ConfirmOrderPage = (props) => {
         }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          setUserData(data);
+        .then(async (data) => {
+          console.log("data from async", data);
+          await setUserData(data);
+          saveOrder(data);
+          //return data;
         })
-        .then(() => {
-          saveOrder();
-        })
+        // .then((returnedData) => {
+        //   saveOrder(returnedData);
+        // })
         .catch((err) => console.log("err", err));
-    }
-    try {
-      saveOrder();
-    } catch (err) {
-      console.log("err", err);
+    } else {
+      try {
+        saveOrder();
+      } catch (err) {
+        console.log("err", err);
+      }
     }
     // at this point the user should be stored on state
 

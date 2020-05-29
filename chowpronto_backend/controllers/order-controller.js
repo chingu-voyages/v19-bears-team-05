@@ -19,8 +19,10 @@ const dataFromClientSide = {
 */
 
 const createOrder = async (req, res) => {
+  console.log("save order was hit");
   const { cart, deliveryDetails, patronId } = req.body;
   if (!cart || cart.length === 0) {
+    console.log("first error");
     return res.status(400).send("Your cart is empty");
   }
   if (
@@ -31,13 +33,16 @@ const createOrder = async (req, res) => {
     !deliveryDetails.address ||
     !deliveryDetails.postcode
   ) {
+    console.log("second error");
     return res.status(400).send("Please, provide all delivery details");
   }
   if (!patronId) {
+    console.log("third error");
     return res.status(400).send("Something went wrong");
   }
 
   try {
+    console.log("in try block");
     const newOrder = Order({ deliveryDetails, patronId });
     cart.forEach((menuItem) => newOrder.cart.push(menuItem));
     newOrder.save();
