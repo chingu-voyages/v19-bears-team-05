@@ -3,12 +3,26 @@ const Patron = require("../models/Patron");
 const jwt = require("jsonwebtoken");
 const { validate } = require("./validation");
 
+const REGISTER_PATRON = "REGISTER";
+const GUEST_PATRON = "GUEST";
+
 const signup = async (req, res) => {
-  const { name, email, password, phone, address, postcode } = req.body;
-  if (!name || !email || !password || !phone || !address || !postcode) {
+  const { name, email, password, phone, address, postcode, role } = req.body;
+  if (
+    !name ||
+    !email ||
+    !phone ||
+    !address ||
+    !postcode ||
+    (role === REGISTER_PATRON && !password)
+  ) {
     return res
       .status(403)
       .send("Signing up failed, please fill in all form fields.");
+  }
+
+  if (!role || (role !== REGISTER_PATRON && role !== GUEST_PATRON)) {
+    return res.status(403).send("Signing up failed due to technical problem.");
   }
 
   const errorMessages = validate(
@@ -17,32 +31,40 @@ const signup = async (req, res) => {
     password,
     phone,
     address,
-    postcode
+    postcode,
+    role
   );
   if (errorMessages.length !== 0) {
     return res.status(400).send(errorMessages);
   }
 
-  const existingUser = await Patron.findOne({ email });
-  if (existingUser) {
-    return res.status(500).send("User with given credentials already exists");
-  }
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  const newPatron = new Patron({
-    name,
-    email,
-    password: hashedPassword,
-    phone,
-    address,
-    postcode,
-  });
-
-  delete password;
-  delete salt;
-
   try {
+    let newPatron;
+    let passwordToSave = {};
+    if (role === REGISTER_PATRON) {
+      const existingUser = await Patron.findOne({ email });
+      if (existingUser) {
+        return res
+          .status(500)
+          .send("User with given credentials already exists");
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      passwordToSave = { password: hashedPassword };
+      delete password;
+      delete salt;
+    }
+
+    newPatron = new Patron({
+      name,
+      email,
+      phone,
+      address,
+      postcode,
+      role,
+      ...passwordToSave,
+    });
+
     const savedPatron = await newPatron.save();
     const token = await jwt.sign(
       { _id: newPatron._id },
@@ -58,9 +80,11 @@ const signup = async (req, res) => {
         phone: savedPatron.phone,
         address: savedPatron.address,
         postcode: savedPatron.postcode,
+        role: savedPatron.role,
       },
     });
   } catch (err) {
+    console.error(err);
     res.status(500).send("Signing up failed, please try again later.");
   }
 };
