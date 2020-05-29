@@ -7,14 +7,14 @@ const dataFromClientSide = {
     { menuItemId: "5ec0180b61361e716d8bf4ba", quantity: 2 },
     { menuItemId: "5ec0180b61361e716d8bf4cf", quantity: 3 },
   ],
-  deliveryDetails: {
-    email: "patron_chow_pronto@gmail.com",
-    firstName: "Love",
-    secondName: "Eating",
-    phone: "24255222244",
-    address: "1/2 flat, 20 Hope Street, Glasqow, UK",
-  },
-  patronID: "5ed0f412cd1c6b40fabc0fa2"
+  "deliveryDetails": 	{
+    "email" : "kosenchiha@gmail.com",
+    "name" : "hjkhkg",
+    "phone": "24255222244",
+    "address": "1/2 flat, 20 Hope Street, Glasqow, UK",
+    "postcode" : "hjkhkg"
+	},
+"patronId": "5ed0f412cd1c6b40fabc0fa2"
 };
 */
 
