@@ -1,6 +1,4 @@
 @startuml
-!pragma teoz true
-
 actor Patron
 participant "Patron UI"
 participant "Shopping Cart"
@@ -18,31 +16,30 @@ Patron -> "Patron UI"
 alt items fetched
 Database --> "Patron UI": menu items
 loop adding items
-{contextStart} "Patron UI" -> "Shopping Cart": addToOrder(menuItem)
+"Patron UI" -> "Shopping Cart": addToOrder(menuItem)
 "Shopping Cart" --> "Patron UI": update UI
 end
-opt log in
-"Patron UI" -> "Auth Service": login(email, password)
-"Auth Service" -> "Patron UI": setToken(token)
-end
-"Patron UI" -> Database: Checkout createOrder([{basketItemId, quantity}])
-"Database" -> "Patron UI": orderId, orderItems
-"Patron UI" --> "Confirmation Page": redirect(order details)
 opt log in
 "Confirmation Page" -> "Auth Service": login(email, password)
 "Auth Service" -> "Confirmation Page": setToken(token)
 end
-opt register as user
-"Confirmation Page" -> "Confirmation Page": updatePassword()
+' "Patron UI" -> Database: Checkout createOrder([{basketItemId, quantity}])
+' "Database" -> "Confirmation Page": orderId, orderItems
+"Confirmation Page" -> "Confirmation Page": add user details
+"Patron UI" --> "Confirmation Page": redirect(basketDetails)
+opt not registered
+"Confirmation Page" -> "Confirmation Page": add password
 end
-opt amend basket
-{contextEnd} "Confirmation Page" -> "Patron UI": updatePassword()
+opt unregistered
+"Confirmation Page" -> "Database": RegisterCustomer(orderDetails, role: ENUM GUEST | REGISTER, password: "" | userPassword)
+"Database" --> "Confirmation Page": Token, User Details
 end
-"Confirmation Page" -> "Database": SubmitOrder(orderId, token?, orderDetails, password?)
-{contextStart} <-> {contextEnd} : Basket context must be live
+"Confirmation Page" -> "Database": CreateOrder(Token, basketItems, addressDetails)
+"Database" -> "Confirmation Page": OrderId
+
 "Database" -> "Payment Provider" : newPayment(...)
 "Payment Provider" -> "Database" : token???
-"Database" -> "Confirmation Page" : redirect(transactionId)
+"Database" -> "Confirmation Page" : redirect(orderID, )
 alt transaction success
 "Transaction Handler" -> Database: updateTransaction(paymentId)
 Database --> "Transaction Handler": Confirmation

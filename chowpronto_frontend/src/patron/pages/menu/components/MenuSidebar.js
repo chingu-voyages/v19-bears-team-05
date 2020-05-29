@@ -49,13 +49,14 @@ const MenuSidebar = (props) => {
       <Search value="" onChange={() => console.log("Search bar change")} />
       <Filter />
       <BasketSummary />
-
-      <CheckoutButton
-        title="Proceed To Checkout"
-        onClick={() => checkout(state.basketItems)}
-        primary
-        elevated
-      />
+      <Link
+        to={(location) => {
+          logout();
+          return `/confirmOrder`;
+        }}
+      >
+        <CheckoutButton title="Proceed To Checkout" primary elevated />
+      </Link>
     </StyledMenuHeader>
   );
 };
