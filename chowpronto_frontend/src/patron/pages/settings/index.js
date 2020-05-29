@@ -98,6 +98,7 @@ function InputList() {
               {text}
             </div>
           )}
+          <div onClick={(_) => send({ type: "save" })}>Edit</div>
         </InputDetail>
       ))}
     </div>
@@ -105,12 +106,7 @@ function InputList() {
 }
 
 function InputDetail({ children }) {
-  return (
-    <Flex>
-      {children}
-      <div>Edit</div>
-    </Flex>
-  );
+  return <Flex>{children}</Flex>;
 }
 function inputReducer(data, action) {
   switch (data.state) {
