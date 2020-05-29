@@ -67,7 +67,7 @@ const signup = async (req, res) => {
 
     const savedPatron = await newPatron.save();
     const token = await jwt.sign(
-      { _id: newPatron._id },
+      { _id: newPatron._id, role: newPatron.role },
       process.env.TOKEN_SECRET
     );
 
