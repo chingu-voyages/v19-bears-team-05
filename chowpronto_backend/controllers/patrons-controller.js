@@ -2,9 +2,7 @@ const bcrypt = require("bcryptjs");
 const Patron = require("../models/Patron");
 const jwt = require("jsonwebtoken");
 const { validate } = require("./validation");
-
-const REGISTER_PATRON = "REGISTER";
-const GUEST_PATRON = "GUEST";
+const { GUEST_PATRON, REGISTER_PATRON } = require("../utils/roles");
 
 const signup = async (req, res) => {
   const { name, email, password, phone, address, postcode, role } = req.body;
@@ -105,9 +103,13 @@ const login = async (req, res) => {
   if (!validPassword)
     return res.status(400).send("User with given credentials doesn't exist");
 
-  const token = jwt.sign({ _id: patron._id }, process.env.TOKEN_SECRET, {
-    expiresIn: "720h",
-  });
+  const token = jwt.sign(
+    { _id: patron._id, role: patron.role },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: "720h",
+    }
+  );
   res.send({
     token,
     patron: {
