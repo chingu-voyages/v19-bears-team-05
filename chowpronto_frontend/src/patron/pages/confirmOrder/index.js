@@ -37,23 +37,22 @@ const ConfirmOrderPage = (props) => {
         .then((data) => {
           setUserData(data);
         })
-        .then(()=>{
-          saveOrder()
+        .then(() => {
+          saveOrder();
         })
         .catch((err) => console.log("err", err));
     }
     try {
-      saveOrder()
-    } catch(err){
-      console.log('err', err)
+      saveOrder();
+    } catch (err) {
+      console.log("err", err);
     }
     // at this point the user should be stored on state
 
- headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
-
+    //  headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json"
+    //     }
   }
   return (
     <PageLayout>
