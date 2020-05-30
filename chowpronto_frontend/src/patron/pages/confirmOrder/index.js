@@ -16,7 +16,6 @@ const ConfirmOrderPage = (props) => {
   const { state, dispatch } = useContext(MenuContext);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
-    console.log("returnedData arguments to function", returnedData);
     fetch("/api/orders/order", {
       method: "POST",
       headers: {
@@ -51,25 +50,20 @@ const ConfirmOrderPage = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "def@gmail.com",
+          email: "registerMe123@gmail.com",
           name: "New Patron",
-          password: "12345678",
+          password: "secret123",
           phone: "+12-3457-8910",
           address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
           postcode: "W 765 HS",
-          role: "GUEST",
+          role: "REGISTER",
         }),
       })
         .then((res) => res.json())
         .then(async (data) => {
-          console.log("data from async", data);
           await setUserData(data);
           saveOrder(data);
-          //return data;
         })
-        // .then((returnedData) => {
-        //   saveOrder(returnedData);
-        // })
         .catch((err) => console.log("err", err));
     } else {
       try {

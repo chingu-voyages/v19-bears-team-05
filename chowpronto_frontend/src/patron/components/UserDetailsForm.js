@@ -4,27 +4,22 @@ import styled from "styled-components";
 import { MenuContext } from "../../state/MenuContext";
 
 export default function UserDetailsForm() {
-  let { state, dispatch } = useContext(MenuContext);
-  const [registerInput, setRegisterInput] = useState(false);
-  console.log("state", state);
-  state = {
-    tags: [],
-    search: "",
+  let { state: ctx, dispatch } = useContext(MenuContext);
+  const initialState = {
     name: "",
     address: "",
     postcode: "",
     phone: "",
     email: "",
+    register: false,
+    password: "",
   };
+  const [formState, setFormState] = useState(initialState);
 
   function handleChange(e) {
-    console.log("e", e.target);
-    dispatch({
-      type: "form_entry",
-      field: e.target.name,
-      value: e.target.value,
-    });
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   }
+
   return (
     <form action="POST">
       <StyledInputContainer>
@@ -32,7 +27,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="name"
           name="name"
-          value={state.name}
+          value={formState.name}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -41,7 +36,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="address"
           name="address"
-          value={state.address}
+          value={formState.address}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -50,7 +45,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="postcode"
           name="postcode"
-          value={state.postcode}
+          value={formState.postcode}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -59,7 +54,7 @@ export default function UserDetailsForm() {
           type="tel"
           placeholder="phone"
           name="phone"
-          value={state.phone}
+          value={formState.phone}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -68,34 +63,31 @@ export default function UserDetailsForm() {
           type="email"
           placeholder="email"
           name="email"
-          value={state.email}
+          value={formState.email}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
-      {!registerInput && (
+      {!formState.register ? (
         <label htmlFor="register">
           Would you like to register?
           <input
             type="checkbox"
             name="register"
             id="register"
-            value="register"
-            onChange={() => setRegisterInput(true)}
+            value="true"
+            onChange={(e) => handleChange(e)}
           />
         </label>
-      )}
-      {registerInput && (
-        <div>
-          <StyledInputContainer>
-            <input
-              type="password"
-              placeholder="password"
-              name="password"
-              value={state.password}
-              onChange={(e) => handleChange(e)}
-            />
-          </StyledInputContainer>
-        </div>
+      ) : (
+        <StyledInputContainer>
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            value={formState.password}
+            onChange={(e) => handleChange(e)}
+          />
+        </StyledInputContainer>
       )}
     </form>
   );
