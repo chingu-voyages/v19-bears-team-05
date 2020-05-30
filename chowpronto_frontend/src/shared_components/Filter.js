@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import OptionListBox from "./OptionListBox";
 import { MenuContext } from "../state/MenuContext";
-import useMenuItems from "../hooks/useMenuItems";
 
 const Filter = (props) => {
-  const mockFilter = ["veget", "spicy", "kids", "desert"];
   const { state, dispatch } = useContext(MenuContext);
   const [tags, setTags] = useState([]);
   useEffect(() => {

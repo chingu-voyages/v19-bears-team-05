@@ -19,8 +19,9 @@ function useAuth() {
     role: "GUEST",
   };
   let user = undefined;
-  const getUser = async () =>
-    new Promise((res, rej) => setTimeout(() => res(user)), 1000);
+  const getUser = () => {
+    return getFromStorage();
+  };
   const login = async (email, password) =>
     new Promise((res, rej) =>
       setTimeout(() => res({ name: "Kenny Loggins", id: "232323" }))
@@ -31,7 +32,19 @@ function useAuth() {
       return true;
     }, 200);
   function setToStorage(dataObj) {
-    // if(window)
+    try {
+      window.localStorage.setItem("chowpronto", JSON.stringify(dataObj));
+    } catch (err) {
+      console.log("err", err);
+    }
+  }
+  function getFromStorage() {
+    try {
+      const storageData = window.localStorage.getItem("chowpronto");
+      return storageData ? JSON.parse(storageData) : {};
+    } catch (err) {
+      console.log("err", err);
+    }
   }
   return { getUser, login, logout };
 }

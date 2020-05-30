@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BoxContainer from "./BoxContainer";
 import { AdditionalActionButton } from "./AdditionalActionButton";

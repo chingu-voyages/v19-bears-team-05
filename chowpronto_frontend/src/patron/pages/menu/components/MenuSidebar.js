@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -9,8 +9,6 @@ import DeliveryTime from "../../../components/DeliveryTime";
 import useAuth from "../../../../hooks/useAuth";
 import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
-import useCheckout from "../../../../hooks/useCheckout";
-import { MenuContext } from "../../../../state/MenuContext";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 
 const MenuSidebar = (props) => {
@@ -20,7 +18,6 @@ const MenuSidebar = (props) => {
     getUser().then((data) => setUser(data));
   }, []);
   // const { state, dispatch } = useContext(MenuContext);
-  const checkout = useCheckout();
   return (
     <StyledSidebar>
       <UserBanner>

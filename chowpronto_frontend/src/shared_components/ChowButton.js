@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const ChowButton = (props) => {
-  const { title, onClick, primary, secondary, tertiary, elevated } = props;
+  const { title } = props;
   return <StyledButton {...props}>{title}</StyledButton>;
 };
 

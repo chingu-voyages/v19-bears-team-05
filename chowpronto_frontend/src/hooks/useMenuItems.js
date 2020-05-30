@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 function useMenuItems(filterObject = {}) {
   // takes an object with filters as key value pairs
   const [menuItems, setMenuItems] = useState([]);
-  const [tags, setTags] = useState([]);
   function doFetch(filterObject) {
     let tagString =
       filterObject.tags?.reduce(

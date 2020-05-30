@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import TextInputBox from "./TextInputBox";
-import styled from "styled-components";
 import { MenuContext } from "../state/MenuContext";
 
 const Search = (props) => {

@@ -7,13 +7,7 @@ import { MenuContext } from "../../../../state/MenuContext";
 import { Link } from "react-router-dom";
 
 export default function OrderDetails() {
-  // const foodList = [
-  //   { name: "pizza", unitPrice: 955, quantity: 2 },
-  //   { name: "burger", unitPrice: 695, quantity: 1 },
-  //   { name: "diet coke", unitPrice: 295, quantity: 1 },
-  //   { name: "french fries", unitPrice: 595, quantity: 10 },
-  // ];
-  const { state, dispatch } = useContext(MenuContext);
+  const { state } = useContext(MenuContext);
   const { basketItems } = state;
   const deliveryAddress = "AB12 3EY";
   const deliveryDate = new Date(2020, 4, 29, 18, 30);

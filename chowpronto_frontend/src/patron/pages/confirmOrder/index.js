@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
@@ -8,12 +8,19 @@ import OrderDetails from "./components/OrderDetails";
 import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import useAuth from "../../../hooks/useAuth";
-import { MenuContext } from "../../../state/MenuContext";
 
 const ConfirmOrderPage = (props) => {
-  const { getUser, login, logout } = useAuth();
-  const user = false;
-  const { state, dispatch } = useContext(MenuContext);
+  const { getUser } = useAuth();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    async function fetchUser() {
+      const fetched = await getUser();
+      setUser(fetched);
+    }
+    fetchUser();
+  }, []);
+  // const user = false;
+  console.log("user", user);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
     fetch("/api/orders/order", {
@@ -50,7 +57,7 @@ const ConfirmOrderPage = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "registerMe123@gmail.com",
+          email: "registerMe432@gmail.com",
           name: "New Patron",
           password: "secret123",
           phone: "+12-3457-8910",
