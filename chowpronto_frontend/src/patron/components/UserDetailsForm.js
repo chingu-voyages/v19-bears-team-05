@@ -83,7 +83,7 @@ export default function UserDetailsForm() {
             type="password"
             placeholder="password"
             name="password"
-            value={ctx.formState.password}
+            value={ctx.formState.password || ""}
             onChange={(e) => handleChange(e)}
           />
         </StyledInputContainer>
