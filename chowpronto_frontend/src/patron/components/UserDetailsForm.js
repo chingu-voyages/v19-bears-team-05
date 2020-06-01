@@ -75,6 +75,7 @@ export default function UserDetailsForm() {
             id="register"
             value="true"
             onChange={() => setRegisterDialog(true)}
+            style={{ cursor: "pointer" }}
           />
         </label>
       ) : (

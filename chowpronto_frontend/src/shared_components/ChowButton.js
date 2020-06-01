@@ -20,6 +20,7 @@ const StyledButton = styled.button`
     primary ? theme.primary.bg : "translucent"};
   color: ${({ primary, theme }) => (primary ? "white" : theme.primary.bg)};
   box-shadow: ${({ elevated, theme }) => elevated && theme.sh400};
+  cursor: pointer;
 `;
 
 export default ChowButton;

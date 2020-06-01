@@ -28,6 +28,7 @@ const MenuSidebar = (props) => {
                 logout();
                 return `${location.pathname}?loginModal=true`;
               }}
+              style={{ cursor: "pointer" }}
             >
               Not me?
             </Link>

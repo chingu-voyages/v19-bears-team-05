@@ -83,4 +83,5 @@ const ClearButton = styled.button`
   position: absolute;
   right: ${({ theme }) => theme.pd600};
   bottom: ${({ theme }) => theme.pd600};
+  cursor: pointer;
 `;

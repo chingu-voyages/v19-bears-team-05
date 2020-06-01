@@ -49,6 +49,10 @@ const FilterListItem = styled.li`
   label {
     padding-left: 20px;
   }
+  input[type="checkbox"]{
+
+    cursor: pointer;
+  }
   input[type="checkbox"]:before {
     content: "";
     display: inline-block;
