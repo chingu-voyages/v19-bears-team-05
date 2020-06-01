@@ -5,16 +5,17 @@ import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
 import AddIcon from "../../../../shared_components/AddIcon";
 import ChowButton from "../../../../shared_components/ChowButton";
 import { MenuContext } from "../../../../state/MenuContext";
+import parseMoney from "../../../../helpers/parseMoney";
 
 const MenuItem = (props) => {
-  const { state, dispatch } = useContext(MenuContext);
+  const { dispatch } = useContext(MenuContext);
   return (
     <StyledMenuItem active>
       <HeaderBar>
         <StyledHeader>{props.name}</StyledHeader>
         <HeaderRight>
           <Vendor>{props.vendor}</Vendor>
-          <StyledHeader>{props.unitPrice}</StyledHeader>
+          <StyledHeader>{parseMoney(props.unitPrice)}</StyledHeader>
         </HeaderRight>
       </HeaderBar>
       <Description>{props.about}</Description>
