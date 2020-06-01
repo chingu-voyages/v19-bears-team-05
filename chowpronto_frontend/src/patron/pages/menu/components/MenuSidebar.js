@@ -17,8 +17,6 @@ const MenuSidebar = (props) => {
   useEffect(() => {
     setUser(getUser());
   }, []);
-  console.log("user", user);
-  // const { state, dispatch } = useContext(MenuContext);
   return (
     <StyledSidebar>
       <UserBanner>

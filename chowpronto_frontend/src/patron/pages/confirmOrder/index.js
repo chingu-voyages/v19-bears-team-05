@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import styled from "styled-components";
+import React, { useState, useContext } from "react";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
-import ChowButton from "../../../shared_components/ChowButton";
 import OrderDetails from "./components/OrderDetails";
 import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
-import useAuth from "../../../hooks/useAuth";
 import { MenuContext } from "../../../state/MenuContext";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 
 const ConfirmOrderPage = (props) => {
-  const { state: ctx, dispatch } = useContext(MenuContext);
+  const { state: ctx } = useContext(MenuContext);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
     fetch("/api/orders/order", {

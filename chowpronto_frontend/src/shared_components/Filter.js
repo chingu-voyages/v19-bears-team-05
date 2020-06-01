@@ -13,7 +13,6 @@ const Filter = (props) => {
     }
     getTags();
   }, []);
-  console.log("state", state);
   return (
     <div className="filter">
       <OptionListBox

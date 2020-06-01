@@ -1,14 +1,14 @@
 function useAuth() {
   // takes no arguments and returns 3 functions, get current user (getUser()), login & logout
-  const fakeGuest = {
-    email: "fakeguest@gmail.com",
-    name: "New Patron",
-    password: "",
-    phone: "+12-3457-8910",
-    address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
-    postcode: "W 765 HS",
-    role: "GUEST",
-  };
+  // const fakeGuest = {
+  //   email: "fakeguest@gmail.com",
+  //   name: "New Patron",
+  //   password: "",
+  //   phone: "+12-3457-8910",
+  //   address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
+  //   postcode: "W 765 HS",
+  //   role: "GUEST",
+  // };
   const fakeUser = {
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Z…4NDN9.5dQx6aYVjwuwHFKcfNSjVHYfr_BwPXq-A_7luNZWGQ0",
