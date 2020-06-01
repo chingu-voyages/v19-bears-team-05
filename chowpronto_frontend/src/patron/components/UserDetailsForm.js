@@ -5,19 +5,24 @@ import { MenuContext } from "../../state/MenuContext";
 
 export default function UserDetailsForm() {
   let { state: ctx, dispatch } = useContext(MenuContext);
-  const initialState = {
-    name: "",
-    address: "",
-    postcode: "",
-    phone: "",
-    email: "",
-    register: false,
-    password: "",
-  };
-  const [formState, setFormState] = useState(initialState);
+  // const initialState = {
+  //   name: "",
+  //   address: "",
+  //   postcode: "",
+  //   phone: "",
+  //   email: "",
+  //   register: false,
+  //   password: "",
+  // };
+  // const [formState, setFormState] = useState(initialState);
 
+  const [registerDialog, setRegisterDialog] = useState(false);
   function handleChange(e) {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    dispatch({
+      type: "update_form_state",
+      field: e.target.name,
+      value: e.target.value,
+    });
   }
 
   return (
@@ -27,7 +32,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="name"
           name="name"
-          value={formState.name}
+          value={ctx.formState.name}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -36,7 +41,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="address"
           name="address"
-          value={formState.address}
+          value={ctx.formState.address}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -45,7 +50,7 @@ export default function UserDetailsForm() {
           type="text"
           placeholder="postcode"
           name="postcode"
-          value={formState.postcode}
+          value={ctx.formState.postcode}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -54,7 +59,7 @@ export default function UserDetailsForm() {
           type="tel"
           placeholder="phone"
           name="phone"
-          value={formState.phone}
+          value={ctx.formState.phone}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
@@ -63,11 +68,11 @@ export default function UserDetailsForm() {
           type="email"
           placeholder="email"
           name="email"
-          value={formState.email}
+          value={ctx.formState.email}
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
-      {!formState.register ? (
+      {!registerDialog ? (
         <label htmlFor="register">
           Would you like to register?
           <input
@@ -75,7 +80,7 @@ export default function UserDetailsForm() {
             name="register"
             id="register"
             value="true"
-            onChange={(e) => handleChange(e)}
+            onChange={() => setRegisterDialog(true)}
           />
         </label>
       ) : (
@@ -84,7 +89,7 @@ export default function UserDetailsForm() {
             type="password"
             placeholder="password"
             name="password"
-            value={formState.password}
+            value={ctx.formState.password}
             onChange={(e) => handleChange(e)}
           />
         </StyledInputContainer>

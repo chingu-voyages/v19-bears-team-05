@@ -18,9 +18,11 @@ export function reducer(state, action) {
         ...state,
         basketItems: newBasketItemList,
       };
-    case "form_entry":
-      console.log("action.field", action.field);
-      return { ...state, [action.field]: action.value };
+    case "update_form_state":
+      return {
+        ...state,
+        formState: { ...state.formState, [action.field]: action.value },
+      };
     default:
       throw new Error();
   }

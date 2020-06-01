@@ -19,8 +19,6 @@ const ConfirmOrderPage = (props) => {
     }
     fetchUser();
   }, []);
-  // const user = false;
-  console.log("user", user);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
     fetch("/api/orders/order", {

@@ -2,19 +2,26 @@
 actor Patron
 participant "Patron UI"
 participant "Shopping Cart"
+participant "Local Storage"
 participant "Auth Service"
 participant "Confirmation Page"
 database Database
 participant "Transaction Handler"
 actor "Payment Provider"
-actor "Vendor Messaging"
-actor "Delivery Service"
+' actor "Vendor Messaging"
+' actor "Delivery Service"
 
 Patron -> "Patron UI"
 "Patron UI" -> "Patron UI": location?
 "Patron UI" -> Database: fetchMenuItems()
 alt items fetched
 Database --> "Patron UI": menu items
+"Patron UI" -> "Local Storage": getUser()
+opt user on localstorage
+"Local Storage" --> "Patron UI": User Details
+"Patron UI" -> "Patron UI": setUserToContext()
+end
+
 loop adding items
 "Patron UI" -> "Shopping Cart": addToOrder(menuItem)
 "Shopping Cart" --> "Patron UI": update UI
@@ -40,15 +47,15 @@ end
 "Database" -> "Payment Provider" : newPayment(...)
 "Payment Provider" -> "Database" : token???
 "Database" -> "Confirmation Page" : redirect(orderID, )
-alt transaction success
-"Transaction Handler" -> Database: updateTransaction(paymentId)
-Database --> "Transaction Handler": Confirmation
-"Transaction Handler" --> "Patron UI": Confirmation
-"Transaction Handler" -> "Vendor Messaging": sendMessage(customerOrder)
-"Transaction Handler" -> "Delivery Service": sendMessage(customerOrder)
-else transaction failure
-"Transaction Handler" --> "Patron UI": Error Message
-end
+' alt transaction success
+' "Transaction Handler" -> Database: updateTransaction(paymentId)
+' Database --> "Transaction Handler": Confirmation
+' "Transaction Handler" --> "Patron UI": Confirmation
+' "Transaction Handler" -> "Vendor Messaging": sendMessage(customerOrder)
+' "Transaction Handler" -> "Delivery Service": sendMessage(customerOrder)
+' else transaction failure
+' "Transaction Handler" --> "Patron UI": Error Message
+' end
 
 else error fetching
 Database --> "Patron UI": error message
