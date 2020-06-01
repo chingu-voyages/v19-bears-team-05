@@ -15,8 +15,9 @@ const MenuSidebar = (props) => {
   const { getUser, logout } = useAuth();
   const [user, setUser] = useState(null);
   useEffect(() => {
-    getUser().then((data) => setUser(data));
+    setUser(getUser());
   }, []);
+  console.log("user", user);
   // const { state, dispatch } = useContext(MenuContext);
   return (
     <StyledSidebar>
