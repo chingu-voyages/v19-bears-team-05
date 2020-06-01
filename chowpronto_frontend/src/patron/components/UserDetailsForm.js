@@ -1,20 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StyledBoxContainer } from "../../shared_components/BoxContainer";
 import styled from "styled-components";
 import { MenuContext } from "../../state/MenuContext";
 
 export default function UserDetailsForm() {
   let { state: ctx, dispatch } = useContext(MenuContext);
-  // const initialState = {
-  //   name: "",
-  //   address: "",
-  //   postcode: "",
-  //   phone: "",
-  //   email: "",
-  //   register: false,
-  //   password: "",
-  // };
-  // const [formState, setFormState] = useState(initialState);
+
+  useEffect(() => {
+    dispatch({ type: "prefill_form" });
+  }, []);
 
   const [registerDialog, setRegisterDialog] = useState(false);
   function handleChange(e) {

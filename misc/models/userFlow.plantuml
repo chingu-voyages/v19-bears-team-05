@@ -16,7 +16,7 @@ Patron -> "Patron UI"
 "Patron UI" -> Database: fetchMenuItems()
 alt items fetched
 Database --> "Patron UI": menu items
-"Patron UI" -> "Local Storage": getUser()
+"Patron UI" -> "Local Storage": getUser() check to see if there is a user on localstorage
 opt user on localstorage
 "Local Storage" --> "Patron UI": User Details
 "Patron UI" -> "Patron UI": setUserToContext()

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
@@ -8,17 +8,10 @@ import OrderDetails from "./components/OrderDetails";
 import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import useAuth from "../../../hooks/useAuth";
+import { MenuContext } from "../../../state/MenuContext";
 
 const ConfirmOrderPage = (props) => {
-  const { getUser } = useAuth();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    async function fetchUser() {
-      const fetched = await getUser();
-      setUser(fetched);
-    }
-    fetchUser();
-  }, []);
+  const { state: ctx, dispatch } = useContext(MenuContext);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
     fetch("/api/orders/order", {
@@ -47,26 +40,23 @@ const ConfirmOrderPage = (props) => {
       .then((data) => console.log("returned from createOrder", data));
   }
   function handleSubmit(e) {
+    const formDetails = JSON.stringify({
+      ...ctx.formState,
+      role: ctx.formState.password.length > 0 ? "REGISTER" : "GUEST",
+    });
     e.preventDefault();
-    if (!user) {
+    if (!ctx.userDetails || !ctx.userDetails.token) {
       fetch("/api/patrons/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: "registerMe432@gmail.com",
-          name: "New Patron",
-          password: "secret123",
-          phone: "+12-3457-8910",
-          address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
-          postcode: "W 765 HS",
-          role: "REGISTER",
-        }),
+        body: formDetails,
       })
         .then((res) => res.json())
         .then(async (data) => {
           await setUserData(data);
+          console.log("data from signup", data);
           saveOrder(data);
         })
         .catch((err) => console.log("err", err));

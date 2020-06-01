@@ -15,4 +15,11 @@ export const initialState = {
     email: "",
     password: "",
   },
+  userDetails: {
+    name: "",
+    address: "",
+    postcode: "",
+    phone: "",
+    email: "",
+  },
 };
