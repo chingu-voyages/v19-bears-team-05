@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
 import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
-import ChowButton from "../../../../shared_components/ChowButton";
 import DeliveryTime from "../../../components/DeliveryTime";
 import useAuth from "../../../../hooks/useAuth";
 import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
+import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
 
 const MenuSidebar = (props) => {
   const { getUser, logout } = useAuth();
@@ -63,17 +63,6 @@ const MenuSidebar = (props) => {
 const UserBanner = styled.div`
   margin-bottom: ${({ theme }) => theme.mg600};
   font-size: ${({ theme }) => theme.fz300};
-`;
-
-const CheckoutButton = styled(ChowButton)`
-  position: fixed;
-  bottom: ${({ theme }) => theme.pd900};
-  right: ${({ theme }) => theme.pd900};
-  font-size: ${({ theme }) => theme.fz400};
-  padding: ${({ theme }) => theme.pd600};
-  backdrop-filter: blur(2px);
-  z-index: 10;
-  opacity: 0.9;
 `;
 
 export default MenuSidebar;

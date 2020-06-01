@@ -15,7 +15,6 @@ export default function OrderDetails() {
     <StyledOrderDetails>
       <h3>Order Details</h3>
       {basketItems.map((val) => {
-        console.log("val.name", val.name.length);
         return (
           <p key={val._id}>
             {val.name} x {val.quantity}{" "}

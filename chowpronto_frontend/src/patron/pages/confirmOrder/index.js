@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import useAuth from "../../../hooks/useAuth";
 import { MenuContext } from "../../../state/MenuContext";
+import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 
 const ConfirmOrderPage = (props) => {
   const { state: ctx, dispatch } = useContext(MenuContext);
@@ -82,16 +83,14 @@ const ConfirmOrderPage = (props) => {
       </StyledSidebar>
       <StyledPageMain>
         <UserDetailsForm />
-        <SubmitButton title="submit" primary onClick={(e) => handleSubmit(e)} />
+        <CheckoutButton
+          title="submit order"
+          primary
+          onClick={(e) => handleSubmit(e)}
+        />
       </StyledPageMain>
-      <input type="password" />
     </PageLayout>
   );
 };
-
-const SubmitButton = styled(ChowButton)`
-  max-width: 150px;
-  align-self: flex-end;
-`;
 
 export default ConfirmOrderPage;
