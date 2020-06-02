@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import styled from "styled-components";
 import {
   Title,
   BorderedContainer,
@@ -41,6 +42,7 @@ function InputList() {
       // TODO: do we need this?
     }
   }
+
   function handleEditClick(text, id) {
     // if 'idle' change state to 'editing'
     if (data.state === "idle") send({ type: "editing", payload: { id } });
@@ -49,37 +51,53 @@ function InputList() {
       send({ type: "save", payload: { id, text } });
     }
   }
+  function handleEnterPress(charCode, text, id) {
+    // if not 'Enter' then do nothing
+    if (!charCode === 13) return;
+    handleEditClick(text, id);
+  }
 
   return (
     <div>
-      {data.items.map(({ label, text, id }) => (
-        <InputDetail key={`${label}-${id} `}>
-          <div
-            style={{
-              fontWeight: "normal",
-              fontSize: "16px",
-              lineHeight: "19px",
-              textTransform: "uppercase",
-              justifySelf: "flex-start",
-            }}
-          >
-            {label}
-          </div>
-          {data.state === "editing" && data.openId === id ? (
-            <Input text={text} send={send} id={id} />
-          ) : (
+      {data.items.map(({ label, text, id }) => {
+        const btnToggle = data.state === "editing" && data.openId === id;
+        return (
+          <InputDetail key={`${label}-${id} `}>
             <div
-              onClick={(_) => handleTextInputClick(data.state, id)}
-              style={inputDetailStyles.shared}
+              style={{
+                fontWeight: "normal",
+                fontSize: "16px",
+                lineHeight: "19px",
+                textTransform: "uppercase",
+                justifySelf: "flex-start",
+              }}
             >
-              {text}
+              {label}
             </div>
-          )}
-          <div onClick={(_) => handleEditClick(text, id)}>
-            {data.state === "editing" && data.openId === id ? "Save" : "Edit"}
-          </div>
-        </InputDetail>
-      ))}
+            {data.state === "editing" && data.openId === id ? (
+              <Input text={text} send={send} id={id} />
+            ) : (
+              <div
+                tabIndex="0"
+                onKeyPress={({ charCode }) =>
+                  handleEnterPress(charCode, data.state, id)
+                }
+                onClick={() => handleTextInputClick(data.state, id)}
+                style={inputDetailStyles.shared}
+              >
+                {text}
+              </div>
+            )}
+            <Button
+              bg={btnToggle}
+              role="button"
+              onClick={() => handleEditClick(text, id)}
+            >
+              {btnToggle ? "Save" : "Edit"}
+            </Button>
+          </InputDetail>
+        );
+      })}
     </div>
   );
 }
@@ -168,8 +186,21 @@ const inputDetailStyles = {
   },
   textInput: {
     border: "none",
-    background: "#D0D3E5",
+    background: "#F0F2FF",
     fontFamily: "inherit",
     borderRadius: "4px",
   },
 };
+
+const Button = styled.button`
+  font-size: 18px;
+  padding: 0.8em 0;
+  background: ${({ bg }) => (bg ? "#F0F2FF" : "none")};
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  :focus,
+  :active {
+    background: #dce1ff;
+  }
+`;
