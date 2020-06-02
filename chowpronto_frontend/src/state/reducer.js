@@ -18,6 +18,24 @@ export function reducer(state, action) {
         ...state,
         basketItems: newBasketItemList,
       };
+    case "update_form_state":
+      return {
+        ...state,
+        formState: { ...state.formState, [action.field]: action.value },
+      };
+    case "set_user":
+      return {
+        ...state,
+        userDetails: action.userDetails,
+      };
+    case "prefill_form":
+      return {
+        ...state,
+        formState:
+          state.userDetails.token && state.formState.email.length === 0
+            ? state.userDetails.patron
+            : state.formState,
+      };
     default:
       throw new Error();
   }

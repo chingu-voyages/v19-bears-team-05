@@ -5,6 +5,7 @@ const { validate } = require("./validation");
 const { GUEST_PATRON, REGISTER_PATRON } = require("../utils/roles");
 
 const signup = async (req, res) => {
+  console.log("Signup was hit");
   const { name, email, password, phone, address, postcode, role } = req.body;
   if (
     !name ||
@@ -14,13 +15,15 @@ const signup = async (req, res) => {
     !postcode ||
     (role === REGISTER_PATRON && !password)
   ) {
+    console.log("req.body", req.body);
+    console.log("first error");
     return res
-      .status(403)
+      .status(400)
       .send("Signing up failed, please fill in all form fields.");
   }
 
   if (!role || (role !== REGISTER_PATRON && role !== GUEST_PATRON)) {
-    return res.status(403).send("Signing up failed due to technical problem.");
+    return res.status(400).send("Signing up failed due to technical problem.");
   }
 
   const errorMessages = validate(

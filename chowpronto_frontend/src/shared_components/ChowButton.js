@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const ChowButton = (props) => {
-  const { title, onClick, primary, secondary, tertiary, elevated } = props;
+  const { title } = props;
   return <StyledButton {...props}>{title}</StyledButton>;
 };
 
@@ -20,13 +20,14 @@ const StyledButton = styled.button`
     primary ? theme.primary.bg : "translucent"};
   color: ${({ primary, theme }) => (primary ? "white" : theme.primary.bg)};
   box-shadow: ${({ elevated, theme }) => elevated && theme.sh400};
+  cursor: pointer;
 `;
 
 export default ChowButton;
 
 ChowButton.propTypes = {
   title: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
   tertiary: PropTypes.bool,

@@ -1,35 +1,30 @@
-import React, { useReducer } from "react";
+import React, { useContext, useEffect } from "react";
 import "./menu.css";
 import MenuSidebar from "./components/MenuSidebar";
 import MenuMain from "./components/MenuMain";
-import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../../../shared_components/LoginModal";
 import DeliverySelect from "../../components/DeliverySelect";
+import { PageLayout } from "../../components/PageLayout";
+import useAuth from "../../../hooks/useAuth";
 import { MenuContext } from "../../../state/MenuContext";
-import { reducer } from "../../../state/reducer";
-import { initialState } from "../../../state/initialState";
 
 const MenuPage = (props) => {
   const location = useLocation();
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { dispatch } = useContext(MenuContext);
+  const { getUser } = useAuth();
+  useEffect(() => {
+    const userDetails = getUser();
+    dispatch({ type: "set_user", userDetails });
+  }, []);
   return (
-    <MenuContext.Provider value={{ state, dispatch }}>
-      <PageLayout>
-        <MenuSidebar {...location} />
-        <MenuMain />
-        {location.search === "?loginModal=true" && <LoginModal />}
-        {location.search === "?deliverySelect=true" && <DeliverySelect />}
-      </PageLayout>
-    </MenuContext.Provider>
+    <PageLayout>
+      <MenuSidebar {...location} />
+      <MenuMain />
+      {location.search === "?loginModal=true" && <LoginModal />}
+      {location.search === "?deliverySelect=true" && <DeliverySelect />}
+    </PageLayout>
   );
 };
-
-const PageLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
 
 export default MenuPage;

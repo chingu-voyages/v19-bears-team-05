@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useDelivery from "../../hooks/useDelivery";
-import useBasket from "../../hooks/useBasket";
 
 const DeliverySelect = (props) => {
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -9,7 +8,6 @@ const DeliverySelect = (props) => {
   useEffect(() => {
     getAvailable().then((data) => setAvailableSlots(data));
   }, []);
-  const [_, updateBasket] = useBasket();
   return (
     <div className="delivery-select modal-page">
       <div className="modal-message">
@@ -24,7 +22,7 @@ const DeliverySelect = (props) => {
               className="slot"
               key={v}
               onClick={() => {
-                updateBasket({ action: "set_delivery_time", time: v });
+                console.log("changed delivery slot");
               }}
             >
               {v}

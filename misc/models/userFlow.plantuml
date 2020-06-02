@@ -2,43 +2,60 @@
 actor Patron
 participant "Patron UI"
 participant "Shopping Cart"
+participant "Local Storage"
 participant "Auth Service"
 participant "Confirmation Page"
 database Database
 participant "Transaction Handler"
 actor "Payment Provider"
-actor "Vendor Messaging"
-actor "Delivery Service"
+' actor "Vendor Messaging"
+' actor "Delivery Service"
 
 Patron -> "Patron UI"
 "Patron UI" -> "Patron UI": location?
 "Patron UI" -> Database: fetchMenuItems()
 alt items fetched
 Database --> "Patron UI": menu items
+"Patron UI" -> "Local Storage": getUser() check to see if there is a user on localstorage
+opt user on localstorage
+"Local Storage" --> "Patron UI": User Details
+"Patron UI" -> "Patron UI": setUserToContext()
+end
+
 loop adding items
 "Patron UI" -> "Shopping Cart": addToOrder(menuItem)
 "Shopping Cart" --> "Patron UI": update UI
 end
-"Patron UI" -> Database: Checkout createOrder([{basketItemId, quantity}])
-"Database" -> "Confirmation Page": orderId, orderItems
-"Patron UI" --> "Confirmation Page": redirect()
 opt log in
 "Confirmation Page" -> "Auth Service": login(email, password)
 "Auth Service" -> "Confirmation Page": setToken(token)
 end
-"Confirmation Page" -> "Database": SubmitOrder(orderId, token?, orderDetails, password?)
+' "Patron UI" -> Database: Checkout createOrder([{basketItemId, quantity}])
+' "Database" -> "Confirmation Page": orderId, orderItems
+"Confirmation Page" -> "Confirmation Page": add user details
+"Patron UI" --> "Confirmation Page": redirect(basketDetails)
+opt not registered
+"Confirmation Page" -> "Confirmation Page": add password
+end
+opt unregistered
+"Confirmation Page" -> "Database": RegisterCustomer(orderDetails, role: ENUM GUEST | REGISTER, password: "" | userPassword)
+"Database" --> "Confirmation Page": Token, User Details
+end
+"Confirmation Page" -> "Database": CreateOrder(Token, basketItems, addressDetails)
+"Database" -> "Confirmation Page": OrderId
+
 "Database" -> "Payment Provider" : newPayment(...)
 "Payment Provider" -> "Database" : token???
-"Database" -> "Confirmation Page" : redirect(transactionId)
-alt transaction success
-"Transaction Handler" -> Database: updateTransaction(paymentId)
-Database --> "Transaction Handler": Confirmation
-"Transaction Handler" --> "Patron UI": Confirmation
-"Transaction Handler" -> "Vendor Messaging": sendMessage(customerOrder)
-"Transaction Handler" -> "Delivery Service": sendMessage(customerOrder)
-else transaction failure
-"Transaction Handler" --> "Patron UI": Error Message
-end
+"Database" -> "Confirmation Page" : redirect(orderID, )
+' alt transaction success
+' "Transaction Handler" -> Database: updateTransaction(paymentId)
+' Database --> "Transaction Handler": Confirmation
+' "Transaction Handler" --> "Patron UI": Confirmation
+' "Transaction Handler" -> "Vendor Messaging": sendMessage(customerOrder)
+' "Transaction Handler" -> "Delivery Service": sendMessage(customerOrder)
+' else transaction failure
+' "Transaction Handler" --> "Patron UI": Error Message
+' end
 
 else error fetching
 Database --> "Patron UI": error message

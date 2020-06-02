@@ -1,10 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import OptionListBox from "./OptionListBox";
 import { MenuContext } from "../state/MenuContext";
 
 const Filter = (props) => {
-  const mockFilter = ["veget", "spicy", "kids", "desert"];
   const { state, dispatch } = useContext(MenuContext);
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    function getTags() {
+      fetch(`/api/tags`)
+        .then((res) => res.json())
+        .then((data) => setTags(data.map((v) => v.name)));
+    }
+    getTags();
+  }, []);
   return (
     <div className="filter">
       <OptionListBox
@@ -19,7 +27,7 @@ const Filter = (props) => {
           }
           dispatch({ type: "set_tags", tags: newArray });
         }}
-        allListItem={mockFilter}
+        allListItem={tags}
         selectedListItem={state.tags}
       />
     </div>
