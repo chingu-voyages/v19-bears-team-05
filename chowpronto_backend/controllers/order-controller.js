@@ -19,11 +19,10 @@ const dataFromClientSide = {
 */
 
 const createOrder = async (req, res) => {
-  console.log("save order was hit");
   const { cart, deliveryDetails, patronId } = req.body;
+
   if (!cart || cart.length === 0) {
-    console.log("first error");
-    return res.status(400).send("Your cart is empty");
+    return res.status(400).send({ errorMsg: "Your cart is empty" });
   }
   if (
     !deliveryDetails ||
@@ -33,23 +32,18 @@ const createOrder = async (req, res) => {
     !deliveryDetails.address ||
     !deliveryDetails.postcode
   ) {
-    console.log("second error");
-    return res.status(400).send("Please, provide all delivery details");
-  }
-  if (!patronId) {
-    console.log("third error");
-    return res.status(400).send("Something went wrong");
+    return res
+      .status(400)
+      .send({ errorMsg: "Please, provide all delivery details" });
   }
 
   try {
-    console.log("in try block");
     const newOrder = Order({ deliveryDetails, patronId });
     cart.forEach((menuItem) => newOrder.cart.push(menuItem));
     newOrder.save();
     res.send({ orderId: newOrder._id });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("something went wrong on server side");
+    res.status(500).send({ errorMsg: "something went wrong on server side" });
   }
 };
 
@@ -64,8 +58,7 @@ const getOrderById = async (req, res) => {
     });
     res.json(order);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("No order with this Id");
+    res.status(500).send({ errorMsg: "No order with this Id" });
   }
 };
 
