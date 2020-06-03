@@ -8,4 +8,19 @@ export const initialState = {
   search: "",
   basketItems: [],
   deliveryDate: now,
+  formState: {
+    name: "",
+    address: "",
+    postcode: "",
+    phone: "",
+    email: "",
+    password: "",
+  },
+  userDetails: {
+    name: "",
+    address: "",
+    postcode: "",
+    phone: "",
+    email: "",
+  },
 };

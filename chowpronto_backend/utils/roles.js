@@ -1,0 +1,3 @@
+const REGISTER_PATRON = "REGISTER";
+const GUEST_PATRON = "GUEST";
+module.exports = { REGISTER_PATRON, GUEST_PATRON };

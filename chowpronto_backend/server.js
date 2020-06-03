@@ -18,6 +18,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/vendors", require("./routes/api/vendors"));
 app.use("/api/menuitems", require("./routes/api/menuitems"));
+app.use("/api/orders", require("./routes/api/orders"));
 
 app.use("/api/tags", require("./routes/api/tags"));
 

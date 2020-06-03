@@ -8,4 +8,5 @@ export const AdditionalActionButton = styled.button`
   &:active {
     color: ${({ theme }) => theme.colors.active};
   }
+  cursor: pointer;
 `;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BoxContainer from "./BoxContainer";
 import { AdditionalActionButton } from "./AdditionalActionButton";
@@ -48,6 +48,10 @@ const FilterListItem = styled.li`
   justify-content: flex-start;
   label {
     padding-left: 20px;
+  }
+  input[type="checkbox"]{
+
+    cursor: pointer;
   }
   input[type="checkbox"]:before {
     content: "";
