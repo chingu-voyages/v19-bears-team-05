@@ -9,23 +9,22 @@ import MONTHS from "../../helpers/months";
 
 const DeliverySelect = (props) => {
   const { state, dispatch } = useContext(MenuContext);
-  const [startOffset, setStartOffset] = useState(0);
+  const [deliveryDate, setDeliveryDate] = useState(
+    new Date(state.deliveryDate.getTime())
+  );
+  const [displayStart, setDisplayStart] = useState(
+    new Date(state.deliveryDate.getTime())
+  );
   const [times, setTimes] = useState([]);
   const [dates, setDates] = useState([]);
-  console.log("state", state);
   useEffect(() => {
     let timesArray = new Array(8)
       .fill({})
       .map(
-        (val, ind) =>
-          new Date(
-            state.deliveryDate.getTime() +
-              1000 * 60 * 10 * ind +
-              1000 * 60 * startOffset
-          )
+        (val, ind) => new Date(displayStart.getTime() + 1000 * 60 * 10 * ind)
       );
     setTimes(timesArray);
-  }, [startOffset]);
+  }, [displayStart]);
   useEffect(() => {
     let datesArray = new Array(5)
       .fill({})
@@ -34,7 +33,7 @@ const DeliverySelect = (props) => {
           new Date(state.deliveryDate.getTime() + 1000 * 60 * 60 * 24 * ind)
       );
     setDates(datesArray);
-  }, []);
+  }, [state.deliveryDate]);
   return (
     <Modal>
       <div>
@@ -54,29 +53,30 @@ const DeliverySelect = (props) => {
           <ChowButton
             secondary
             title="earlier"
-            onClick={() => setStartOffset(startOffset - 10)}
+            onClick={() =>
+              setDisplayStart(new Date(displayStart.getTime() - 1000 * 60 * 10))
+            }
           />
           {times.map((v, i) => (
             <ChowButton
               secondary
-              primary={v.getTime() === state.deliveryDate.getTime()}
+              primary={v.getTime() === deliveryDate.getTime()}
               title={`${v.getHours()}:${
                 v.getMinutes() === 0 ? "0" : ""
               }${v.getMinutes()}`}
               className="slot"
-              // style={{ backgroundColor: "#DCE1FF", margin: "2px" }}
               key={v}
               onClick={() => {
-                dispatch({ type: "change_delivery_time", date: v });
+                setDeliveryDate(new Date(v.getTime()));
               }}
-            >
-              {v} hello
-            </ChowButton>
+            />
           ))}
           <ChowButton
             secondary
             title="later"
-            onClick={() => setStartOffset(startOffset + 10)}
+            onClick={() =>
+              setDisplayStart(new Date(displayStart.getTime() + 1000 * 60 * 10))
+            }
           />
         </div>
         <div className="date-select">
@@ -84,21 +84,48 @@ const DeliverySelect = (props) => {
           {dates.map((v, i) => (
             <ChowButton
               secondary
-              primary={v.toDateString() === state.deliveryDate.toDateString()}
-              title={`${v.getDate()}th ${MONTHS[v.getMonth()]}`}
+              primary={v.toDateString() === deliveryDate.toDateString()}
+              title={
+                i === 0
+                  ? "today"
+                  : i === 1
+                  ? "tomorrow"
+                  : `${v.getDate()}th ${MONTHS[v.getMonth()]}`
+              }
               className="slot"
               // style={{ backgroundColor: "#DCE1FF", margin: "2px" }}
               key={v}
               onClick={() => {
-                dispatch({ type: "change_delivery_date", date: v });
+                const newStartDate = new Date(
+                  v.getFullYear(),
+                  v.getMonth(),
+                  v.getDate(),
+                  displayStart.getHours(),
+                  displayStart.getMinutes()
+                );
+                setDisplayStart(newStartDate);
+                const newDeliveryDate = new Date(
+                  v.getFullYear(),
+                  v.getMonth(),
+                  v.getDate(),
+                  deliveryDate.getHours(),
+                  deliveryDate.getMinutes()
+                );
+                setDeliveryDate(newDeliveryDate);
               }}
-            >
-              {v} hello
-            </ChowButton>
+              style={{ width: "100px", margin: "5px" }}
+            />
           ))}
         </div>
         <ChowButton secondary title="cancel" />
-        <ChowButton primary title="change" />
+
+        <ChowButton
+          primary
+          title="change"
+          onClick={() =>
+            dispatch({ type: "set_delivery_date", date: deliveryDate })
+          }
+        />
       </div>
     </Modal>
   );
