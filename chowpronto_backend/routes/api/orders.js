@@ -8,7 +8,6 @@ const orderControllers = require("../../controllers/order-controller");
 
 router.post("/order", orderControllers.createOrder);
 router.get("/:orderId", orderControllers.getOrderById);
-
-//router.get("/:menuItemId", menuItemsControllers.getMenuItemById);
+router.get("/patron/:patronId", orderControllers.getPatronsOrders);
 
 module.exports = router;

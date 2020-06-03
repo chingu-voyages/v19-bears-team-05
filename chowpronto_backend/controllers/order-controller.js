@@ -19,10 +19,8 @@ const dataFromClientSide = {
 */
 
 const createOrder = async (req, res) => {
-  console.log("save order was hit");
   const { cart, deliveryDetails, patronId } = req.body;
   if (!cart || cart.length === 0) {
-    console.log("first error");
     return res.status(400).send("Your cart is empty");
   }
   if (
@@ -33,16 +31,13 @@ const createOrder = async (req, res) => {
     !deliveryDetails.address ||
     !deliveryDetails.postcode
   ) {
-    console.log("second error");
     return res.status(400).send("Please, provide all delivery details");
   }
   if (!patronId) {
-    console.log("third error");
     return res.status(400).send("Something went wrong");
   }
 
   try {
-    console.log("in try block");
     const newOrder = Order({ deliveryDetails, patronId });
     cart.forEach((menuItem) => newOrder.cart.push(menuItem));
     newOrder.save();
@@ -69,5 +64,78 @@ const getOrderById = async (req, res) => {
   }
 };
 
+/*
+patron's credentials
+{
+  "email" : "test@gmail.com",
+  "name": "Test Patron",
+  "password" : "12345678",
+  "phone": "+12-3457-8910",
+  "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
+  "postcode" : "W 765 HS",
+  "role": "REGISTER"
+}
+
+patron's id
+"_id": "5ed76f4bd8b7fb359eeaead3"
+
+Metod GET
+ url = http://localhost:5000/api/orders/patron/5ed76f4bd8b7fb359eeaead3
+ will return 
+ [
+    {
+        "orderId": "5ed77116391a4a3c4d9c4480",
+        "total": 19260,
+        "date": "2020-06-03T09:44:54.564Z"
+    },
+    {
+        "orderId": "5ed77125391a4a3c4d9c4482",
+        "total": 24660,
+        "date": "2020-06-03T09:45:09.136Z"
+    },
+    {
+        "orderId": "5ed7712e391a4a3c4d9c4485",
+        "total": 35260,
+        "date": "2020-06-03T09:45:18.382Z"
+    }
+]
+*/
+
+const getPatronsOrders = async (req, res) => {
+  try {
+    const { patronId } = req.params;
+    await Order.find({ patronId }, { cart: 1, date: 1, paid: 1 })
+      .populate({
+        path: "cart.menuItemId",
+        model: "MenuItem",
+        select: ["unitPrice"],
+      })
+      .exec((err, orders) => {
+        if (err) {
+          return res
+            .status(500)
+            .send({ errorMsg: "Can't find orders for given vendor id" });
+        }
+        const vendorOrders = orders.map((order) => {
+          const total = order.cart.reduce(
+            (sum, menuItem) =>
+              menuItem.quantity * menuItem.menuItemId.unitPrice + sum,
+            0
+          );
+          return {
+            orderId: order._id,
+            total,
+            date: order.date,
+          };
+        });
+        res.json(vendorOrders);
+      });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ errorMsg: "Server error" });
+  }
+};
+
 exports.createOrder = createOrder;
 exports.getOrderById = getOrderById;
+exports.getPatronsOrders = getPatronsOrders;
