@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import TextDisplayBox from "../../shared_components/TextDisplayBox";
+import { MenuContext } from "../../state/MenuContext";
 
 const DeliverySelector = (props) => {
+  const { state, dispatch } = useContext(MenuContext);
   return (
     <TextDisplayBox
       title="delivery time"
-      value="Today 17:30"
+      value={
+        "Today " +
+        state.deliveryDate.getHours() +
+        ":" +
+        state.deliveryDate.getMinutes()
+      }
       onChange={props.onChange}
     />
   );

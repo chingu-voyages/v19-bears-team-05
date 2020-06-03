@@ -18,6 +18,13 @@ export function reducer(state, action) {
         ...state,
         basketItems: newBasketItemList,
       };
+    case "change_delivery_time":
+      return { ...state, deliveryDate: action.date };
+    case "change_delivery_date":
+      let currentSelected = new Date(state.deliveryDate);
+      currentSelected.setDate(action.date.getDate());
+      currentSelected.setMonth(action.date.getMonth());
+      return { ...state, deliveryDate: currentSelected };
     default:
       throw new Error();
   }
