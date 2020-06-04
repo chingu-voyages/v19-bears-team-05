@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -10,19 +10,22 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
+import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuSidebar = (props) => {
   const { getUser, logout } = useAuth();
-  const [user, setUser] = useState(null);
+  const { state, dispatch } = useContext(MenuContext);
+  let user = getUser();
   useEffect(() => {
-    setUser(getUser());
+    dispatch({ type: "set_user", userDetails: getUser() });
   }, []);
+  console.log("state.userDetails", state.userDetails);
   return (
     <StyledSidebar>
       <UserBanner>
-        {user ? (
+        {state.userDetails && state.userDetails.token ? (
           <span>
-            Welcome back <span>{user.name}</span>{" "}
+            Welcome back <span>{state.userDetails.patron.name}</span>{" "}
             <Link
               to={(location) => {
                 logout();
@@ -34,7 +37,15 @@ const MenuSidebar = (props) => {
             </Link>
           </span>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link
+            to={(location) => {
+              logout();
+              return `${location.pathname}?loginModal=true`;
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Login
+          </Link>
         )}
       </UserBanner>
       <Logo />

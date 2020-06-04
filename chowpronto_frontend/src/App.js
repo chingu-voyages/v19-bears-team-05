@@ -7,6 +7,7 @@ import RegisterPage from "./patron/pages/register";
 import LandingPage from "./patron/pages/landing";
 import Theme from "./style/Theme";
 import Context from "./state/Context";
+import LoginPage from "./patron/pages/login";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
               </Route>
               <Route path="/register">
                 <RegisterPage />
+              </Route>
+              <Route path="/login">
+                <LoginPage />
               </Route>
             </Switch>
           </Router>
