@@ -23,6 +23,6 @@ Please include headers in these requests
 
 router.post("/order", verifyToken, checkPatron, orderControllers.createOrder);
 router.get("/:orderId", verifyToken, orderControllers.getOrderById);
-router.get("/patron/:patronId", orderControllers.getPatronsOrders);
+router.get("/patron/:patronId", verifyToken, orderControllers.getPatronsOrders);
 
 module.exports = router;

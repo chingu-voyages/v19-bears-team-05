@@ -77,6 +77,8 @@ patron's credentials
 patron's id
 "_id": "5ed76f4bd8b7fb359eeaead3"
 
+id in token must be equal patron's id
+
 Metod GET
  url = http://localhost:5000/api/orders/patron/5ed76f4bd8b7fb359eeaead3
  will return 
@@ -101,7 +103,13 @@ Metod GET
 
 const getPatronsOrders = async (req, res) => {
   try {
+    const { patronData } = req;
     const { patronId } = req.params;
+
+    if (patronData._id !== patronId) {
+      return res.status(403).send({ errorMsg: "Unauthorized" });
+    }
+
     await Order.find({ patronId }, { cart: 1, date: 1, paid: 1 })
       .populate({
         path: "cart.menuItemId",
@@ -112,9 +120,9 @@ const getPatronsOrders = async (req, res) => {
         if (err) {
           return res
             .status(500)
-            .send({ errorMsg: "Can't find orders for given vendor id" });
+            .send({ errorMsg: "Can't find orders for given patron id" });
         }
-        const vendorOrders = orders.map((order) => {
+        const patronOrders = orders.map((order) => {
           const total = order.cart.reduce(
             (sum, menuItem) =>
               menuItem.quantity * menuItem.menuItemId.unitPrice + sum,
@@ -126,7 +134,7 @@ const getPatronsOrders = async (req, res) => {
             date: order.date,
           };
         });
-        res.json(vendorOrders);
+        res.json(patronOrders);
       });
   } catch (err) {
     console.error(err);
