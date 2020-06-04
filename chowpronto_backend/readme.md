@@ -100,6 +100,7 @@ patron's id is
 "_id": "5ed76f4bd8b7fb359eeaead3"
 ```
 
+Id in token and patron's id should be equal.
 url = http://localhost:5000/api/orders/patron/5ed76f4bd8b7fb359eeaead3
 will return
 

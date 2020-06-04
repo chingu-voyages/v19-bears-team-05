@@ -12,7 +12,11 @@ const {
 // @access   Pivate
 
 // @route   GET api/orders/:orderId
-// @desc    get order by order route
+// @desc    get order by order id route
+// @access   Pivate
+
+// @route   GET api/orders/patron/:patronId
+// @desc    get all order for a patron
 // @access   Pivate
 
 /*
