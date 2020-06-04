@@ -103,12 +103,7 @@ Metod GET
 
 const getPatronsOrders = async (req, res) => {
   try {
-    const { patronData } = req;
     const { patronId } = req.params;
-
-    if (patronData._id !== patronId) {
-      return res.status(403).send({ errorMsg: "Unauthorized" });
-    }
 
     await Order.find({ patronId }, { cart: 1, date: 1, paid: 1 })
       .populate({
