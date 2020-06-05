@@ -52,7 +52,9 @@ const MenuSidebar = (props) => {
       />
       <Search value="" onChange={() => console.log("Search bar change")} />
       <Filter />
-      <BasketSummary />
+      <Link to="/basket">
+        <BasketSummary />
+      </Link>
       <Link
         to={(location) => {
           return `/confirmOrder`;

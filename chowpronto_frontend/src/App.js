@@ -9,6 +9,7 @@ import Theme from "./style/Theme";
 import Context from "./state/Context";
 import LoginPage from "./patron/pages/login";
 import useOnInitialisation from "./hooks/useOnInitialisation";
+import BasketPage from "./patron/pages/basketPage";
 
 function App() {
   // function to run only on initial render of site
