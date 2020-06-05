@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MenuPage from "./patron/pages/menu";
@@ -12,13 +12,18 @@ import useOnInitialisation from "./hooks/useOnInitialisation";
 
 function App() {
   // function to run only on initial render of site
-  const initialise = useOnInitialisation();
+  const [user, setUser] = useState(window.localStorage.getItem("chowpronto"));
+  // const initialise = useOnInitialisation();
   useEffect(() => {
-    initialise();
+    try {
+      setUser(window.localStorage.getItem("chowpronto"));
+    } catch (err) {
+      console.log("err", err);
+    }
   }, []);
   return (
     <Theme>
-      <Context>
+      <Context user={user}>
         <div className="App">
           <Router>
             <Switch>
@@ -27,6 +32,9 @@ function App() {
               </Route>
               <Route path="/menu">
                 <MenuPage />
+              </Route>
+              <Route path="/basket">
+                <BasketPage />
               </Route>
               <Route path="/confirmOrder">
                 <ConfirmOrderPage />

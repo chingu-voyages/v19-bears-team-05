@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import useAuth from "./useAuth";
+import UserContext from "../state/UserContext";
 
 export default function useOnInitialisation() {
-  const { initialMount } = useAuth();
-  function initialise() {
-    initialMount();
-  }
+  const context = useContext(UserContext);
+  useEffect(() => {
+    console.log("context", context);
+  }, [context]);
+  function initialise() {}
   return initialise;
 }

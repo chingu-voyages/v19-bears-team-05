@@ -1,16 +1,7 @@
-import { useContext } from "react";
-import { UserContext } from "../state/UserContext";
+import { useContext, useState, useEffect } from "react";
+import UserContext from "../state/UserContext";
 
 function useAuth() {
-  const { user: context, setUser: setContext } = useContext(UserContext);
-  function getUser() {
-    // return context;
-  }
-
-  function initialMount() {
-    const storageData = getFromStorage();
-    setUserDetailsToContext(storageData);
-  }
   function login(email, password) {
     const credentials = JSON.stringify({ email, password });
     fetch("/api/patrons/login", {
@@ -46,10 +37,15 @@ function useAuth() {
     }
   }
   function setUserDetailsToContext(userDetails) {
-    setContext({ type: "set_user", userDetails });
-    console.log("context", context);
+    // setContext({ type: "set_user", userDetails });
   }
-  return { getUser, initialMount, login, logout, register };
+  return {
+    // getUser,
+    // initialMount,
+    login,
+    logout,
+    register,
+  };
 }
 
 export default useAuth;
