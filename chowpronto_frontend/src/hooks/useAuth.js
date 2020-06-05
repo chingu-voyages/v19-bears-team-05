@@ -2,6 +2,30 @@ import { useContext, useState, useEffect } from "react";
 import UserContext from "../state/UserContext";
 
 function useAuth() {
+  const { user, setUser } = useContext(UserContext);
+  async function onInit() {
+    const storageData = getFromStorage();
+    const userDetails = await getUserById(storageData.token);
+    setUserDetailsToContext(userDetails);
+    console.log("From onInit");
+  }
+  function getUserById(token) {
+    // fetch("/api/patron/getUserById", {
+    //   method: "GET",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    return {
+      _id: "5ed935717d520e32d44787b1",
+      name: "Test Patron",
+      emil: "test111@gmail.com",
+      phone: "+12-3457-8910",
+      address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
+      postcode: "W 765 HS",
+    };
+  }
   function login(email, password) {
     const credentials = JSON.stringify({ email, password });
     fetch("/api/patrons/login", {
@@ -23,7 +47,7 @@ function useAuth() {
   function register(customerDetailsObject) {}
   function setToStorage(dataObj) {
     try {
-      window.localStorage.setItem("chowpronto", JSON.stringify(dataObj));
+      window.localStorage.setItem("chowpronto", JSON.stringify(dataObj.token));
     } catch (err) {
       console.log("err", err);
     }
@@ -37,11 +61,11 @@ function useAuth() {
     }
   }
   function setUserDetailsToContext(userDetails) {
-    // setContext({ type: "set_user", userDetails });
+    setUser({ type: "set_user", userDetails });
   }
   return {
     // getUser,
-    // initialMount,
+    onInit,
     login,
     logout,
     register,
