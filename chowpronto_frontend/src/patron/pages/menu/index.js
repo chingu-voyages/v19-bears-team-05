@@ -11,12 +11,6 @@ import { MenuContext } from "../../../state/MenuContext";
 
 const MenuPage = (props) => {
   const location = useLocation();
-  const { dispatch } = useContext(MenuContext);
-  const { getUser } = useAuth();
-  useEffect(() => {
-    const userDetails = getUser();
-    dispatch({ type: "set_user", userDetails });
-  }, []);
   return (
     <PageLayout>
       <MenuSidebar {...location} />

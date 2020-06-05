@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MenuPage from "./patron/pages/menu";
@@ -7,8 +7,15 @@ import RegisterPage from "./patron/pages/register";
 import LandingPage from "./patron/pages/landing";
 import Theme from "./style/Theme";
 import Context from "./state/Context";
+import LoginPage from "./patron/pages/login";
+import useOnInitialisation from "./hooks/useOnInitialisation";
 
 function App() {
+  // function to run only on initial render of site
+  const initialise = useOnInitialisation();
+  useEffect(() => {
+    initialise();
+  }, []);
   return (
     <Theme>
       <Context>
@@ -26,6 +33,9 @@ function App() {
               </Route>
               <Route path="/register">
                 <RegisterPage />
+              </Route>
+              <Route path="/login">
+                <LoginPage />
               </Route>
             </Switch>
           </Router>
