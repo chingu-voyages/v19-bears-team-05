@@ -8,29 +8,49 @@ import UserDetailsForm from "../../components/UserDetailsForm";
 import { MenuContext } from "../../../state/MenuContext";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 
+const saveOrder = (token, patronId, deliveryDetails, basket) => {
+  return fetch("/api/orders/order", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cart: basket,
+      deliveryDetails,
+      patronId,
+    }),
+  })
+    .then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        return res.json();
+      } else {
+        throw res;
+      }
+    })
+    .then((order) => console.log("returned from createOrder", order));
+};
+
+const signupNewPatron = (formDetails) => {
+  return fetch("/api/patrons/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: formDetails,
+  }).then((res) => {
+    console.log("in first then");
+    if (res.status >= 200 && res.status < 300) {
+      return res.json();
+    } else {
+      throw res;
+    }
+  });
+};
+
 const ConfirmOrderPage = (props) => {
   const { state: ctx } = useContext(MenuContext);
-  console.log(ctx);
-  const [userData, setUserData] = useState({});
 
-  function saveOrder(data, patronId, deliveryDetails, basket) {
-    console.log("Token", data.token);
-
-    fetch("/api/orders/order", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${data.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cart: basket,
-        deliveryDetails,
-        patronId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("returned from createOrder", data));
-  }
   function handleSubmit(e) {
     const formDetails = JSON.stringify({
       ...ctx.formState,
@@ -38,43 +58,26 @@ const ConfirmOrderPage = (props) => {
     });
     e.preventDefault();
     if (!ctx.userDetails || !ctx.userDetails.token) {
-      console.log("in signup, formDetails", formDetails);
-      fetch("/api/patrons/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: formDetails,
-      })
-        .then((res) => {
-          console.log("in first then");
-          if (res.status >= 200 && res.status < 300) {
-            return res.json();
-          } else {
-            throw res;
-          }
-        })
-        .then(async (data) => {
-          console.log("in second then", data);
-          await setUserData(data);
-          console.log("data", data);
+      signupNewPatron(formDetails)
+        .then((data) => {
+          /// save token to local storage
+          /// save user data somewhere
 
+          const { token, patron } = data;
+          const { _id, email, name, phone, address, postcode } = patron;
           const deliveryDetails = {
-            email: data.patron.email,
-            name: data.patron.name,
-            phone: data.patron.phone,
-            address: data.patron.address,
-            postcode: data.patron.postcode,
+            email,
+            name,
+            phone,
+            address,
+            postcode,
           };
-          const patronId = data.patron._id;
-          const token = data.token;
-          saveOrder(token, patronId, deliveryDetails, ctx.basketItems);
+
+          return saveOrder(token, _id, deliveryDetails, ctx.basketItems);
         })
         .catch((err) => {
-          console.log("inErr", err);
           err.json().then((json) => {
-            console.log(json.errMsg);
-            alert(json.errMsg);
+            console.log(json.errorMsg);
           });
         });
     } else {
