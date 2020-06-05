@@ -1,11 +1,15 @@
+import { useContext } from "react";
+import { UserContext } from "../state/UserContext";
+
 function useAuth() {
-  // takes no arguments and returns 3 functions, get current user (getUser()), login & logout
-  let user = undefined;
-  const getUser = () => {
-    return getFromStorage();
-  };
-  function setUser(dataObj) {
-    setToStorage(dataObj);
+  const { user: context, setUser: setContext } = useContext(UserContext);
+  function getUser() {
+    // return context;
+  }
+
+  function initialMount() {
+    const storageData = getFromStorage();
+    setUserDetailsToContext(storageData);
   }
   function login(email, password) {
     const credentials = JSON.stringify({ email, password });
@@ -17,11 +21,15 @@ function useAuth() {
       body: credentials,
     })
       .then((res) => res.json())
-      .then((data) => setToStorage(data));
+      .then((data) => {
+        // setUser(data);
+      });
   }
   function logout() {
-    setToStorage({});
+    window.localStorage.removeItem("chowpronto");
   }
+
+  function register(customerDetailsObject) {}
   function setToStorage(dataObj) {
     try {
       window.localStorage.setItem("chowpronto", JSON.stringify(dataObj));
@@ -37,7 +45,11 @@ function useAuth() {
       console.log("err", err);
     }
   }
-  return { getUser, setUser, login, logout };
+  function setUserDetailsToContext(userDetails) {
+    setContext({ type: "set_user", userDetails });
+    console.log("context", context);
+  }
+  return { getUser, initialMount, login, logout, register };
 }
 
 export default useAuth;

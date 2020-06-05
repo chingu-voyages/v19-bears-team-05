@@ -15,11 +15,6 @@ import { MenuContext } from "../../../../state/MenuContext";
 const MenuSidebar = (props) => {
   const { getUser, logout } = useAuth();
   const { state, dispatch } = useContext(MenuContext);
-  let user = getUser();
-  useEffect(() => {
-    dispatch({ type: "set_user", userDetails: getUser() });
-  }, []);
-  console.log("state.userDetails", state.userDetails);
   return (
     <StyledSidebar>
       <UserBanner>
@@ -28,7 +23,7 @@ const MenuSidebar = (props) => {
             Welcome back <span>{state.userDetails.patron.name}</span>{" "}
             <Link
               to={(location) => {
-                logout();
+                // logout();
                 return `${location.pathname}?loginModal=true`;
               }}
               style={{ cursor: "pointer" }}
@@ -39,7 +34,7 @@ const MenuSidebar = (props) => {
         ) : (
           <Link
             to={(location) => {
-              logout();
+              // logout();
               return `${location.pathname}?loginModal=true`;
             }}
             style={{ cursor: "pointer" }}
@@ -60,7 +55,6 @@ const MenuSidebar = (props) => {
       <BasketSummary />
       <Link
         to={(location) => {
-          logout();
           return `/confirmOrder`;
         }}
       >
