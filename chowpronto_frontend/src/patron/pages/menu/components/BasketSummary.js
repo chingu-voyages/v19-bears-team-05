@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
-import BoxContainer, {
-  StyledBoxContainer,
-} from "../../../../shared_components/BoxContainer";
-import useBasket from "../../../../hooks/useBasket";
+import BoxContainer from "../../../../shared_components/BoxContainer";
+// import useBasket from "../../../../hooks/useBasket";
 import { MenuContext } from "../../../../state/MenuContext";
 import styled from "styled-components";
 
@@ -27,7 +25,11 @@ export default function BasketSummary() {
 }
 
 const BasketList = styled(BoxContainer)`
+  ul {
+    padding: 0;
+  }
   li {
-    border: solid red 2px;
+    list-style-type: none;
+    font-size: ${({ theme }) => theme.fz300};
   }
 `;

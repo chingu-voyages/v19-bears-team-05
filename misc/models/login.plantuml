@@ -1,0 +1,57 @@
+@startuml
+actor Patron
+participant "App.js"
+participant "menuPage"
+participant "orderConfirm"
+participant "loginComponent"
+participant "useInitialise"
+participant "useAuth"
+participant "localStorage"
+participant "userContext"
+
+Patron -> App.js
+"App.js" -> useInitialise : run on initial mount
+"App.js" -> menuPage : render
+"useInitialise" -> "useAuth" : initialMount()
+"useAuth" -> "localStorage" : getUserDetails()
+opt user found
+"localStorage" -> useAuth : found details
+useAuth -> userContext : setUserDetailsToContext(found details)
+end
+menuPage -> useAuth : getUser();
+useAuth -> userContext : getDataFromContext()
+alt user
+userContext -> useAuth : user Data;
+useAuth -> menuPage : user details;
+else
+useAuth -> menuPage : null;
+end
+opt Login
+menuPage -> loginComponent : redirect();
+loginComponent -> useAuth : login(credentials)
+useAuth -> API : login(credentials);
+alt success
+API -> useAuth : token & user details
+useAuth -> userContext : setUserDetailsToContext( token & user details )
+useAuth -> localStorage : setUserDetailsToLocalStorage(token & user details)
+userContext --> menuPage : state change
+menuPage -> useAuth : getUser() in useEffect watching userContext
+else
+API --> useAuth : Error
+useAuth --> menuPage : ???
+end
+end
+menuPage -> orderConfirm : redirect()
+orderConfirm -> useAuth : getUser()
+useAuth -> orderConfirm : user token?
+alt !userToken
+orderConfirm -> useAuth : register(customer details)
+useAuth -> API : signup(customer details)
+API -> useAuth : customer details & token
+useAuth -> useCheckout : createOrder(customer token && basket items)
+useAuth -> userContext : setUserDetailsToContext( token & user details )
+useAuth -> localStorage : setUserDetailsToLocalStorage(token & user details)
+else userToken
+orderConfirm -> useCheckout : createOrder(customer token && basket items)
+end
+@enduml

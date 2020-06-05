@@ -1,20 +1,19 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import useBasket from "../../../../hooks/useBasket";
 import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
 import AddIcon from "../../../../shared_components/AddIcon";
-import ChowButton from "../../../../shared_components/ChowButton";
 import { MenuContext } from "../../../../state/MenuContext";
+import parseMoney from "../../../../helpers/parseMoney";
 
 const MenuItem = (props) => {
-  const { state, dispatch } = useContext(MenuContext);
+  const { dispatch } = useContext(MenuContext);
   return (
     <StyledMenuItem active>
       <HeaderBar>
         <StyledHeader>{props.name}</StyledHeader>
         <HeaderRight>
           <Vendor>{props.vendor}</Vendor>
-          <StyledHeader>{props.unitPrice}</StyledHeader>
+          <StyledHeader>{parseMoney(props.unitPrice)}</StyledHeader>
         </HeaderRight>
       </HeaderBar>
       <Description>{props.about}</Description>
@@ -85,4 +84,5 @@ const ClearButton = styled.button`
   position: absolute;
   right: ${({ theme }) => theme.pd600};
   bottom: ${({ theme }) => theme.pd600};
+  cursor: pointer;
 `;

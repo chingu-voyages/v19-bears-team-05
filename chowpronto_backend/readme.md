@@ -23,10 +23,11 @@ To create a new patron this endpoint requires following data to be passed in req
 {
 	"email" : "new_patron@gmail.com",
 	"name": "New patron",
-	"password" : "12345678",
+	"password" : "12345678", //optional for "GUEST"
 	"phone": "+12-3457-8910",
 	"address":"123 Flat, 12 Hope Street, Faith City, Wanderland",
 	"postcode" : "W 765 HS"
+    "role": "REGISTER" or "role": "GUEST"
 }
 ```
 
@@ -42,12 +43,14 @@ As a response client will receive
         "phone": "+12-3457-8910",
         "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
         "postcode": "W 765 HS"
+        "role": "REGISTER" or "role": "GUEST"
     }
 }
 ```
 
 ### POST api/login
 
+Only patron with role "REGISTER" can log in.
 To log in into existing account client has to provide next data:
 
 ```
@@ -69,6 +72,7 @@ Response sent from backend :
         "phone": "+12-3457-8910",
         "address": "123 Flat, 12 Hope Street, Faith City, Wanderland",
         "postcode": "W 765 HS"
+        "role": "REGISTER"
     }
 }
 ```

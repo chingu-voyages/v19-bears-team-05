@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 // { tags: string[], search: string}
 function useMenuItems(filterObject = {}) {
   // takes an object with filters as key value pairs
-  const [fetchData, setFetchData] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
   function doFetch(filterObject) {
     let tagString =
       filterObject.tags?.reduce(
@@ -16,13 +16,14 @@ function useMenuItems(filterObject = {}) {
     }`;
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setFetchData(data))
+      .then((data) => setMenuItems(data))
       .catch();
   }
+
   useEffect(() => {
     doFetch(filterObject);
   }, [filterObject]);
-  return [fetchData, doFetch];
+  return { menuItems, doFetch };
 }
 
 export default useMenuItems;
