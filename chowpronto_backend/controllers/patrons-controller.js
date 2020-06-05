@@ -5,7 +5,6 @@ const { validate } = require("./validation");
 const { GUEST_PATRON, REGISTER_PATRON } = require("../utils/roles");
 
 const signup = async (req, res) => {
-  console.log("Signup was hit");
   const { name, email, password, phone, address, postcode, role } = req.body;
   if (
     !name ||
@@ -15,15 +14,15 @@ const signup = async (req, res) => {
     !postcode ||
     (role === REGISTER_PATRON && !password)
   ) {
-    console.log("req.body", req.body);
-    console.log("first error");
     return res
-      .status(400)
-      .send("Signing up failed, please fill in all form fields.");
+      .status(401)
+      .send({ errMsg: "Signing up failed, please fill in all form fields." });
   }
 
   if (!role || (role !== REGISTER_PATRON && role !== GUEST_PATRON)) {
-    return res.status(400).send("Signing up failed due to technical problem.");
+    return res
+      .status(400)
+      .send({ errMsg: "Signing up failed due to technical problem." });
   }
 
   const errorMessages = validate(
@@ -36,7 +35,7 @@ const signup = async (req, res) => {
     role
   );
   if (errorMessages.length !== 0) {
-    return res.status(400).send(errorMessages);
+    return res.status(400).send({ errMsg: errorMessages });
   }
 
   try {
@@ -47,7 +46,7 @@ const signup = async (req, res) => {
       if (existingUser) {
         return res
           .status(500)
-          .send("User with given credentials already exists");
+          .send({ errMsg: "User with given credentials already exists" });
       }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -86,7 +85,9 @@ const signup = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Signing up failed, please try again later.");
+    res
+      .status(500)
+      .send({ errMsg: "Signing up failed, please try again later." });
   }
 };
 
@@ -95,16 +96,20 @@ const login = async (req, res) => {
   if (!email || !password) {
     return res
       .status(403)
-      .send("Signing up failed, please fill in all form fields.");
+      .send({ errMsg: "Signing up failed, please fill in all form fields." });
   }
 
   const patron = await Patron.findOne({ email });
   if (!patron)
-    return res.status(400).send("User with given credentials doesn't exist");
+    return res
+      .status(400)
+      .send({ errMsg: "User with given credentials doesn't exist" });
 
   const validPassword = await bcrypt.compare(password, patron.password);
   if (!validPassword)
-    return res.status(400).send("User with given credentials doesn't exist");
+    return res
+      .status(400)
+      .send({ errMsg: "User with given credentials doesn't exist" });
 
   const token = jwt.sign(
     { _id: patron._id, role: patron.role },

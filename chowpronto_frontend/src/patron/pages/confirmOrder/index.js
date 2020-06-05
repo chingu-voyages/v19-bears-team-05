@@ -10,28 +10,22 @@ import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 
 const ConfirmOrderPage = (props) => {
   const { state: ctx } = useContext(MenuContext);
+  console.log(ctx);
   const [userData, setUserData] = useState({});
-  function saveOrder(returnedData) {
+
+  function saveOrder(data, patronId, deliveryDetails, basket) {
+    console.log("Token", data.token);
+
     fetch("/api/orders/order", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${userData.token}`,
+        Authorization: `Bearer ${data.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        cart: [
-          { menuItemId: "5ec0180b61361e716d8bf4a2", quantity: 5 },
-          { menuItemId: "5ec0180b61361e716d8bf4ba", quantity: 2 },
-          { menuItemId: "5ec0180b61361e716d8bf4cf", quantity: 3 },
-        ],
-        deliveryDetails: {
-          email: "kosenchiha@gmail.com",
-          name: "hjkhkg",
-          phone: "24255222244",
-          address: "1/2 flat, 20 Hope Street, Glasqow, UK",
-          postcode: "hjkhkg",
-        },
-        patronId: returnedData.patron._id,
+        cart: basket,
+        deliveryDetails,
+        patronId,
       }),
     })
       .then((res) => res.json())
@@ -44,6 +38,7 @@ const ConfirmOrderPage = (props) => {
     });
     e.preventDefault();
     if (!ctx.userDetails || !ctx.userDetails.token) {
+      console.log("in signup, formDetails", formDetails);
       fetch("/api/patrons/signup", {
         method: "POST",
         headers: {
@@ -51,18 +46,43 @@ const ConfirmOrderPage = (props) => {
         },
         body: formDetails,
       })
-        .then((res) => res.json())
-        .then(async (data) => {
-          await setUserData(data);
-          console.log("data from signup", data);
-          saveOrder(data);
+        .then((res) => {
+          console.log("in first then");
+          if (res.status >= 200 && res.status < 300) {
+            return res.json();
+          } else {
+            throw res;
+          }
         })
-        .catch((err) => console.log("err", err));
+        .then(async (data) => {
+          console.log("in second then", data);
+          await setUserData(data);
+          console.log("data", data);
+
+          const deliveryDetails = {
+            email: data.patron.email,
+            name: data.patron.name,
+            phone: data.patron.phone,
+            address: data.patron.address,
+            postcode: data.patron.postcode,
+          };
+          const patronId = data.patron._id;
+          const token = data.token;
+          saveOrder(token, patronId, deliveryDetails, ctx.basketItems);
+        })
+        .catch((err) => {
+          console.log("inErr", err);
+          err.json().then((json) => {
+            console.log(json.errMsg);
+            alert(json.errMsg);
+          });
+        });
     } else {
       try {
         saveOrder();
       } catch (err) {
-        console.log("err", err);
+        alert(err);
+        console.log("errSaveOrder", err);
       }
     }
     // at this point the user should be stored on state
