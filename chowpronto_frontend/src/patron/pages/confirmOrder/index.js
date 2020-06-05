@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import { MenuContext } from "../../../state/MenuContext";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
+import UserContext from "../../../state/UserContext";
 
 const saveOrder = (token, patronId, deliveryDetails, basket) => {
   return fetch("/api/orders/order", {
@@ -57,6 +58,7 @@ const ConfirmOrderPage = (props) => {
       role: ctx.formState.password.length > 0 ? "REGISTER" : "GUEST",
     });
     e.preventDefault();
+
     if (!ctx.userDetails || !ctx.userDetails.token) {
       signupNewPatron(formDetails)
         .then((data) => {
@@ -74,6 +76,7 @@ const ConfirmOrderPage = (props) => {
           };
 
           return saveOrder(token, _id, deliveryDetails, ctx.basketItems);
+
         })
         .catch((err) => {
           err.json().then((json) => {
@@ -82,7 +85,7 @@ const ConfirmOrderPage = (props) => {
         });
     } else {
       try {
-        saveOrder();
+        saveOrder(user);
       } catch (err) {
         alert(err);
         console.log("errSaveOrder", err);

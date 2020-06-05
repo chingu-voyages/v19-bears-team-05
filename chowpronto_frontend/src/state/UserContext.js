@@ -1,6 +1,6 @@
 import React from "react";
+// import history from "./history";
 
-export const UserContext = React.createContext({
-  user: {},
-  setUser: () => {},
-});
+const AuthContext = React.createContext();
+
+export default AuthContext;
