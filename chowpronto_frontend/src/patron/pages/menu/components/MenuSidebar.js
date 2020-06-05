@@ -13,7 +13,7 @@ import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
 import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuSidebar = (props) => {
-  const { getUser, logout } = useAuth();
+  // const { getUser, logout } = useAuth();
   const { state, dispatch } = useContext(MenuContext);
   return (
     <StyledSidebar>
