@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 import { ClearButton } from "./ClearButton";
+import ModalBackground from "../patron/components/ModalBackground";
 
 const LoginModal = (props) => {
   const [formState, setFormState] = useState({ name: "", email: "" });
@@ -15,8 +16,8 @@ const LoginModal = (props) => {
     password: "",
   });
   return (
-    <div className="modal-page">
-      <div className="modal-message">
+    <ModalBackground>
+      <div className="modal">
         <h1>Login</h1>
         <Link to={(location) => location.pathname}>
           <button>close</button>
@@ -51,7 +52,7 @@ const LoginModal = (props) => {
           Not a user yet? Don't worry, we'll let you register when you checkout
         </p>
       </div>
-    </div>
+    </ModalBackground>
   );
 };
 

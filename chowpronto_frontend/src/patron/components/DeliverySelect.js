@@ -9,7 +9,21 @@ import MONTHS from "../../helpers/months";
 
 const DeliverySelect = (props) => {
   const { state, dispatch } = useContext(MenuContext);
-  console.log("state", state);
+  const [postcode, setPostcode] = useState("");
+  const [address, setAddress] = useState("");
+  console.log("postcode", postcode);
+  useEffect(() => {
+    setPostcode(
+      state.formState.postcode.length > 0
+        ? state.formState.postcode
+        : state.userDetails.postcode
+    );
+    setAddress(
+      state.formState.address.length > 0
+        ? state.formState.address
+        : state.userDetails.address
+    );
+  }, []);
   const [deliveryDate, setDeliveryDate] = useState(
     new Date(state.deliveryDate.getTime())
   );
@@ -43,10 +57,16 @@ const DeliverySelect = (props) => {
             <CloseIcon />
           </div>
         </Link>
-        <TextDisplayBox title="delivery postcode" value="EX1 1AA" {...props} />
+        <TextDisplayBox
+          title="delivery postcode"
+          value={postcode}
+          onChange={(e) => setPostcode(e.target.value)}
+          {...props}
+        ></TextDisplayBox>
         <TextDisplayBox
           title="delivery address lookup"
-          value="1 Longroad Lane"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           {...props}
         />
         <div className="time-select">
@@ -140,9 +160,19 @@ const DeliverySelect = (props) => {
           <ChowButton
             primary
             title="change"
-            onClick={() =>
-              dispatch({ type: "set_delivery_date", date: deliveryDate })
-            }
+            onClick={() => {
+              dispatch({ type: "set_delivery_date", date: deliveryDate });
+              dispatch({
+                type: "update_form_state",
+                field: "address",
+                value: address,
+              });
+              dispatch({
+                type: "update_form_state",
+                field: "postcode",
+                value: postcode,
+              });
+            }}
             style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
           />
         </div>

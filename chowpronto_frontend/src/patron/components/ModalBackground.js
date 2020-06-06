@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 const ModalBackground = styled.div`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   background-color: #22222222;
   top: 0;
-  /* backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;

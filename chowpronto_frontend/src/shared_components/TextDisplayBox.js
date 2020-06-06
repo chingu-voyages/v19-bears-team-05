@@ -11,14 +11,16 @@ export default function InputBox(props) {
       <TextInput
         type="text"
         {...props}
-        readOnly
+        // readOnly
         placeholder={props.placeholder || props.title}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
       />
-      <AdditionalActionButton onClick={() => props.additionalAction()}>
-        change
-      </AdditionalActionButton>
+      {props.additionalAction && (
+        <AdditionalActionButton onClick={() => props.additionalAction()}>
+          change
+        </AdditionalActionButton>
+      )}
     </BoxContainer>
   );
 }
