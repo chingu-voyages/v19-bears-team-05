@@ -5,9 +5,10 @@ function useAuth() {
   const { user, setUser } = useContext(UserContext);
   async function onInit() {
     const storageData = getFromStorage();
-    const userDetails = await getUserById(storageData.token);
-    setUserDetailsToContext(userDetails);
-    console.log("From onInit");
+    if (storageData) {
+      const userDetails = await getUserById(storageData.token);
+      setUserDetailsToContext(userDetails);
+    }
   }
   function getUserById(token) {
     // fetch("/api/patron/getUserById", {
@@ -37,7 +38,8 @@ function useAuth() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // setUser(data);
+        setToStorage(data);
+        setUserDetailsToContext(data);
       });
   }
   function logout() {
@@ -47,7 +49,7 @@ function useAuth() {
   function register(customerDetailsObject) {}
   function setToStorage(dataObj) {
     try {
-      window.localStorage.setItem("chowpronto", JSON.stringify(dataObj.token));
+      window.localStorage.setItem("chowpronto", dataObj.token);
     } catch (err) {
       console.log("err", err);
     }
@@ -55,7 +57,7 @@ function useAuth() {
   function getFromStorage() {
     try {
       const storageData = window.localStorage.getItem("chowpronto");
-      return storageData ? JSON.parse(storageData) : {};
+      return storageData ? storageData : {};
     } catch (err) {
       console.log("err", err);
     }
