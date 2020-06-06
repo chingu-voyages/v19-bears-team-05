@@ -7,9 +7,12 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import { MenuContext } from "../../../state/MenuContext";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
+import UserContext from "../../../state/UserContext";
 
 const ConfirmOrderPage = (props) => {
   const { state: ctx } = useContext(MenuContext);
+  const { user } = useContext(UserContext);
+  console.log("user", user);
   const [userData, setUserData] = useState({});
   function saveOrder(returnedData) {
     fetch("/api/orders/order", {
@@ -43,7 +46,7 @@ const ConfirmOrderPage = (props) => {
       role: ctx.formState.password.length > 0 ? "REGISTER" : "GUEST",
     });
     e.preventDefault();
-    if (!ctx.userDetails || !ctx.userDetails.token) {
+    if (!user || !user.token) {
       fetch("/api/patrons/signup", {
         method: "POST",
         headers: {
@@ -60,7 +63,7 @@ const ConfirmOrderPage = (props) => {
         .catch((err) => console.log("err", err));
     } else {
       try {
-        saveOrder();
+        saveOrder(user);
       } catch (err) {
         console.log("err", err);
       }
