@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useContext } from "react";
+import React, { useEffect, Fragment } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MenuPage from "./patron/pages/menu";
@@ -9,11 +9,9 @@ import Theme from "./style/Theme";
 import Context from "./state/Context";
 import LoginPage from "./patron/pages/login";
 import useOnInitialisation from "./hooks/useOnInitialisation";
-import UserContext from "./state/UserContext";
 
 function App() {
   // function to run only on initial render of site
-  // const [user, setUser] = useState(window.localStorage.getItem("chowpronto"));
   return (
     <Theme>
       <Context>

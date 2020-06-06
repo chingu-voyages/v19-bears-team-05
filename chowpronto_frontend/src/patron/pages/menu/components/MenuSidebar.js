@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -10,20 +10,20 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
-import { MenuContext } from "../../../../state/MenuContext";
 
-const MenuSidebar = (props) => {
-  // const { getUser, logout } = useAuth();
-  const { state, dispatch } = useContext(MenuContext);
+const MenuSidebar = () => {
+  const { getUser, logout } = useAuth();
+  const user = getUser();
+  console.log("user", user);
   return (
     <StyledSidebar>
       <UserBanner>
-        {state.userDetails && state.userDetails.token ? (
+        {user && Object.keys(user).length > 0 ? (
           <span>
-            Welcome back <span>{state.userDetails.patron.name}</span>{" "}
+            Welcome back <span>{user.name}</span>{" "}
             <Link
               to={(location) => {
-                // logout();
+                logout();
                 return `${location.pathname}?loginModal=true`;
               }}
               style={{ cursor: "pointer" }}

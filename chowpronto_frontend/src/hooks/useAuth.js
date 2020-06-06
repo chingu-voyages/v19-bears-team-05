@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import UserContext from "../state/UserContext";
 
 function useAuth() {
@@ -9,6 +9,9 @@ function useAuth() {
       const userDetails = await getUserById(storageData.token);
       setUserDetailsToContext(userDetails);
     }
+  }
+  function getUser() {
+    return user;
   }
   function getUserById(token) {
     // fetch("/api/patron/getUserById", {
@@ -44,6 +47,7 @@ function useAuth() {
   }
   function logout() {
     window.localStorage.removeItem("chowpronto");
+    // setUser({ type: "set_user", userDetails: {} });
   }
 
   function register(customerDetailsObject) {}
@@ -66,7 +70,7 @@ function useAuth() {
     setUser({ type: "set_user", userDetails });
   }
   return {
-    // getUser,
+    getUser,
     onInit,
     login,
     logout,

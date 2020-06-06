@@ -6,11 +6,7 @@ import { ClearButton } from "./ClearButton";
 import ModalBackground from "../patron/components/ModalBackground";
 
 const LoginModal = (props) => {
-  const [formState, setFormState] = useState({ name: "", email: "" });
   const { login } = useAuth();
-  function handleChange(e) {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,7 +16,7 @@ const LoginModal = (props) => {
       <div className="modal">
         <h1>Login</h1>
         <Link to={(location) => location.pathname}>
-          <button>close</button>
+          <CloseButton>close</CloseButton>
         </Link>
         <form
           action="POST"
@@ -55,13 +51,6 @@ const LoginModal = (props) => {
     </ModalBackground>
   );
 };
-
-const StyledModalMessage = styled.div`
-  background: white;
-  width: 50vw;
-  min-width: 300px;
-  position: relative;
-`;
 
 const CloseButton = styled(ClearButton)`
   position: absolute;

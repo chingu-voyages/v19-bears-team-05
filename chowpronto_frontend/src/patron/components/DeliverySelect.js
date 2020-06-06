@@ -11,7 +11,6 @@ const DeliverySelect = (props) => {
   const { state, dispatch } = useContext(MenuContext);
   const [postcode, setPostcode] = useState("");
   const [address, setAddress] = useState("");
-  console.log("postcode", postcode);
   useEffect(() => {
     setPostcode(
       state.formState.postcode.length > 0
@@ -23,7 +22,12 @@ const DeliverySelect = (props) => {
         ? state.formState.address
         : state.userDetails.address
     );
-  }, []);
+  }, [
+    state.formState.address,
+    state.formState.postcode,
+    state.userDetails.address,
+    state.userDetails.postcode,
+  ]);
   const [deliveryDate, setDeliveryDate] = useState(
     new Date(state.deliveryDate.getTime())
   );
