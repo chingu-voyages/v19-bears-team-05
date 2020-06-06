@@ -9,6 +9,7 @@ import MONTHS from "../../helpers/months";
 
 const DeliverySelect = (props) => {
   const { state, dispatch } = useContext(MenuContext);
+  console.log("state", state);
   const [deliveryDate, setDeliveryDate] = useState(
     new Date(state.deliveryDate.getTime())
   );
@@ -56,6 +57,7 @@ const DeliverySelect = (props) => {
             onClick={() =>
               setDisplayStart(new Date(displayStart.getTime() - 1000 * 60 * 10))
             }
+            style={{ margin: "5px" }}
           />
           {times.map((v, i) => (
             <ChowButton
@@ -69,6 +71,7 @@ const DeliverySelect = (props) => {
               onClick={() => {
                 setDeliveryDate(new Date(v.getTime()));
               }}
+              style={{ margin: "5px" }}
             />
           ))}
           <ChowButton
@@ -77,6 +80,7 @@ const DeliverySelect = (props) => {
             onClick={() =>
               setDisplayStart(new Date(displayStart.getTime() + 1000 * 60 * 10))
             }
+            style={{ margin: "5px" }}
           />
         </div>
         <div className="date-select">
@@ -117,15 +121,31 @@ const DeliverySelect = (props) => {
             />
           ))}
         </div>
-        <ChowButton secondary title="cancel" />
+        <div
+          className="confirmation-buttons"
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingTop: "20px",
+          }}
+        >
+          <Link to={(history) => history.back}>
+            <ChowButton
+              secondary
+              title="cancel"
+              style={{ margin: "5px", padding: "15px" }}
+            />
+          </Link>
 
-        <ChowButton
-          primary
-          title="change"
-          onClick={() =>
-            dispatch({ type: "set_delivery_date", date: deliveryDate })
-          }
-        />
+          <ChowButton
+            primary
+            title="change"
+            onClick={() =>
+              dispatch({ type: "set_delivery_date", date: deliveryDate })
+            }
+            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+          />
+        </div>
       </div>
     </Modal>
   );

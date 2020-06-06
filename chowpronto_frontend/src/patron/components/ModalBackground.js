@@ -13,6 +13,7 @@ const ModalBackground = styled.div`
   z-index: 100;
   > * {
     padding: ${({ theme }) => theme.pd600};
+    padding-top: ${({ theme }) => theme.pd900};
     background-color: white;
     box-shadow: ${({ theme }) => theme.sh400};
     border-radius: ${({ theme }) => theme.br100};
