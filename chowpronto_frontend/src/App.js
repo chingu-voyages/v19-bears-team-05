@@ -5,6 +5,10 @@ import MenuPage from "./patron/pages/menu";
 import ConfirmOrderPage from "./patron/pages/confirmOrder";
 import RegisterPage from "./patron/pages/register";
 import LandingPage from "./patron/pages/landing";
+
+import SettingsPage from "./patron/pages/settings";
+import DeliverySelect from "./patron/components/DeliverySelect";
+
 import Theme from "./style/Theme";
 import Context from "./state/Context";
 import LoginPage from "./patron/pages/login";
@@ -27,10 +31,6 @@ function App() {
                 <Route path="/menu">
                   <MenuPage />
                 </Route>
-                {/* <Route path="/basket">
-                  <BasketPage />
-                  
-                </Route> */}
                 <Route path="/confirmOrder">
                   <ConfirmOrderPage />
                 </Route>
@@ -39,6 +39,9 @@ function App() {
                 </Route>
                 <Route path="/login">
                   <LoginPage />
+                </Route>
+                <Route path="/settings">
+                  <SettingsPage />
                 </Route>
               </Switch>
             </WithData>

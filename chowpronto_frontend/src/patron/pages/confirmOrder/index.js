@@ -76,7 +76,6 @@ const ConfirmOrderPage = (props) => {
           };
 
           return saveOrder(token, _id, deliveryDetails, ctx.basketItems);
-
         })
         .catch((err) => {
           err.json().then((json) => {
@@ -85,7 +84,7 @@ const ConfirmOrderPage = (props) => {
         });
     } else {
       try {
-        saveOrder(user);
+        saveOrder();
       } catch (err) {
         alert(err);
         console.log("errSaveOrder", err);
