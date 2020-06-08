@@ -26,10 +26,9 @@ function App() {
                 <Route path="/menu">
                   <MenuPage />
                 </Route>
-                {/* <Route path="/basket">
+                <Route path="/basket">
                   <BasketPage />
-                  
-                </Route> */}
+                </Route>
                 <Route path="/confirmOrder">
                   <ConfirmOrderPage />
                 </Route>
