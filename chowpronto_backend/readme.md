@@ -14,7 +14,7 @@
 
 `Create a new patron` [POST api/signup](###POST-api/signup) <br/>
 `Login` [POST api/login](###POST-api/login) <br/>
-`Delete profile` [DELETE api/deleteprofile/:patronId](###DELETE-api/deleteprofile/:patronId) <br/>
+`Delete profile` [DELETE api/deleteprofile/:patronId](###DELETE-api/profile/:patronId) <br/>
 `All orders for a patron` [GET api/orders/patron/:patronId](###GET-api/orders/patron/:patronId) <br/>
 
 ### POST api/signup
@@ -79,7 +79,7 @@ Response sent from backend :
 }
 ```
 
-### DELETE api/deleteprofile/:patronId
+### DELETE api/profile/:patronId
 
 Please include headers in these requests
 

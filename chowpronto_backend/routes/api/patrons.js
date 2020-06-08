@@ -19,7 +19,7 @@ const { checkPatronParamsId } = require("../../middleware/checkPatron");
 router.post("/signup", patronsControllers.signup);
 router.post("/login", patronsControllers.login);
 router.delete(
-  "/deleteprofile/:patronId",
+  "/profile/:patronId",
   verifyToken,
   checkPatronParamsId,
   patronsControllers.deleteProfile
