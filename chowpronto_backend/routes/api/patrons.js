@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const patronsControllers = require("../../controllers/patrons-controller");
+const { verifyToken } = require("../../middleware/verifyToken");
+const { checkPatronParamsId } = require("../../middleware/checkPatron");
 
 // @route    POST api/patrons/login
 // @desc     patron can login
@@ -16,6 +18,11 @@ const patronsControllers = require("../../controllers/patrons-controller");
 
 router.post("/signup", patronsControllers.signup);
 router.post("/login", patronsControllers.login);
-router.delete("/deleteprofile/:patronId", patronsControllers.deleteProfile);
+router.delete(
+  "/deleteprofile/:patronId",
+  verifyToken,
+  checkPatronParamsId,
+  patronsControllers.deleteProfile
+);
 
 module.exports = router;

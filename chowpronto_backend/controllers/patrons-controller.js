@@ -131,7 +131,6 @@ const deleteProfile = async (req, res) => {
 
   try {
     const patron = await Patron.findOneAndRemove({ _id: patronId });
-    console.log("patron", patron);
     res.send({ _id: patron._id });
   } catch (err) {
     res.status(500).send({ errorMsg: "Couldn't delete profile" });
