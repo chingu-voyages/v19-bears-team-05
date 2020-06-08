@@ -4,11 +4,11 @@ import { reducer } from "./reducer";
 import { initialState } from "./initialState";
 import UserProvider from "./UserProvider";
 
-export default function Context({ children }) {
+export default function Context(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <MenuContext.Provider value={{ state, dispatch }}>
-      <UserProvider>{children}</UserProvider>
+      <UserProvider {...props}>{props.children}</UserProvider>
     </MenuContext.Provider>
   );
 }
