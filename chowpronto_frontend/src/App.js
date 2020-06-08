@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, Fragment } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MenuPage from "./patron/pages/menu";
@@ -13,45 +13,47 @@ import BasketPage from "./patron/pages/basketPage";
 
 function App() {
   // function to run only on initial render of site
-  const [user, setUser] = useState(window.localStorage.getItem("chowpronto"));
-  // const initialise = useOnInitialisation();
-  useEffect(() => {
-    try {
-      setUser(window.localStorage.getItem("chowpronto"));
-    } catch (err) {
-      console.log("err", err);
-    }
-  }, []);
   return (
     <Theme>
-      <Context user={user}>
+      <Context>
         <div className="App">
           <Router>
-            <Switch>
-              <Route path="/" exact>
-                <LandingPage />
-              </Route>
-              <Route path="/menu">
-                <MenuPage />
-              </Route>
-              <Route path="/basket">
-                <BasketPage />
-              </Route>
-              <Route path="/confirmOrder">
-                <ConfirmOrderPage />
-              </Route>
-              <Route path="/register">
-                <RegisterPage />
-              </Route>
-              <Route path="/login">
-                <LoginPage />
-              </Route>
-            </Switch>
+            <WithData>
+              <Switch>
+                <Route path="/" exact>
+                  <LandingPage />
+                </Route>
+                <Route path="/menu">
+                  <MenuPage />
+                </Route>
+                {/* <Route path="/basket">
+                  <BasketPage />
+                  
+                </Route> */}
+                <Route path="/confirmOrder">
+                  <ConfirmOrderPage />
+                </Route>
+                <Route path="/register">
+                  <RegisterPage />
+                </Route>
+                <Route path="/login">
+                  <LoginPage />
+                </Route>
+              </Switch>
+            </WithData>
           </Router>
         </div>
       </Context>
     </Theme>
   );
+}
+
+function WithData({ children }) {
+  const initialise = useOnInitialisation();
+  useEffect(() => {
+    initialise();
+  }, []);
+  return <Fragment>{children}</Fragment>;
 }
 
 export default App;

@@ -6,7 +6,8 @@ const DeliveryAddress = (props) => {
     <TextDisplayBox
       title="delivery address"
       value="EX1 1AA"
-      onChange={props.onChange}
+      readOnly
+      {...props}
     />
   );
 };

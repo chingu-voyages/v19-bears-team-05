@@ -39,6 +39,8 @@ export function reducer(state, action) {
           (val) => val._id !== action.item._id
         ),
       };
+    case "set_delivery_date":
+      return { ...state, deliveryDate: action.date };
     case "update_form_state":
       return {
         ...state,

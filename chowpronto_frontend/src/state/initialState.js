@@ -1,12 +1,13 @@
 const now = new Date();
 
-const nowPlus30 = now.setMinutes(now.getMinutes() + 30);
+now.setMinutes(Math.ceil(now.getMinutes() / 10) * 10 + 30);
+now.setSeconds(0);
 
 export const initialState = {
   tags: [],
   search: "",
   basketItems: [],
-  deliveryDate: nowPlus30,
+  deliveryDate: now,
   formState: {
     name: "",
     address: "",
