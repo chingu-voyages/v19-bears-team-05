@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 import { ClearButton } from "./ClearButton";
@@ -11,6 +11,8 @@ const LoginModal = (props) => {
     email: "",
     password: "",
   });
+  const history = useHistory();
+  const location = useLocation();
   return (
     <ModalBackground>
       <div className="modal">
@@ -23,7 +25,7 @@ const LoginModal = (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             login(formData.email, formData.password);
-            return <Redirect to={{ pathname: "/login" }} />;
+            history.push(location.pathname);
           }}
         >
           <label htmlFor="email">email</label>

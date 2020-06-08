@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
 import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
@@ -10,6 +10,7 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
+import { ClearButton } from "../../../../shared_components/ClearButton";
 
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
@@ -20,13 +21,14 @@ const MenuSidebar = () => {
       <UserBanner>
         {user && Object.keys(user).length > 0 ? (
           <span>
-            Welcome back <span>{user.name}</span>{" "}
+            Welcome back <span>{user.patron.name}</span>{" "}
             <Link
+              onClick={() => logout()}
               to={(location) => {
-                logout();
                 return `${location.pathname}?loginModal=true`;
               }}
               style={{ cursor: "pointer" }}
+              // todo Figure out why the message is not updating on logout
             >
               Not me?
             </Link>
@@ -34,7 +36,6 @@ const MenuSidebar = () => {
         ) : (
           <Link
             to={(location) => {
-              // logout();
               return `${location.pathname}?loginModal=true`;
             }}
             style={{ cursor: "pointer" }}
