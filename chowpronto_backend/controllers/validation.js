@@ -24,22 +24,15 @@ const passwordValidate = (password) => {
   return password.length >= 8;
 };
 
-const validate = (name, email, password, phone, address, postcode, role) => {
+const validateDeliveryData = (name, email, phone, address, postcode) => {
   const errorMessages = [];
-
-  if (!emailValidate(email)) {
-    errorMessages.push("The email format is incorrect");
-  }
 
   if (!nameValidate(name)) {
     errorMessages.push("Name is required");
   }
-  if (!addressValidate(address)) {
-    errorMessages.push("Address is required");
-  }
 
-  if (role === "REGISTER" && !passwordValidate(password)) {
-    errorMessages.push("The password must have at least 8 characters");
+  if (!emailValidate(email)) {
+    errorMessages.push("The email format is incorrect");
   }
 
   if (!phoneValidate(phone)) {
@@ -47,6 +40,11 @@ const validate = (name, email, password, phone, address, postcode, role) => {
       "Phone number should be \n +XX-XXXX-XXXX \n +XX.XXXX.XXXX \n +XX XXXX XXXX"
     );
   }
+
+  if (!addressValidate(address)) {
+    errorMessages.push("Address is required");
+  }
+
   if (!postcodeValidate(postcode)) {
     errorMessages.push("Please provide valid postcode");
   }
@@ -54,4 +52,15 @@ const validate = (name, email, password, phone, address, postcode, role) => {
   return errorMessages.join(", \n ");
 };
 
-module.exports = { validate };
+const validate = (name, email, phone, address, postcode, password, role) => {
+  const errorMessages = [];
+  errorMessages.push(
+    validateDeliveryData(name, email, phone, address, postcode)
+  );
+  if (role === "REGISTER" && !passwordValidate(password)) {
+    errorMessages.push("The password must have at least 8 characters");
+  }
+  return errorMessages.join(", \n ");
+};
+
+module.exports = { validate, validateDeliveryData };

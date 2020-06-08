@@ -12,11 +12,16 @@
 
 ## API endpoints
 
-`Create a new patron` [POST api/signup](###POST-api/signup) <br/>
-`Login` [POST api/login](###POST-api/login) <br/>
-`All orders for a patron` [GET api/orders/patron/:patronId](###GET-api/orders/patron/:patronId) <br/>
+#### Patrons
 
-### POST api/signup
+[POST api/patrons/signup](###POST-api/patrons/patrons/signup) `Create a new patron` <br/>
+[POST api/patrons/patrons/login](###POST-api/patrons/login) `Login` <br/>
+
+#### Orders
+
+[GET api/orders/patron/:patronId](###GET-api/orders/patron/:patronId) `Returns all orders by patron id` <br/>
+
+### POST api/patrons/signup
 
 To create a new patron this endpoint requires following data to be passed in request body:
 
@@ -49,7 +54,7 @@ As a response client will receive
 }
 ```
 
-### POST api/login
+### POST api/patrons/login
 
 Only patron with role "REGISTER" can log in.
 To log in into existing account client has to provide next data:

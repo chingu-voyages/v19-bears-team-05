@@ -28,10 +28,10 @@ const signup = async (req, res) => {
   const errorMessages = validate(
     name,
     email,
-    password,
     phone,
     address,
     postcode,
+    password,
     role
   );
   if (errorMessages.length !== 0) {
