@@ -160,10 +160,7 @@ const DeliverySelect = (props) => {
               style={{ margin: "5px", padding: "15px" }}
             />
           </Link>
-
-          <ChowButton
-            primary
-            title="change"
+          <Link
             onClick={() => {
               dispatch({ type: "set_delivery_date", date: deliveryDate });
               dispatch({
@@ -177,8 +174,14 @@ const DeliverySelect = (props) => {
                 value: postcode,
               });
             }}
-            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
-          />
+            to={(history) => history.back}
+          >
+            <ChowButton
+              primary
+              title="change"
+              style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+            />
+          </Link>
         </div>
       </div>
     </Modal>

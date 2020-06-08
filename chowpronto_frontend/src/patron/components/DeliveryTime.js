@@ -18,18 +18,8 @@ const DeliverySelector = (props) => {
   return (
     <TextDisplayBox
       title="delivery time"
-      value={
-        // (elapsed === 0
-        //   ? "today"
-        //   : elapsed === 1
-        //   ? "tomorrow"
-        //   : days[state.deliveryDate.getDay()]) +
-        // " " +
-        // state.deliveryDate.getHours() +
-        // ":" +
-        // state.deliveryDate.getMinutes()
-        parseTime(state.deliveryDate)
-      }
+      // todo today / tomorrow not showing on update
+      value={parseTime(state.deliveryDate)}
       readOnly
     />
   );
