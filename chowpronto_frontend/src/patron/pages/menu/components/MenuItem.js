@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
 import AddIcon from "../../../../shared_components/AddIcon";
 import { MenuContext } from "../../../../state/MenuContext";
+import { ClearButton } from "../../../../shared_components/ClearButton";
 import parseMoney from "../../../../helpers/parseMoney";
 
 const MenuItem = (props) => {
@@ -74,15 +75,4 @@ const FooterBar = styled(HeaderBar)``;
 const Availability = styled(Description)`
   margin: 0;
   font-size: ${({ theme }) => theme.fz200};
-`;
-
-const ClearButton = styled.button`
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0;
-  position: absolute;
-  right: ${({ theme }) => theme.pd600};
-  bottom: ${({ theme }) => theme.pd600};
-  cursor: pointer;
 `;

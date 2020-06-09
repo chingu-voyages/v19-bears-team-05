@@ -1,15 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const patronsControllers = require("../../controllers/patrons-controller");
+const { verifyToken } = require("../../middleware/verifyToken");
+const { checkPatronParamsId } = require("../../middleware/checkPatron");
 
-// @route    GET api/users
-// @desc     Test route
+// @route    POST api/patrons/login
+// @desc     patron can login
 // @access   Public
 
-// if you need to be authenticated to access that endpoint, then the @access is Private. If not, it's Public.
+// @route    POST api/patrons/signup
+// @desc     New patron can create an account
+// @access   Public
 
-router.get("/", (req, res) => res.send("Patrons route"));
+// @route    DELETE api/patrons/deleteprofile/:patronId
+// @desc     New patron can create an account
+// @access   Public
+
 router.post("/signup", patronsControllers.signup);
 router.post("/login", patronsControllers.login);
+router.delete(
+  "/profile/:patronId",
+  verifyToken,
+  checkPatronParamsId,
+  patronsControllers.deleteProfile
+);
 
 module.exports = router;
