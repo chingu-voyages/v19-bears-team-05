@@ -5,9 +5,9 @@ function useAuth() {
   const { user, setUser } = useContext(UserContext);
   async function onInit() {
     const storageData = getFromStorage();
-    if (storageData && Object.keys(storageData).length > 0) {
+    if (storageData && storageData.length > 0) {
       const userDetails = await getUserById(storageData.token);
-      setUserDetailsToContext(userDetails);
+      setUserDetailsToContext({ ...userDetails, token: storageData });
     }
   }
   function getUser() {
@@ -22,8 +22,6 @@ function useAuth() {
     //   },
     // });
     return {
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Z…EzMX0.Acy2fgFhVudwVCZUaEPtPhKBSZLThMP0QB14N_8pP6I",
       patron: {
         _id: "5ed935717d520e32d44787b1",
         name: "Test Patron",
@@ -45,8 +43,8 @@ function useAuth() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setToStorage(data);
-        setUserDetailsToContext(data);
+        setTokenToStorage({ token: data.token });
+        setUserDetailsToContext({ data });
       });
   }
   function logout() {
@@ -55,10 +53,9 @@ function useAuth() {
   }
 
   function register(customerDetailsObject) {}
-  function setToStorage(dataObj) {
+  function setTokenToStorage(dataObj) {
     try {
       window.localStorage.setItem("chowpronto", dataObj.token);
-      console.log(window.localStorage.getItem("chowpronto"));
     } catch (err) {
       console.log("err", err);
     }
@@ -66,7 +63,7 @@ function useAuth() {
   function getFromStorage() {
     try {
       const storageData = window.localStorage.getItem("chowpronto");
-      return storageData ? storageData : {};
+      return storageData ? storageData : "";
     } catch (err) {
       console.log("err", err);
     }
