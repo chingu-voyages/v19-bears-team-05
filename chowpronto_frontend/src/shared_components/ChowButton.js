@@ -15,9 +15,10 @@ const StyledButton = styled.button`
   padding: ${({ theme }) => theme.pd300};
   border-radius: ${({ theme }) => theme.br100};
   border: none;
-  border: ${({ secondary, theme }) => secondary && theme.bd200f};
+  border: ${({ secondary, theme }) => secondary && theme.bd100f};
+  box-sizing: border-box;
   background: ${({ primary, theme }) =>
-    primary ? theme.primary.bg : "translucent"};
+    primary ? theme.primary.bg : "transparent"};
   color: ${({ primary, theme }) => (primary ? "white" : theme.primary.bg)};
   box-shadow: ${({ elevated, theme }) => elevated && theme.sh400};
   cursor: pointer;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useHistory } from "react-router-dom";
 
 // Local imports
 import Svgs from "../../../assets/svgs/landingPage/index";
@@ -41,6 +42,7 @@ function LocationSearch() {
   );
 }
 function Search({ input, onChange }) {
+  const history = useHistory();
   return (
     <ElevatedContainer>
       <Flex>
@@ -50,7 +52,15 @@ function Search({ input, onChange }) {
         </InputParent>
         <Grid>
           <SearchSVG />
-          <SearchButton>Search</SearchButton>
+          <SearchButton
+            onClick={() =>
+              history.push({
+                pathname: "/menu",
+              })
+            }
+          >
+            Search
+          </SearchButton>
         </Grid>
       </Flex>
       <div

@@ -1,31 +1,31 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Login from "../patron/pages/login";
+import styled from "styled-components";
+import { ClearButton } from "./ClearButton";
+import ModalBackground from "../patron/components/ModalBackground";
 
 const LoginModal = (props) => {
-  const [formState, setFormState] = useState({ name: "", email: "" });
   const { login } = useAuth();
-  function handleChange(e) {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const history = useHistory();
+  const location = useLocation();
   return (
-    <div className="modal-page">
-      <div className="modal-message">
+    <ModalBackground>
+      <div className="modal">
         <h1>Login</h1>
         <Link to={(location) => location.pathname}>
-          <button>close</button>
+          <CloseButton>close</CloseButton>
         </Link>
         <form
           action="POST"
           onSubmit={(e) => {
             e.preventDefault();
             login(formData.email, formData.password);
-            return <Redirect to={{ pathname: "/login" }} />;
+            history.push(location.pathname);
           }}
         >
           <label htmlFor="email">email</label>
@@ -50,8 +50,15 @@ const LoginModal = (props) => {
           Not a user yet? Don't worry, we'll let you register when you checkout
         </p>
       </div>
-    </div>
+    </ModalBackground>
   );
 };
 
+const CloseButton = styled(ClearButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+`;
 export default LoginModal;
