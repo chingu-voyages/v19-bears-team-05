@@ -18,6 +18,27 @@ export function reducer(state, action) {
         ...state,
         basketItems: newBasketItemList,
       };
+    case "remove_single_item_from_basket":
+      const reducedBasket = state.basketItems.reduce(
+        (acc, val) =>
+          val._id !== action.item._id
+            ? [...acc, val]
+            : val.quantity > 1
+            ? [...acc, { ...val, quantity: val.quantity - 1 }]
+            : acc,
+        []
+      );
+      return {
+        ...state,
+        basketItems: reducedBasket,
+      };
+    case "remove_line_from_basket":
+      return {
+        ...state,
+        basketItems: state.basketItems.filter(
+          (val) => val._id !== action.item._id
+        ),
+      };
     case "set_delivery_date":
       return { ...state, deliveryDate: action.date };
     case "update_form_state":
