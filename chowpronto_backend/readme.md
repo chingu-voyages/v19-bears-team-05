@@ -14,6 +14,7 @@
 
 `Create a new patron` [POST api/signup](###POST-api/signup) <br/>
 `Login` [POST api/login](###POST-api/login) <br/>
+`Delete profile` [DELETE api/deleteprofile/:patronId](###DELETE-api/profile/:patronId) <br/>
 `All orders for a patron` [GET api/orders/patron/:patronId](###GET-api/orders/patron/:patronId) <br/>
 
 ### POST api/signup
@@ -78,7 +79,36 @@ Response sent from backend :
 }
 ```
 
+### DELETE api/profile/:patronId
+
+Please include headers in these requests
+
+```
+ headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      }
+```
+
+Id in token and patron's id should be equal.
+If success, endpoint returns
+
+```
+{ "_id": "5ede1d9096f5a83c98a01aca"}
+```
+
+In case of error `{ errorMsg: "Unauthorized" }` will be send with status code 403 or `{ errorMsg: "Couldn't delete profile" }` with status code 500.
+
 ### GET api/orders/patron/:patronId
+
+Please include headers in these requests
+
+```
+ headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      }
+```
 
 There is a patron in db with credentials:
 
@@ -127,7 +157,7 @@ will return
 If there is a registered user but they don't have any previous orders, empty array will be sent. (
 for example: Method GET /api/orders/patron/5ed7a6dbc5acbd75ae8e0b0f)
 
-In case of error `{ errorMsg: "Server error" }` or `{ errorMsg: "Can't find orders for given vendor id" }` will be send with status code 500.
+In case of error `{ errorMsg: "Server error" }` or `{ errorMsg: "Can't find orders for given vendor id" }` will be send with status code 500 or `{ errorMsg: "Unauthorized" }` will be send with status code 403.
 
 ## Errors
 

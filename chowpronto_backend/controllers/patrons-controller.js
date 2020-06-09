@@ -131,5 +131,17 @@ const login = async (req, res) => {
   });
 };
 
+const deleteProfile = async (req, res) => {
+  const { patronId } = req.params;
+
+  try {
+    const patron = await Patron.findOneAndRemove({ _id: patronId });
+    res.send({ _id: patron._id });
+  } catch (err) {
+    res.status(500).send({ errorMsg: "Couldn't delete profile" });
+  }
+};
+
 exports.signup = signup;
 exports.login = login;
+exports.deleteProfile = deleteProfile;
