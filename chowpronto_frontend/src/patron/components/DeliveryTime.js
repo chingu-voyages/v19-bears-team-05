@@ -14,7 +14,6 @@ const DeliverySelector = (props) => {
     state.deliveryDate.getDate()
   );
   const elapsed = (del1200 - now1200) / 1000 / 60 / 60 / 24;
-  console.log("elapsed", elapsed);
   return (
     <TextDisplayBox
       title="delivery time"

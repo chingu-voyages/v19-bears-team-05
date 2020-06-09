@@ -44,7 +44,7 @@ function useAuth() {
       .then((res) => res.json())
       .then((data) => {
         setTokenToStorage({ token: data.token });
-        setUserDetailsToContext({ data });
+        setUserDetailsToContext({ ...data });
       });
   }
   function logout() {

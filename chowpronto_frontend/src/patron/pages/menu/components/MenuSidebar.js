@@ -15,7 +15,6 @@ import { ClearButton } from "../../../../shared_components/ClearButton";
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
-  console.log("user", user);
   return (
     <StyledSidebar>
       <UserBanner>
