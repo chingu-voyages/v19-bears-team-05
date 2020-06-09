@@ -18,6 +18,8 @@ export function reducer(state, action) {
         ...state,
         basketItems: newBasketItemList,
       };
+    case "set_delivery_date":
+      return { ...state, deliveryDate: action.date };
     case "update_form_state":
       return {
         ...state,
