@@ -1,29 +1,65 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from "react";
+import useAuth from "./useAuth";
+import { MenuContext } from "../state/MenuContext";
 
 export default function useCheckout() {
-  const history = useHistory();
-  function checkout(basket) {
-    let serverData = basket.map((val) => ({
-      _id: val._id,
-      quantity: val.quantity,
-    }));
-    fetch("/api/orders/guest", {
-      method: "POST",
-      body: JSON.stringify(serverData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data._id) {
-          history.push({
-            pathname: "/confirmOrder",
-            state: { basket, orderId: data._id },
+  const { getUser, register } = useAuth();
+  const { state } = useContext(MenuContext);
+  const user = getUser();
+  function checkout() {
+    if (!user.token) {
+      register(state.formState)
+        .then((data) => {
+          /// save token to local storage
+          /// save user data somewhere
+
+          // const { token, patron } = data;
+          // const { _id, email, name, phone, address, postcode } = patron;
+          // const deliveryDetails = {
+          //   email,
+          //   name,
+          //   phone,
+          //   address,
+          //   postcode,
+          // };
+
+          return saveOrder();
+        })
+        .catch((err) => {
+          err.json().then((json) => {
+            console.log(json.errorMsg);
           });
+        });
+    } else {
+      try {
+        saveOrder(user.patron._id);
+      } catch (err) {
+        alert(err);
+        console.log("errSaveOrder", err);
+      }
+    }
+  }
+  function saveOrder() {
+    return fetch("/api/orders/order", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cart: state.basketItems,
+        deliveryDetails: state.deliveryDate,
+        patronId: user.patron._id,
+      }),
+    })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return res.json();
         } else {
-          throw new Error("Error creating order");
+          throw res;
         }
       })
-      .catch((err) => console.log("err", err));
+      .then((order) => console.log("returned from createOrder", order));
   }
-  return checkout;
+  return { checkout };
 }

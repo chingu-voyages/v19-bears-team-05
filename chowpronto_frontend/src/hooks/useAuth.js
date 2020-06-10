@@ -52,7 +52,27 @@ function useAuth() {
     setUser({ type: "set_user", userDetails: {} });
   }
 
-  function register(customerDetailsObject) {}
+  async function register(customerDetailsObject) {
+    console.log("customerDetailsObject", customerDetailsObject);
+    let serverObject =
+      customerDetailsObject.password.length > 0
+        ? { ...customerDetailsObject, role: "REGISTER" }
+        : { ...customerDetailsObject, role: "GUEST" };
+    return fetch("/api/patrons/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: serverObject,
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        return res.json();
+      } else {
+        throw res;
+      }
+    });
+  }
+
   function setTokenToStorage(dataObj) {
     try {
       window.localStorage.setItem("chowpronto", dataObj.token);

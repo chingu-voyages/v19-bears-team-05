@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import TextDisplayBox from "../../shared_components/TextDisplayBox";
 import { MenuContext } from "../../state/MenuContext";
-import days from "../../helpers/days";
 import parseTime from "../../helpers/parseTime";
 
 const DeliverySelector = (props) => {
@@ -14,7 +13,6 @@ const DeliverySelector = (props) => {
     state.deliveryDate.getDate()
   );
   const elapsed = (del1200 - now1200) / 1000 / 60 / 60 / 24;
-  console.log("elapsed", elapsed);
   return (
     <TextDisplayBox
       title="delivery time"

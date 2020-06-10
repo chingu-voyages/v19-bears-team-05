@@ -14,6 +14,7 @@ import Context from "./state/Context";
 import LoginPage from "./patron/pages/login";
 import useOnInitialisation from "./hooks/useOnInitialisation";
 import BasketPage from "./patron/pages/basketPage";
+import OrderConfirmationPage from "./patron/pages/orderConfirmation";
 
 function App() {
   // function to run only on initial render of site
@@ -44,6 +45,9 @@ function App() {
                 </Route>
                 <Route path="/settings">
                   <SettingsPage />
+                </Route>
+                <Route path="/orderConfirmation">
+                  <OrderConfirmationPage />
                 </Route>
               </Switch>
             </WithData>
