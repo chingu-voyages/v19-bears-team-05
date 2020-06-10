@@ -9,7 +9,6 @@ export default function UserDetailsForm() {
   const { getUser } = useAuth();
 
   const user = getUser();
-  console.log("user", user);
 
   useEffect(() => {
     dispatch({ type: "prefill_form", user });

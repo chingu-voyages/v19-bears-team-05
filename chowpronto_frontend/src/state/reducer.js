@@ -52,11 +52,12 @@ export function reducer(state, action) {
         userDetails: action.userDetails,
       };
     case "prefill_form":
-      console.log("state.formState", state.formState);
       return {
         ...state,
         formState:
-          action.user.token && state.formState?.email?.length === 0
+          action.user.token &&
+          state.formState.email.length === 0 &&
+          action.user.patron
             ? action.user.patron
             : state.formState,
       };

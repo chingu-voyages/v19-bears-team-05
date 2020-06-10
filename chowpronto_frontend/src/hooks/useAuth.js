@@ -7,6 +7,7 @@ function useAuth() {
     const storageData = getFromStorage();
     if (storageData && storageData.length > 0) {
       const userDetails = await getUserById(storageData.token);
+      console.log("userDetails", userDetails);
       setUserDetailsToContext({ ...userDetails, token: storageData });
     }
   }
@@ -15,25 +16,24 @@ function useAuth() {
   }
 
   function getUserById(token) {
-    fetch("/api/patrons/patron", {
+    return fetch("/api/patrons/patron", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("data from getUserData", data));
-    return {
-      patron: {
-        _id: "5ed935717d520e32d44787b1",
-        name: "Test Patron",
-        emil: "test111@gmail.com",
-        phone: "+12-3457-8910",
-        address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
-        postcode: "W 765 HS",
-      },
-    };
+    }).then((res) => res.json());
+    // .then((data) => console.log("data from getUserData", data));
+    // return {
+    //   patron: {
+    //     _id: "5ed935717d520e32d44787b1",
+    //     name: "Test Patron",
+    //     emil: "test111@gmail.com",
+    //     phone: "+12-3457-8910",
+    //     address: "123 Flat, 12 Hope Street, Faith City, Wanderland",
+    //     postcode: "W 765 HS",
+    //   },
+    // };
   }
   function login(email, password) {
     const credentials = JSON.stringify({ email, password });

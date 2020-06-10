@@ -7,7 +7,6 @@ import RegisterPage from "./patron/pages/register";
 import LandingPage from "./patron/pages/landing";
 
 import SettingsPage from "./patron/pages/settings";
-import DeliverySelect from "./patron/components/DeliverySelect";
 
 import Theme from "./style/Theme";
 import Context from "./state/Context";
