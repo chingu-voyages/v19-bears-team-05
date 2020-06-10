@@ -13,14 +13,17 @@ function useAuth() {
   function getUser() {
     return user;
   }
+
   function getUserById(token) {
-    // fetch("/api/patron/getUserById", {
-    //   method: "GET",
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     "Content-Type": "application/json",
-    //   },
-    // });
+    fetch("/api/patrons/patron", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("data from getUserData", data));
     return {
       patron: {
         _id: "5ed935717d520e32d44787b1",

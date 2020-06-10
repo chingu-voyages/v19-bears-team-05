@@ -84,7 +84,6 @@ const signup = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
     res
       .status(500)
       .send({ errorMsg: "Signing up failed, please try again later." });
@@ -142,6 +141,18 @@ const deleteProfile = async (req, res) => {
   }
 };
 
+const getPatronProfile = async (req, res) => {
+  const { _id } = req.patronData;
+
+  try {
+    const patron = await Patron.findOne({ _id });
+    res.send({ patron });
+  } catch (err) {
+    res.status(500).send({ errorMsg: "Couldn't find profile" });
+  }
+};
+
 exports.signup = signup;
 exports.login = login;
 exports.deleteProfile = deleteProfile;
+exports.getPatronProfile = getPatronProfile;
