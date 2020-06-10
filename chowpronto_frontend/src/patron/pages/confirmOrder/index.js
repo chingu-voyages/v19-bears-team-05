@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
@@ -7,7 +7,6 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import { MenuContext } from "../../../state/MenuContext";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
-import UserContext from "../../../state/UserContext";
 
 const saveOrder = (token, patronId, deliveryDetails, basket) => {
   return fetch("/api/orders/order", {
