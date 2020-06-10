@@ -8,7 +8,11 @@ export default function Context(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <MenuContext.Provider value={{ state, dispatch }}>
-      <UserProvider {...props}>{props.children}</UserProvider>
+      <UserProvider {...props}>
+        {/* <ErrorsProvider> */}
+        {props.children}
+        {/* </ErrorsProvider> */}
+      </UserProvider>
     </MenuContext.Provider>
   );
 }

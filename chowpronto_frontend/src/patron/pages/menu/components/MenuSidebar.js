@@ -14,6 +14,7 @@ import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
+  console.log("user", user);
   return (
     <StyledSidebar>
       <UserBanner>
@@ -21,7 +22,9 @@ const MenuSidebar = () => {
           <span>
             Welcome back <span>{user.patron.name}</span>{" "}
             <Link
-              onClick={() => logout()}
+              onClick={() => {
+                logout();
+              }}
               to={(location) => {
                 return `${location.pathname}?loginModal=true`;
               }}

@@ -49,7 +49,7 @@ export function reducer(state, action) {
     case "set_user":
       return {
         ...state,
-        userDetails: action.userDetails,
+        userDetails: { ...action.userDetails },
       };
     case "prefill_form":
       return {
