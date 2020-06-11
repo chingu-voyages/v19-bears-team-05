@@ -3,11 +3,12 @@ import styled from "styled-components";
 import ChowButton from "../../../../shared_components/ChowButton";
 import { StyledBoxContainer } from "../../../../shared_components/BoxContainer";
 import useAuth from "../../../../hooks/useAuth";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const { getUser } = useAuth();
   const userLoggedIn = !!getUser().token;
-  console.log("getUser()", !!getUser().token);
+  const history = useHistory();
   return (
     <Divider {...userLoggedIn}>
       <h3>Already {userLoggedIn ? "Logged In" : "Registered?"}</h3>
@@ -16,7 +17,7 @@ export default function Login() {
         elevated
         title="login"
         disabled={userLoggedIn}
-        onClick={() => {}}
+        onClick={() => history.push("/login")}
       />
     </Divider>
   );

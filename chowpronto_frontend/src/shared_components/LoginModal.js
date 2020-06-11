@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 import { ClearButton } from "./ClearButton";
@@ -17,15 +17,13 @@ const LoginModal = (props) => {
     <ModalBackground>
       <div className="modal">
         <h1>Login</h1>
-        <Link to={(location) => location.pathname}>
-          <CloseButton>close</CloseButton>
-        </Link>
+        <CloseButton onClick={() => history.goBack()}>close</CloseButton>
         <form
           action="POST"
           onSubmit={(e) => {
             e.preventDefault();
             login(formData.email, formData.password);
-            history.push(location.pathname);
+            history.goBack();
           }}
         >
           <label htmlFor="email">email</label>

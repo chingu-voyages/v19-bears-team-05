@@ -16,7 +16,7 @@ const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
   const { push, pop, get } = useError();
-  console.log("peek", get);
+
   return (
     <StyledSidebar>
       <UserBanner>

@@ -60,6 +60,7 @@ function useAuth() {
           error.push(json.errorMsg);
         })
       );
+
   }
   function logout() {
     console.log("Hello from logout");
