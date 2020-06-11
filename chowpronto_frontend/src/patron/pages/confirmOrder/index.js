@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useContext } from "react";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
@@ -7,6 +8,7 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 import useCheckout from "../../../hooks/useCheckout";
+
 
 const ConfirmOrderPage = (props) => {
   const { checkout } = useCheckout();

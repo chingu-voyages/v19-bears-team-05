@@ -58,6 +58,7 @@ function useAuth() {
           console.log(json.errorMsg);
         })
       );
+
   }
   async function logout() {
     await window.localStorage.removeItem("chowpronto");

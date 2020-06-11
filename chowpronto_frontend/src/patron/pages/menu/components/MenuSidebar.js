@@ -14,7 +14,6 @@ import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
-  console.log("user", user);
   return (
     <StyledSidebar>
       <UserBanner>
