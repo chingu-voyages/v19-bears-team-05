@@ -15,16 +15,6 @@ export default function useCheckout() {
           /// save token to local storage
           /// save user data somewhere
 
-          // const { token, patron } = data;
-          // const { _id, email, name, phone, address, postcode } = patron;
-          // const deliveryDetails = {
-          //   email,
-          //   name,
-          //   phone,
-          //   address,
-          //   postcode,
-          // };
-
           return saveOrder();
         })
         .catch((err) => {
