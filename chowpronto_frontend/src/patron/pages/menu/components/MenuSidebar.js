@@ -10,10 +10,12 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
+import useError from "../../../../hooks/useError";
 
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
+  const { push, pop, get } = useError();
   return (
     <StyledSidebar>
       <UserBanner>

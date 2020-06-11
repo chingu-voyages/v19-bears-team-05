@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import UserContext from "../state/UserContext";
+import useError from "./useError";
 
 function useAuth() {
   const context = useContext(UserContext);
   const user = context?.user;
   const setUser = context?.setUser;
+  const error = useError();
+  console.log("error", error);
   async function onInit() {
     const storageData = await getFromStorage();
     console.log("storageData", storageData);
@@ -55,7 +58,7 @@ function useAuth() {
       })
       .catch((err) =>
         err.json().then((json) => {
-          console.log(json.errorMsg);
+          error.push(json.errorMsg);
         })
       );
 
