@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import useAuth from "./useAuth";
 import { MenuContext } from "../state/MenuContext";
 
@@ -9,20 +9,7 @@ export default function useCheckout() {
   function checkout() {
     if (!user.token) {
       register(state.formState)
-        .then((data) => {
-          /// save token to local storage
-          /// save user data somewhere
-
-          // const { token, patron } = data;
-          // const { _id, email, name, phone, address, postcode } = patron;
-          // const deliveryDetails = {
-          //   email,
-          //   name,
-          //   phone,
-          //   address,
-          //   postcode,
-          // };
-
+        .then(() => {
           return saveOrder();
         })
         .catch((err) => {
@@ -31,15 +18,22 @@ export default function useCheckout() {
           });
         });
     } else {
-      try {
-        saveOrder(user.patron._id);
-      } catch (err) {
-        alert(err);
-        console.log("errSaveOrder", err);
-      }
+      saveOrder().catch((err) => {
+        err.json().then((json) => {
+          console.log(json.errorMsg);
+        });
+      });
     }
   }
   function saveOrder() {
+    const {
+      name,
+      phone,
+      address,
+      postcode,
+      deliveryDate,
+      email,
+    } = state.formState;
     return fetch("/api/orders/order", {
       method: "POST",
       headers: {
@@ -48,7 +42,14 @@ export default function useCheckout() {
       },
       body: JSON.stringify({
         cart: state.basketItems,
-        deliveryDetails: state.deliveryDate,
+        deliveryDetails: {
+          name,
+          phone,
+          address,
+          postcode,
+          deliveryDate,
+          email,
+        },
         patronId: user.patron._id,
       }),
     })
