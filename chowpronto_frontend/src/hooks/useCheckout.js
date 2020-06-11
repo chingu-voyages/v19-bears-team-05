@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import useAuth from "./useAuth";
 import { MenuContext } from "../state/MenuContext";
+import useError from "./useError";
 
 export default function useCheckout() {
   const { getUser, register } = useAuth();
   const { state } = useContext(MenuContext);
   const user = getUser();
+  const errorMsg = useError();
   function checkout() {
     if (!user.token) {
       register(state.formState)
@@ -27,7 +29,8 @@ export default function useCheckout() {
         })
         .catch((err) => {
           err.json().then((json) => {
-            console.log(json.errorMsg);
+            console.log("json.errorMsg", json.errorMsg);
+            errorMsg.push(json.errorMsg);
           });
         });
     } else {
