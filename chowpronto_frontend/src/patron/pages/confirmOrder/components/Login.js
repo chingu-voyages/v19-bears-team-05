@@ -7,10 +7,17 @@ import useAuth from "../../../../hooks/useAuth";
 export default function Login() {
   const { getUser } = useAuth();
   const userLoggedIn = !!getUser().token;
+  console.log("getUser()", !!getUser().token);
   return (
     <Divider {...userLoggedIn}>
       <h3>Already {userLoggedIn ? "Logged In" : "Registered?"}</h3>
-      <ChowButton primary elevated title="login" disabled={userLoggedIn} />
+      <ChowButton
+        primary
+        elevated
+        title="login"
+        disabled={userLoggedIn}
+        onClick={() => {}}
+      />
     </Divider>
   );
 }
@@ -24,5 +31,5 @@ const Divider = styled(StyledBoxContainer)`
   &:hover {
     background-color: none;
   }
-  opacity: ${({ userLoggedIn }) => (userLoggedIn ? 1 : 0.25)};
+  opacity: ${({ userLoggedIn }) => (userLoggedIn ? 0.25 : 1)};
 `;
