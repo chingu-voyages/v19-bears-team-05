@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import useError from "./useError";
 
 //filterObject looks like:
 // { tags: string[], search: string}
 function useMenuItems(filterObject = {}) {
   // takes an object with filters as key value pairs
   const [menuItems, setMenuItems] = useState([]);
+  const error = useError();
   function doFetch(filterObject) {
     let tagString =
       filterObject.tags?.reduce(
@@ -15,9 +17,21 @@ function useMenuItems(filterObject = {}) {
       filterObject?.search?.split(" ").join("+") || ""
     }`;
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => setMenuItems(data))
-      .catch();
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return res.json();
+        } else {
+          throw res;
+        }
+      })
+      .then((data) => {
+        setMenuItems(data);
+      })
+      .catch((err) => {
+        const errMsg =
+          err && err.statusText ? err.statusText : "Something went wrong";
+        error.push(errMsg);
+      });
   }
 
   useEffect(() => {

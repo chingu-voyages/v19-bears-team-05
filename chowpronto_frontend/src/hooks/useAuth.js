@@ -7,13 +7,11 @@ function useAuth() {
   const user = context?.user;
   const setUser = context?.setUser;
   const error = useError();
-  console.log("error", error);
   async function onInit() {
     const storageData = await getFromStorage();
-    console.log("storageData", storageData);
     if (storageData && storageData.length > 0) {
       const userDetails = await getUserById(storageData);
-      if (userDetails.patron) {
+      if (userDetails && userDetails.patron) {
         setUserDetailsToContext({ ...userDetails, token: storageData });
       } else {
         logout();
@@ -25,7 +23,6 @@ function useAuth() {
   }
 
   function getUserById(token) {
-    console.log(token);
     return fetch("/api/patrons/patron", {
       method: "GET",
       headers: {
@@ -33,8 +30,23 @@ function useAuth() {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
-      .catch((err) => console.log("err", err));
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return res.json();
+        } else {
+          throw res;
+        }
+      })
+      .catch((err) => {
+        console.log("in here", err);
+        err.json().then((json) => {
+          const msg =
+            json && json.errorMsg
+              ? json.errorMsg
+              : "Server is unavailable in the moment";
+          error.push(msg);
+        });
+      });
   }
   function login(email, password) {
     const credentials = JSON.stringify({ email, password });
@@ -61,7 +73,6 @@ function useAuth() {
           error.push(json.errorMsg);
         })
       );
-
   }
   async function logout() {
     await window.localStorage.removeItem("chowpronto");
@@ -69,7 +80,6 @@ function useAuth() {
   }
 
   async function register(customerDetailsObject) {
-    console.log("customerDetailsObject", customerDetailsObject);
     let serverObject =
       customerDetailsObject.password.length > 0
         ? { ...customerDetailsObject, role: "REGISTER" }
@@ -91,7 +101,6 @@ function useAuth() {
 
   function setTokenToStorage(dataObj) {
     try {
-      console.log("dataObj", dataObj);
       window.localStorage.setItem("chowpronto", dataObj.token);
     } catch (err) {
       console.log("err", err);

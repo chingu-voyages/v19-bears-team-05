@@ -1,15 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 import OptionListBox from "./OptionListBox";
 import { MenuContext } from "../state/MenuContext";
+import useError from "../hooks/useError";
 
 const Filter = (props) => {
   const { state, dispatch } = useContext(MenuContext);
   const [tags, setTags] = useState([]);
+  const error = useError();
+  console.log("error.get", error.get);
   useEffect(() => {
     function getTags() {
       fetch(`/api/tags`)
         .then((res) => res.json())
-        .then((data) => setTags(data.map((v) => v.name)));
+        .then((data) => setTags(data.map((v) => v.name)))
+        .catch((err) => {
+          const errMsg =
+            err && err.statusText ? err.statusText : "Something went wrong";
+          error.push(errMsg);
+        });
     }
     getTags();
   }, []);
