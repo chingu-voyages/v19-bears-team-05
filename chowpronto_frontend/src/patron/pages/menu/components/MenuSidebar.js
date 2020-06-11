@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
 import Filter from "../../../../shared_components/Filter";
 import Search from "../../../../shared_components/Search";
@@ -10,7 +10,6 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
-import { ClearButton } from "../../../../shared_components/ClearButton";
 
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
@@ -22,7 +21,9 @@ const MenuSidebar = () => {
           <span>
             Welcome back <span>{user.patron.name}</span>{" "}
             <Link
-              onClick={() => logout()}
+              onClick={() => {
+                logout();
+              }}
               to={(location) => {
                 return `${location.pathname}?loginModal=true`;
               }}

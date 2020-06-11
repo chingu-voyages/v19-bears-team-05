@@ -2,13 +2,17 @@ import React, { useContext, useState, useEffect } from "react";
 import { StyledBoxContainer } from "../../shared_components/BoxContainer";
 import styled from "styled-components";
 import { MenuContext } from "../../state/MenuContext";
+import useAuth from "../../hooks/useAuth";
 
 export default function UserDetailsForm() {
   let { state: ctx, dispatch } = useContext(MenuContext);
+  const { getUser } = useAuth();
+
+  const user = getUser();
 
   useEffect(() => {
-    dispatch({ type: "prefill_form" });
-  }, []);
+    dispatch({ type: "prefill_form", user });
+  }, [user]);
 
   const [registerDialog, setRegisterDialog] = useState(false);
   function handleChange(e) {

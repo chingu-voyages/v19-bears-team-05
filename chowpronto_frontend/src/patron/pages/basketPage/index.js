@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { MenuContext } from "../../../state/MenuContext";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import formatEuro from "../../../helpers/parseMoney";
 import styled from "styled-components";
 import SimpleAddIcon from "../../../shared_components/SimpleAddIcon";

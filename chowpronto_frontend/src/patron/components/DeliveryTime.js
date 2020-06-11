@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import TextDisplayBox from "../../shared_components/TextDisplayBox";
 import { MenuContext } from "../../state/MenuContext";
-import days from "../../helpers/days";
 import parseTime from "../../helpers/parseTime";
 
 const DeliverySelector = (props) => {
