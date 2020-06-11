@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useError from "../../hooks/useError";
+import CloseIcon from "../../shared_components/CloseIcon";
 
 export default function ErrorDialog() {
   const error = useError();
@@ -9,7 +10,17 @@ export default function ErrorDialog() {
     <React.Fragment>
       {currentErrors.length > 0 && (
         <StyledDialog>
-          <div>Error:</div>{" "}
+          <div style={{ position: "relative" }}>
+            <div
+              className="close-icon"
+              role="button"
+              onClick={() => error.pop()}
+            >
+              <CloseIcon />
+            </div>
+            <h2>Error:</h2>
+            <h4>{currentErrors[0]}</h4>
+          </div>
         </StyledDialog>
       )}
     </React.Fragment>
@@ -24,11 +35,19 @@ const StyledDialog = styled.div`
   justify-content: center;
   align-items: center;
   > div {
-    border: solid red 2px;
+    border: ${({ theme }) => theme.bd900};
     padding: ${({ theme }) => theme.pd900};
     background-color: white;
     border-radius: ${({ theme }) => theme.br100};
     z-index: 100;
     box-shadow: ${({ theme }) => theme.sh400};
+  }
+  .close-icon {
+    position: absolute;
+    top: ${({ theme }) => theme.pd600};
+    right: ${({ theme }) => theme.pd600};
+    width: 25px;
+    height: 25px;
+    display: inline-block;
   }
 `;

@@ -23,6 +23,7 @@ export const theme = {
   bd100f: "1px solid #536dfecc", // border focus
   bd200f: "2px solid #536dfe", // border focus
   bd200u: "2px solid #BDBDBD", // border unfocus
+  bd900: "5px solid #536dfe",
   fz200: "10px", // fontsize
   fz300: "12px",
   fz400: "14px",
