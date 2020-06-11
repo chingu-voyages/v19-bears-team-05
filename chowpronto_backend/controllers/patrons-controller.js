@@ -122,7 +122,7 @@ const login = async (req, res) => {
     patron: {
       _id: patron._id,
       name: patron.name,
-      emil: patron.email,
+      email: patron.email,
       phone: patron.phone,
       address: patron.address,
       postcode: patron.postcode,
