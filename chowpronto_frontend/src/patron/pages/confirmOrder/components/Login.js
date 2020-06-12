@@ -10,7 +10,7 @@ export default function Login() {
   const userLoggedIn = !!getUser().token;
   const history = useHistory();
   return (
-    <Divider {...userLoggedIn}>
+    <Divider userLoggedIn={userLoggedIn}>
       <h3>Already {userLoggedIn ? "Logged In" : "Registered?"}</h3>
       <ChowButton
         primary

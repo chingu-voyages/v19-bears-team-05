@@ -11,7 +11,6 @@ export default function useCheckout() {
   function checkout() {
     if (!user.token) {
       register(state.formState)
-
         .then(() => {
           return saveOrder();
         })
@@ -66,7 +65,6 @@ export default function useCheckout() {
       })
       .then((order) => {
         dispatch({ type: "set_order_id", orderId: order.orderId });
-        console.log("returned from createOrder", order);
       });
   }
   return { checkout };
