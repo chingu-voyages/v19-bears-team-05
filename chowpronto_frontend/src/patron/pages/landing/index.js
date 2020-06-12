@@ -144,8 +144,8 @@ function CardList() {
         alignItems: "flex-start",
       }}
     >
-      {cardData.map(({ title, text, Svg }) => (
-        <CardDetail title={title} text={text} Svg={Svg} />
+      {cardData.map(({ title, text, Svg }, index) => (
+        <CardDetail key={index} title={title} text={text} Svg={Svg} />
       ))}
     </div>
   );
