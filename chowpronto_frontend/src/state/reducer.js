@@ -46,11 +46,11 @@ export function reducer(state, action) {
         ...state,
         formState: { ...state.formState, [action.field]: action.value },
       };
-    case "set_user":
-      return {
-        ...state,
-        userDetails: { ...action.userDetails },
-      };
+    // case "set_user":
+    //   return {
+    //     ...state,
+    //     userDetails: { ...action.userDetails },
+    //   };
     case "prefill_form":
       return {
         ...state,

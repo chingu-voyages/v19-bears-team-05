@@ -3,9 +3,9 @@ import UserContext from "../state/UserContext";
 import useError from "./useError";
 
 function useAuth() {
-  const context = useContext(UserContext);
-  const user = context?.user;
-  const setUser = context?.setUser;
+  const { user, setUser } = useContext(UserContext);
+  // const user = context?.user;
+  // const setUser = context?.setUser;
   const error = useError();
   async function onInit() {
     const storageData = await getFromStorage();
@@ -60,8 +60,9 @@ function useAuth() {
       );
   }
   async function logout() {
+    setUserDetailsToContext({});
+    console.log("user", user);
     await window.localStorage.removeItem("chowpronto");
-    setUser({ type: "set_user", userDetails: {} });
   }
 
   async function register(customerDetailsObject) {
@@ -101,6 +102,7 @@ function useAuth() {
     }
   }
   function setUserDetailsToContext(userDetails) {
+    console.log("setUserDetailsToContext called");
     setUser({ type: "set_user", userDetails });
   }
   return {
