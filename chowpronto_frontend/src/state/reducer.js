@@ -49,15 +49,22 @@ export function reducer(state, action) {
     case "set_user":
       return {
         ...state,
-        userDetails: action.userDetails,
+        userDetails: { ...action.userDetails },
       };
     case "prefill_form":
       return {
         ...state,
         formState:
-          state.userDetails.token && state.formState.email.length === 0
-            ? state.userDetails.patron
+          action.user.token &&
+          state.formState.email.length === 0 &&
+          action.user.patron
+            ? action.user.patron
             : state.formState,
+      };
+    case "set_order_id":
+      return {
+        ...state,
+        orderId: action.orderId,
       };
     default:
       throw new Error();

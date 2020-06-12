@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MenuContext } from "../../../state/MenuContext";
+import { Link } from "react-router-dom";
+import formatEuro from "../../../helpers/parseMoney";
+import styled from "styled-components";
+import { PageLayout } from "../../components/PageLayout";
+import { StyledPageMain } from "../../components/StyledPageMain";
 
-export default function OrderConfirmationPage(props) {
-  console.log("props", props);
+const OrderConfirmationPage = (props) => {
+  const { state } = useContext(MenuContext);
+  console.log("state", state);
   return (
-    <div>
-      <h1>Order Confirmation Page</h1>
-    </div>
+    <PageLayout>
+      {/* <MenuSidebar {...location} /> */}
+      <StyledPageMain>
+        <h1>order confirmation</h1>
+        <h4>thanks for your order ref: {state.orderId}</h4>
+        <h2>order summary:</h2>
+        <ul>
+          {state.basketItems.map((val) => (
+            <BasketPageItem key={val._id}>
+              <span>
+                {val.quantity} x {val.name} @ {formatEuro(val.unitPrice)} ={" "}
+                {formatEuro(val.unitPrice * val.quantity)}
+              </span>
+            </BasketPageItem>
+          ))}
+        </ul>
+        <Link to="/menu"> ← back to menu</Link>
+      </StyledPageMain>
+    </PageLayout>
   );
-}
+};
+
+const BasketPageItem = styled.li`
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  span:first-child {
+    flex: 10;
+  }
+  div {
+    flex: 1;
+  }
+`;
+
+export default OrderConfirmationPage;
