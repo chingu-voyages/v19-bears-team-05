@@ -9,7 +9,6 @@ function useAuth() {
   const error = useError();
   async function onInit() {
     const storageData = await getFromStorage();
-    console.log("storageData", storageData);
     if (storageData && storageData.length > 0) {
       const userDetails = await getUserById(storageData);
       if (userDetails.patron) {
@@ -24,7 +23,6 @@ function useAuth() {
   }
 
   function getUserById(token) {
-    console.log(token);
     return fetch("/api/patrons/patron", {
       method: "GET",
       headers: {
@@ -60,7 +58,6 @@ function useAuth() {
           error.push(json.errorMsg);
         })
       );
-
   }
   async function logout() {
     await window.localStorage.removeItem("chowpronto");
@@ -68,7 +65,6 @@ function useAuth() {
   }
 
   async function register(customerDetailsObject) {
-    console.log("customerDetailsObject", customerDetailsObject);
     let serverObject =
       customerDetailsObject.password.length > 0
         ? { ...customerDetailsObject, role: "REGISTER" }
@@ -78,7 +74,7 @@ function useAuth() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: serverObject,
+      body: JSON.stringify(serverObject),
     }).then((res) => {
       if (res.status >= 200 && res.status < 300) {
         return res.json();
@@ -90,7 +86,6 @@ function useAuth() {
 
   function setTokenToStorage(dataObj) {
     try {
-      console.log("dataObj", dataObj);
       window.localStorage.setItem("chowpronto", dataObj.token);
     } catch (err) {
       console.log("err", err);

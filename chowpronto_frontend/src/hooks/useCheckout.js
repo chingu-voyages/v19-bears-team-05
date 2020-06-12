@@ -12,21 +12,20 @@ export default function useCheckout() {
   function checkout() {
     if (!user.token) {
       register(state.formState)
-        .then(() => {
+        .then((registeredUser) => {
           return saveOrder(
-            user.token,
-            user.patron._id,
+            registeredUser.token,
+            registeredUser.patron._id,
             state.formState,
             state.basketItems
           );
         })
         .then((order) => {
-          console.log("order", order);
           dispatch({ type: "set_order_id", orderId: order.orderId });
         })
         .catch((err) => {
           err.json().then((json) => {
-            errorMsg.push(json.errorMsg);
+            errorMsg.push(json.errorMsg || json.message);
           });
         });
     } else {
@@ -40,9 +39,8 @@ export default function useCheckout() {
           dispatch({ type: "set_order_id", orderId: order.orderId });
         })
         .catch((err) => {
-          console.log("err", err);
           err.json().then((json) => {
-            errorMsg.push(json.errorMsg);
+            errorMsg.push(json.errorMsg || json.message);
           });
         });
     }
