@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 export default function Login() {
   const { getUser } = useAuth();
   const userLoggedIn = !!getUser().token;
-  console.log("userLoggedIn", userLoggedIn);
   const history = useHistory();
   return (
     <Divider userLoggedIn={userLoggedIn}>
