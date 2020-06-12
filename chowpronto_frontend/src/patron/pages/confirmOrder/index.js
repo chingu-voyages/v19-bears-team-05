@@ -14,7 +14,8 @@ const ConfirmOrderPage = (props) => {
   const history = useHistory();
   function handleSubmit(e) {
     e.preventDefault();
-    checkout();
+    const result = checkout();
+    console.log("result", result);
     history.push("/orderConfirmation");
   }
   return (

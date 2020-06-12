@@ -21,6 +21,7 @@ export default function useCheckout() {
           );
         })
         .then((order) => {
+          console.log("order", order);
           dispatch({ type: "set_order_id", orderId: order.orderId });
         })
         .catch((err) => {
