@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
@@ -8,13 +7,15 @@ import Login from "./components/Login";
 import UserDetailsForm from "../../components/UserDetailsForm";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 import useCheckout from "../../../hooks/useCheckout";
-
+import { useHistory } from "react-router-dom";
 
 const ConfirmOrderPage = (props) => {
   const { checkout } = useCheckout();
+  const history = useHistory();
   function handleSubmit(e) {
     e.preventDefault();
     checkout();
+    history.push("/orderConfirmation");
   }
   return (
     <PageLayout>

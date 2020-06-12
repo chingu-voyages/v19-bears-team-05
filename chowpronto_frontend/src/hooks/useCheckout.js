@@ -4,7 +4,7 @@ import { MenuContext } from "../state/MenuContext";
 
 export default function useCheckout() {
   const { getUser, register } = useAuth();
-  const { state } = useContext(MenuContext);
+  const { state, dispatch } = useContext(MenuContext);
   const user = getUser();
   function checkout() {
     if (!user.token) {
@@ -60,7 +60,10 @@ export default function useCheckout() {
           throw res;
         }
       })
-      .then((order) => console.log("returned from createOrder", order));
+      .then((order) => {
+        dispatch({ type: "set_order_id", orderId: order.orderId });
+        console.log("returned from createOrder", order);
+      });
   }
   return { checkout };
 }
