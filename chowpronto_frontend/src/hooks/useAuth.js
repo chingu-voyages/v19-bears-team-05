@@ -9,8 +9,9 @@ function useAuth() {
   const error = useError();
   async function onInit() {
     const storageData = await getFromStorage();
+    console.log("storageData", storageData);
     if (storageData && storageData.length > 0) {
-      const userDetails = await getUserById(storageData.token);
+      const userDetails = await getUserById(storageData);
       if (userDetails.patron) {
         setUserDetailsToContext({ ...userDetails, token: storageData });
       } else {
@@ -59,10 +60,10 @@ function useAuth() {
           error.push(json.errorMsg);
         })
       );
+
   }
-  function logout() {
-    console.log("Hello from logout");
-    window.localStorage.removeItem("chowpronto");
+  async function logout() {
+    await window.localStorage.removeItem("chowpronto");
     setUser({ type: "set_user", userDetails: {} });
   }
 
@@ -104,7 +105,6 @@ function useAuth() {
     }
   }
   function setUserDetailsToContext(userDetails) {
-    console.log("userDetails", userDetails);
     setUser({ type: "set_user", userDetails });
   }
   return {
