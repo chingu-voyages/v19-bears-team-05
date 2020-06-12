@@ -8,12 +8,13 @@ import { StyledPageMain } from "../../components/StyledPageMain";
 
 const OrderConfirmationPage = (props) => {
   const { state } = useContext(MenuContext);
+  console.log("state", state);
   return (
     <PageLayout>
       {/* <MenuSidebar {...location} /> */}
       <StyledPageMain>
         <h1>order confirmation</h1>
-        <h4>thanks for your order ref: {"01010101010"}</h4>
+        <h4>thanks for your order ref: {state.orderId}</h4>
         <h2>order summary:</h2>
         <ul>
           {state.basketItems.map((val) => (

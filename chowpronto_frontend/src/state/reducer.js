@@ -61,6 +61,11 @@ export function reducer(state, action) {
             ? action.user.patron
             : state.formState,
       };
+    case "set_order_id":
+      return {
+        ...state,
+        orderId: action.orderId,
+      };
     default:
       throw new Error();
   }
