@@ -70,7 +70,9 @@ export default function UserDetailsForm() {
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
-      {!registerDialog ? (
+      {user.token ? (
+        <></>
+      ) : !registerDialog ? (
         <label htmlFor="register">
           Would you like to register?
           <input

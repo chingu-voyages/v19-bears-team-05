@@ -1,20 +1,24 @@
 import { useContext } from "react";
 import useAuth from "./useAuth";
 import { MenuContext } from "../state/MenuContext";
+import useError from "./useError";
 
 export default function useCheckout() {
   const { getUser, register } = useAuth();
   const { state, dispatch } = useContext(MenuContext);
   const user = getUser();
+  const errorMsg = useError();
   function checkout() {
     if (!user.token) {
       register(state.formState)
+
         .then(() => {
           return saveOrder();
         })
         .catch((err) => {
           err.json().then((json) => {
-            console.log(json.errorMsg);
+            console.log("json.errorMsg", json.errorMsg);
+            errorMsg.push(json.errorMsg);
           });
         });
     } else {

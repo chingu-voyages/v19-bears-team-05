@@ -7,7 +7,6 @@ function useAuth() {
   const user = context?.user;
   const setUser = context?.setUser;
   const error = useError();
-  console.log("error", error);
   async function onInit() {
     const storageData = await getFromStorage();
     console.log("storageData", storageData);
