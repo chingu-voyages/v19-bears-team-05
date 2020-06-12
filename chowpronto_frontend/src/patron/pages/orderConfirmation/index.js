@@ -8,7 +8,6 @@ import { StyledPageMain } from "../../components/StyledPageMain";
 
 const OrderConfirmationPage = (props) => {
   const { state } = useContext(MenuContext);
-  console.log("state", state);
   return (
     <PageLayout>
       {/* <MenuSidebar {...location} /> */}
@@ -26,6 +25,7 @@ const OrderConfirmationPage = (props) => {
             </BasketPageItem>
           ))}
         </ul>
+        <h4>you may pay the driver directly by cash or card</h4>
         <Link to="/menu"> ← back to menu</Link>
       </StyledPageMain>
     </PageLayout>

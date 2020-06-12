@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styled from "styled-components";
 import { ClearButton } from "./ClearButton";
@@ -12,7 +12,6 @@ const LoginModal = (props) => {
     password: "",
   });
   const history = useHistory();
-  const location = useLocation();
   return (
     <ModalBackground>
       <div className="modal">
