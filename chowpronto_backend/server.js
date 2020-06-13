@@ -1,12 +1,14 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
 
 const app = express();
 
 // Connect Database
 connectDB();
 
+app.use(morgan("tiny"));
 app.use(express.json());
 dotenv.config();
 

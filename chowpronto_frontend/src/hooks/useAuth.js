@@ -65,7 +65,6 @@ function useAuth() {
   }
 
   async function register(customerDetailsObject) {
-    console.log("customerDetailsObject", customerDetailsObject);
     let serverObject =
       customerDetailsObject.password.length > 0
         ? { ...customerDetailsObject, role: "REGISTER" }
@@ -75,7 +74,7 @@ function useAuth() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: serverObject,
+      body: JSON.stringify(serverObject),
     }).then((res) => {
       if (res.status >= 200 && res.status < 300) {
         return res.json();

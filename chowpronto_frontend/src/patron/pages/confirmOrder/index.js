@@ -1,4 +1,6 @@
-import React from "react";
+
+import React, { useContext, useState } from "react";
+
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
@@ -8,14 +10,31 @@ import UserDetailsForm from "../../components/UserDetailsForm";
 import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 import useCheckout from "../../../hooks/useCheckout";
 import { useHistory } from "react-router-dom";
+import { MenuContext } from "../../../../src/state/MenuContext";
 
 const ConfirmOrderPage = (props) => {
   const { checkout } = useCheckout();
   const history = useHistory();
+  let { state: ctx } = useContext(MenuContext);
+  const [errMsg, setErrMsg] = useState("");
+
   function handleSubmit(e) {
     e.preventDefault();
-    checkout();
-    history.push("/orderConfirmation");
+    const { name, email, postcode, address, phone } = ctx.formState;
+    if (ctx.basketItems.length === 0) {
+      setErrMsg("Your basket is empty!");
+    } else if (
+      name.length === 0 ||
+      email.length === 0 ||
+      postcode.length === 0 ||
+      address.length === 0 ||
+      phone.length === 0
+    ) {
+      setErrMsg("Please, fill in all fields");
+    } else {
+      checkout();
+      history.push("/orderConfirmation");
+    }
   }
   return (
     <PageLayout>
@@ -24,6 +43,7 @@ const ConfirmOrderPage = (props) => {
         <Login />
       </StyledSidebar>
       <StyledPageMain>
+        {errMsg.length > 0 && <p style={{ color: "red" }}>{errMsg}</p>}
         <UserDetailsForm />
         <CheckoutButton
           title="submit order"
