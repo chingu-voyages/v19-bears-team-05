@@ -5,6 +5,7 @@ import { MenuContext } from "../state/MenuContext";
 const Filter = (props) => {
   const { state, dispatch } = useContext(MenuContext);
   const [tags, setTags] = useState([]);
+  const [minimised, setMinimised] = useState(true);
   useEffect(() => {
     function getTags() {
       fetch(`/api/tags`)
@@ -27,8 +28,9 @@ const Filter = (props) => {
           }
           dispatch({ type: "set_tags", tags: newArray });
         }}
-        allListItem={tags}
+        allListItem={minimised ? tags.filter((v, i) => i < 5) : tags}
         selectedListItem={state.tags}
+        additionalAction={() => setMinimised(false)}
       />
     </div>
   );

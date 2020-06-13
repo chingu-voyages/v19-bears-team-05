@@ -34,7 +34,12 @@ export default function InputBox(props) {
             </FilterListItem>
           ))}
         </ul>
-        <AdditionalActionButton type="button">more...</AdditionalActionButton>
+        <AdditionalActionButton
+          type="button"
+          onClick={() => props.additionalAction()}
+        >
+          more...
+        </AdditionalActionButton>
       </form>
     </BoxContainer>
   );
@@ -70,4 +75,5 @@ InputBox.propTypes = {
   onChange: PropTypes.func.isRequired,
   allListItem: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedListItem: PropTypes.arrayOf(PropTypes.string).isRequired,
+  additionalAction: PropTypes.func,
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { ErrorsContext } from "../state/ErrorProvider";
 
 export default function useError() {

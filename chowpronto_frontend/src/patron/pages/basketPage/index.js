@@ -12,7 +12,6 @@ import { StyledPageMain } from "../../components/StyledPageMain";
 
 const BasketPage = (props) => {
   const { state, dispatch } = useContext(MenuContext);
-  console.log("state", state);
   const location = useLocation();
   return (
     <PageLayout>
