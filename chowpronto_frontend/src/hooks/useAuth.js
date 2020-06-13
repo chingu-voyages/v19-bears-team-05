@@ -99,7 +99,6 @@ function useAuth() {
     }
   }
   function setUserDetailsToContext(userDetails) {
-    console.log("setUserDetailsToContext called");
     setUser({ type: "set_user", userDetails });
   }
   return {
