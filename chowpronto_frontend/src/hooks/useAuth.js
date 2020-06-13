@@ -4,8 +4,6 @@ import useError from "./useError";
 
 function useAuth() {
   const { user, setUser } = useContext(UserContext);
-  // const user = context?.user;
-  // const setUser = context?.setUser;
   const error = useError();
   async function onInit() {
     const storageData = await getFromStorage();
