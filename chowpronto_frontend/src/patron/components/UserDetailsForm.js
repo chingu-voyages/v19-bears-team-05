@@ -85,15 +85,26 @@ export default function UserDetailsForm() {
           />
         </label>
       ) : (
-        <StyledInputContainer>
-          <input
-            type="password"
-            placeholder="password"
-            name="password"
-            value={ctx.formState.password || ""}
-            onChange={(e) => handleChange(e)}
-          />
-        </StyledInputContainer>
+        <>
+          <StyledInputContainer>
+            <input
+              type="password"
+              placeholder="password"
+              name="password"
+              value={ctx.formState.password || ""}
+              onChange={(e) => handleChange(e)}
+            />
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <input
+              type="password"
+              placeholder="password confirmation"
+              name="passwordConfirm"
+              value={ctx.formState.passwordConfirm || ""}
+              onChange={(e) => handleChange(e)}
+            />
+          </StyledInputContainer>
+        </>
       )}
     </form>
   );

@@ -15,6 +15,7 @@ export const initialState = {
     phone: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   },
   userDetails: {
     name: "",
