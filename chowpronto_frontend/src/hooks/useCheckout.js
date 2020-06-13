@@ -12,6 +12,7 @@ export default function useCheckout() {
   function checkout() {
     if (!user.token) {
       register(state.formState)
+
         .then((registeredUser) => {
           return saveOrder(
             registeredUser.token,
@@ -22,6 +23,7 @@ export default function useCheckout() {
         })
         .then((order) => {
           dispatch({ type: "set_order_id", orderId: order.orderId });
+
         })
         .catch((err) => {
           err.json().then((json) => {
@@ -45,5 +47,6 @@ export default function useCheckout() {
         });
     }
   }
+
   return { checkout };
 }
