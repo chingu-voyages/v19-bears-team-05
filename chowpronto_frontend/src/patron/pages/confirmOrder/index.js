@@ -17,11 +17,6 @@ const ConfirmOrderPage = (props) => {
   let { state: ctx } = useContext(MenuContext);
   const [errMsg, setErrMsg] = useState("");
 
-  console.log(ctx);
-  console.log("passwordConfirm", ctx.formState.passwordConfirm);
-  console.log("password", ctx.formState.password);
-  console.log(ctx.formState.password === ctx.formState.passwordConfirm);
-
   function handleSubmit(e) {
     e.preventDefault();
     const {
