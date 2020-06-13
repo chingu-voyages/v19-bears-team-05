@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useContext, useState } from "react";
-=======
-import React from "react";
->>>>>>> master
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
