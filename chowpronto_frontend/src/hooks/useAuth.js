@@ -59,7 +59,6 @@ function useAuth() {
   }
   async function logout() {
     setUserDetailsToContext({});
-    console.log("user", user);
     await window.localStorage.removeItem("chowpronto");
   }
 
