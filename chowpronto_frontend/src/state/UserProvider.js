@@ -13,7 +13,7 @@ export default function UserProvider(props) {
 function reducer(state, action) {
   switch (action.type) {
     case "set_user":
-      return { ...state, ...action.userDetails };
+      return { ...action.userDetails };
     default:
       throw new Error();
   }
