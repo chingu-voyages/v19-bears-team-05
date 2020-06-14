@@ -18,7 +18,6 @@ export default function useCheckout() {
     if (!user.token) {
       register(state.formState)
         .then((registeredUser) => {
-          console.log(registeredUser);
           if (registeredUser.patron.role === "REGISTER") {
             setTokenToStorage({ token: registeredUser.token });
             setUserDetailsToContext({
