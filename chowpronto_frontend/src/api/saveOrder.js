@@ -1,4 +1,8 @@
-function saveOrder(token, userId, formObject, basketItemsArray) {
+function saveOrder(token, patronId, formObject, basketItemsArray) {
+  const cart = basketItemsArray.map(({ _id, quantity }) => ({
+    menuItemId: _id,
+    quantity,
+  }));
   const { name, phone, address, postcode, deliveryDate, email } = formObject;
   return fetch("/api/orders/order", {
     method: "POST",
@@ -7,7 +11,7 @@ function saveOrder(token, userId, formObject, basketItemsArray) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      cart: basketItemsArray,
+      cart,
       deliveryDetails: {
         name,
         phone,
@@ -16,8 +20,7 @@ function saveOrder(token, userId, formObject, basketItemsArray) {
         deliveryDate,
         email,
       },
-      // patronId: user.patron._id,
-      patronId: userId,
+      patronId,
     }),
   }).then((res) => {
     if (res.status >= 200 && res.status < 300) {

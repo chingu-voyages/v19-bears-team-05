@@ -3,9 +3,16 @@ const { validateDeliveryData } = require("./validation");
 
 const createOrder = async (req, res) => {
   const { cart, deliveryDetails, patronId } = req.body;
+  console.log(cart);
 
   if (!cart || cart.length === 0) {
     return res.status(400).send({ errorMsg: "Your cart is empty" });
+  }
+
+  if (!cart.every((menuItem) => menuItem.quantity > 0 && menuItem.menuItemId)) {
+    return res
+      .status(400)
+      .send({ errorMsg: "Something wrong with items in your basket" });
   }
   if (
     !deliveryDetails ||
