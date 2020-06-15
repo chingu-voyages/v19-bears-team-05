@@ -61,6 +61,15 @@ export function reducer(state, action) {
         ...state,
         orderId: action.orderId,
       };
+    case "set_delivery_postcode":
+      console.log("action.postcode", action.postcode);
+      return {
+        ...state,
+        formState: {
+          ...state.formState,
+          postcode: action.postcode,
+        },
+      };
     default:
       throw new Error();
   }
