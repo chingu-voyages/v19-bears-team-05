@@ -9,12 +9,18 @@ export default function UserDetailsForm() {
   const { getUser } = useAuth();
 
   const user = getUser();
+  const [registerDialog, setRegisterDialog] = useState(false);
+
+  useEffect(() => {
+    if (!registerDialog) {
+      dispatch({ type: "delete_passwords" });
+    }
+  }, [registerDialog, dispatch]);
 
   useEffect(() => {
     dispatch({ type: "prefill_form", user });
-  }, [user]);
+  }, [user, dispatch]);
 
-  const [registerDialog, setRegisterDialog] = useState(false);
   function handleChange(e) {
     dispatch({
       type: "update_form_state",
@@ -70,9 +76,7 @@ export default function UserDetailsForm() {
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
-      {user.token ? (
-        <></>
-      ) : !registerDialog ? (
+      {!user.token && (
         <label htmlFor="register">
           Would you like to register?
           <input
@@ -80,11 +84,13 @@ export default function UserDetailsForm() {
             name="register"
             id="register"
             value="true"
-            onChange={() => setRegisterDialog(true)}
+            onChange={() => setRegisterDialog(!registerDialog)}
             style={{ cursor: "pointer" }}
           />
         </label>
-      ) : (
+      )}
+
+      {registerDialog && (
         <>
           <StyledInputContainer>
             <input

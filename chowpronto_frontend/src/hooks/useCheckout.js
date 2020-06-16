@@ -24,6 +24,7 @@ export default function useCheckout() {
               token: registeredUser.token,
               patron: registeredUser.patron,
             });
+            dispatch({ type: "delete_passwords" });
           }
           return saveOrder(
             registeredUser.token,
