@@ -76,9 +76,7 @@ export default function UserDetailsForm() {
           onChange={(e) => handleChange(e)}
         />
       </StyledInputContainer>
-      {user.token ? (
-        <></>
-      ) : (
+      {!user.token && (
         <label htmlFor="register">
           Would you like to register?
           <input
