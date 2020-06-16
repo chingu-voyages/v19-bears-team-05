@@ -16,17 +16,15 @@ const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
   const { state, dispatch } = useContext(MenuContext);
-  console.log("state", state);
   useEffect(() => {
-    console.log("firing useEffect");
     if (user.patron && state.formState.postcode.length < 1) {
-      console.log("Calling");
       dispatch({
         type: "set_delivery_postcode",
         postcode: user.patron.postcode,
       });
     }
   }, [user, state]);
+
   return (
     <StyledSidebar>
       <UserBanner>
