@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 
 // Local imports
 import Svgs from "../../../assets/svgs/landingPage/index";
+import { MenuContext } from "../../../state/MenuContext";
 
 // ---------------------
 //     Landing Page
@@ -43,6 +44,7 @@ function LocationSearch() {
 }
 function Search({ input, onChange }) {
   const history = useHistory();
+  const { state, dispatch } = useContext(MenuContext);
   return (
     <ElevatedContainer>
       <Flex>
@@ -53,11 +55,12 @@ function Search({ input, onChange }) {
         <Grid>
           <SearchSVG />
           <SearchButton
-            onClick={() =>
+            onClick={() => {
+              dispatch({ type: "set_delivery_postcode", postcode: input });
               history.push({
                 pathname: "/menu",
-              })
-            }
+              });
+            }}
           >
             Search
           </SearchButton>
