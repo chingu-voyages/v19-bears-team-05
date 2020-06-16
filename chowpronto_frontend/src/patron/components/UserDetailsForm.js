@@ -72,7 +72,7 @@ export default function UserDetailsForm() {
       </StyledInputContainer>
       {user.token ? (
         <></>
-      ) : !registerDialog ? (
+      ) : (
         <label htmlFor="register">
           Would you like to register?
           <input
@@ -80,11 +80,13 @@ export default function UserDetailsForm() {
             name="register"
             id="register"
             value="true"
-            onChange={() => setRegisterDialog(true)}
+            onChange={() => setRegisterDialog(!registerDialog)}
             style={{ cursor: "pointer" }}
           />
         </label>
-      ) : (
+      )}
+
+      {registerDialog && (
         <>
           <StyledInputContainer>
             <input
