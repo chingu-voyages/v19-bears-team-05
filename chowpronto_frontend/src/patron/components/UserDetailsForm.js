@@ -9,12 +9,18 @@ export default function UserDetailsForm() {
   const { getUser } = useAuth();
 
   const user = getUser();
+  const [registerDialog, setRegisterDialog] = useState(false);
+
+  useEffect(() => {
+    if (!registerDialog) {
+      dispatch({ type: "delete_passwords" });
+    }
+  }, [registerDialog, dispatch]);
 
   useEffect(() => {
     dispatch({ type: "prefill_form", user });
-  }, [user]);
+  }, [user, dispatch]);
 
-  const [registerDialog, setRegisterDialog] = useState(false);
   function handleChange(e) {
     dispatch({
       type: "update_form_state",
