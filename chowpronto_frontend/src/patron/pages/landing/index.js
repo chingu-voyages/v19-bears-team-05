@@ -45,7 +45,6 @@ function LocationSearch() {
 function Search({ input, onChange }) {
   const history = useHistory();
   const { state, dispatch } = useContext(MenuContext);
-  console.log("state", state);
   return (
     <ElevatedContainer>
       <Flex>
