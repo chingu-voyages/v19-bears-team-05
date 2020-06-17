@@ -107,6 +107,8 @@ function useAuth() {
     login,
     logout,
     register,
+    setUserDetailsToContext,
+    setTokenToStorage,
   };
 }
 

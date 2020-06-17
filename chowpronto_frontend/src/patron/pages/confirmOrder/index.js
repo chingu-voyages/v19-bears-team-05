@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from "react";
 
 import { PageLayout } from "../../components/PageLayout";
@@ -20,7 +19,15 @@ const ConfirmOrderPage = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { name, email, postcode, address, phone } = ctx.formState;
+    const {
+      name,
+      email,
+      postcode,
+      address,
+      phone,
+      password,
+      passwordConfirm,
+    } = ctx.formState;
     if (ctx.basketItems.length === 0) {
       setErrMsg("Your basket is empty!");
     } else if (
@@ -31,11 +38,14 @@ const ConfirmOrderPage = (props) => {
       phone.length === 0
     ) {
       setErrMsg("Please, fill in all fields");
+    } else if (password !== passwordConfirm) {
+      setErrMsg("Password should match");
     } else {
       checkout();
       history.push("/orderConfirmation");
     }
   }
+
   return (
     <PageLayout>
       <StyledSidebar style={{ flex: 1.5 }}>

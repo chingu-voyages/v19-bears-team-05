@@ -46,6 +46,11 @@ export function reducer(state, action) {
         ...state,
         formState: { ...state.formState, [action.field]: action.value },
       };
+    case "delete_passwords":
+      return {
+        ...state,
+        formState: { ...state.formState, password: "", passwordConfirm: "" },
+      };
     case "prefill_form":
       return {
         ...state,
@@ -60,6 +65,14 @@ export function reducer(state, action) {
       return {
         ...state,
         orderId: action.orderId,
+      };
+    case "set_delivery_postcode":
+      return {
+        ...state,
+        formState: {
+          ...state.formState,
+          postcode: action.postcode,
+        },
       };
     default:
       throw new Error();

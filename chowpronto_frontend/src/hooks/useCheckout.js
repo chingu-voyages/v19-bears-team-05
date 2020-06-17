@@ -5,15 +5,27 @@ import useError from "./useError";
 import saveOrder from "../api/saveOrder";
 
 export default function useCheckout() {
-  const { getUser, register } = useAuth();
+  const {
+    getUser,
+    register,
+    setTokenToStorage,
+    setUserDetailsToContext,
+  } = useAuth();
   const { state, dispatch } = useContext(MenuContext);
   const user = getUser();
   const errorMsg = useError();
   function checkout() {
     if (!user.token) {
       register(state.formState)
-
         .then((registeredUser) => {
+          if (registeredUser.patron.role === "REGISTER") {
+            setTokenToStorage({ token: registeredUser.token });
+            setUserDetailsToContext({
+              token: registeredUser.token,
+              patron: registeredUser.patron,
+            });
+            dispatch({ type: "delete_passwords" });
+          }
           return saveOrder(
             registeredUser.token,
             registeredUser.patron._id,
@@ -23,7 +35,6 @@ export default function useCheckout() {
         })
         .then((order) => {
           dispatch({ type: "set_order_id", orderId: order.orderId });
-
         })
         .catch((err) => {
           err.json().then((json) => {

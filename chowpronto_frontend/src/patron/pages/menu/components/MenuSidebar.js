@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../../../../shared_components/Logo";
@@ -10,11 +10,21 @@ import DeliveryAddress from "../../../components/DeliveryAddress";
 import BasketSummary from "./BasketSummary";
 import { StyledSidebar } from "../../../components/StyledSidebar";
 import { CheckoutButton } from "../../../../shared_components/CheckoutButton";
+import { MenuContext } from "../../../../state/MenuContext";
 
 const MenuSidebar = () => {
   const { getUser, logout } = useAuth();
   const user = getUser();
-  console.log("user", user);
+  const { state, dispatch } = useContext(MenuContext);
+  useEffect(() => {
+    if (user.patron && state.formState.postcode.length < 1) {
+      dispatch({
+        type: "set_delivery_postcode",
+        postcode: user.patron.postcode,
+      });
+    }
+  }, [user, state]);
+
   return (
     <StyledSidebar>
       <UserBanner>
