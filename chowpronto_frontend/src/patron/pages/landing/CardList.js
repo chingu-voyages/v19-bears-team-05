@@ -41,7 +41,21 @@ export function CardList() {
 }
 
 const StyledCardList = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-evenly;
   align-items: flex-start;
+  width: calc(100%-100px);
+  align-content: stretch;
+  justify-items: center;
+  grid-gap: 20px;
+  padding: 20px;
+  position: relative;
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+    section {
+      /* max-height: 5vh; */
+      flex-direction: row;
+    }
+  }
 `;

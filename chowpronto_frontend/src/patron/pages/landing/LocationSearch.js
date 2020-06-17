@@ -12,10 +12,10 @@ export function LocationSearch() {
   return (
     <div
       style={{
-        height: "20em",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flex: 1,
       }}
     >
       <Search input={input} onChange={handleChange} />

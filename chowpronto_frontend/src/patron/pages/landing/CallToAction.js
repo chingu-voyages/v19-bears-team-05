@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 export function CallToAction() {
   return (
-    <div>
+    <div style={{ gridRow: 3, gridColumn: 1 }}>
       <H2>Already a member?</H2>
       <Link to="/login">
         <SignInBtn>Sign in Here</SignInBtn>
@@ -30,12 +30,12 @@ export const SignInBtn = styled.button`
     letter-spacing: 0.01em;
     font-weight: 500;
     font-size: 21px;
-    line-height: 25px;
+    /* line-height: 25px;
     box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
     cursor: pointer;
     &:active {
       transform: translateY(0.1rem);
-    }
+    } */
   `}
 `;
