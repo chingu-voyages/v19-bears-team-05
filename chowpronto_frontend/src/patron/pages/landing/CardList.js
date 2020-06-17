@@ -1,6 +1,7 @@
 import React from "react";
 import Svgs from "../../../assets/svgs/landingPage/index";
 import { CardDetail } from "./CardDetail";
+import styled from "styled-components";
 // Returns Cards
 
 export function CardList() {
@@ -31,16 +32,16 @@ export function CardList() {
   }
   const cardData = combineTextWithSvgs(cardText, Svgs);
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "flex-start",
-      }}
-    >
+    <StyledCardList>
       {cardData.map(({ title, text, Svg }, index) => (
         <CardDetail key={index} title={title} text={text} Svg={Svg} />
       ))}
-    </div>
+    </StyledCardList>
   );
 }
+
+const StyledCardList = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+`;
