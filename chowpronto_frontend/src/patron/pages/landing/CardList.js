@@ -41,7 +41,9 @@ export function CardList() {
 }
 
 const StyledCardList = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
+  display: grid;
+  grid-gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
 `;

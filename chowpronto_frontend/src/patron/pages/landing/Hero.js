@@ -16,34 +16,24 @@ export function Hero() {
     <HeroLayout>
       <HeroTitle> How to get started </HeroTitle>
       <CardList />
-
-      <CallToAction />
     </HeroLayout>
   );
 }
 
 const HeroLayout = styled.article`
-  display: grid;
-  grid-template-rows: 14em auto;
-  height: 50em;
-  width: 100vw;
-
-  /* 
-  -----------------------------------------------------------
-  Expand child beyond parent with margin left and margin right magic
-  */
-  margin-left: calc(49% - 50vw);
-  margin-right: calc(49% - 50vw);
-  /* 
-  -----------------------------------------------------------
-  */
-  background: #f2f5f7;
+  display: flex;
+  flex-direction: column;
+  grid-row: 2;
+  grid-column: 1;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const HeroTitle = styled.h2`
   font-style: normal;
   font-weight: 500;
-  font-size: 48px;
+  font-size: 36px;
   line-height: 56px;
   text-align: center;
   align-self: center;

@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 // Local imports
 import { Hero } from "./Hero";
 import { LocationSearch } from "./LocationSearch";
+import { CallToAction } from "./CallToAction";
 
 // ---------------------
 //     Landing Page
@@ -11,10 +12,14 @@ import { LocationSearch } from "./LocationSearch";
 
 function LandingPage() {
   return (
-    <Layout>
-      <LocationSearch />
-      <Hero />
-    </Layout>
+    <>
+      <Layout>
+        <LocationSearch />
+        <Hero />
+        <CallToAction />
+        <div className="background-fill" />
+      </Layout>
+    </>
   );
 }
 
@@ -27,8 +32,19 @@ function LandingPage() {
 
 // Page Layout
 const Layout = styled.main`
-  max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1;
+  grid-template-rows: 350px 1fr 250px;
+  .background-fill {
+    grid-row: 2/5;
+    grid-column: 1;
+    background: #f2f5f7;
+    height: 100%;
+    position: relative;
+    z-index: -2;
+  }
 `;
 
 // ----------------------

@@ -4,19 +4,19 @@ import styled, { css } from "styled-components";
 
 export function CallToAction() {
   return (
-    <div>
+    <CallToActionContainer>
       <H2>Already a member?</H2>
       <Link to="/login">
         <SignInBtn>Sign in Here</SignInBtn>
       </Link>
-    </div>
+    </CallToActionContainer>
   );
 }
 
 export const H2 = styled.h2`
   ${({ theme }) => css`
     color: ${theme.primary.bg};
-    font-size: 42px;
+    font-size: 36px;
     font-weight: 500;
   `}
 `;
@@ -38,4 +38,13 @@ export const SignInBtn = styled.button`
       transform: translateY(0.1rem);
     }
   `}
+`;
+
+const CallToActionContainer = styled.div`
+  grid-row: 3;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
