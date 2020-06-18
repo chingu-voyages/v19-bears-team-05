@@ -9,7 +9,7 @@ const createOrder = async (req, res) => {
     return res.status(400).send({ errorMsg: "Your cart is empty" });
   }
 
-  if (!cart.every((menuItem) => menuItem.quantity > 0 && menuItem.menuItemId)) {
+  if (!cart.every((menuItem) => menuItem.quantity > 0 && menuItem._id)) {
     return res
       .status(400)
       .send({ errorMsg: "Something wrong with items in your basket" });
@@ -40,7 +40,12 @@ const createOrder = async (req, res) => {
 
   try {
     const newOrder = Order({ deliveryDetails, patronId });
-    cart.forEach((menuItem) => newOrder.cart.push(menuItem));
+    cart.forEach((menuItem) =>
+      newOrder.cart.push({
+        quantity: menuItem.quantity,
+        menuItemId: menuItem._id,
+      })
+    );
     await newOrder.save();
     res.send({ orderId: newOrder._id });
   } catch (err) {
