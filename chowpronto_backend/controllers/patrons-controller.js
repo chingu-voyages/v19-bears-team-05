@@ -126,6 +126,7 @@ const login = async (req, res) => {
       phone: patron.phone,
       address: patron.address,
       postcode: patron.postcode,
+      role: patron.role,
     },
   });
 };
@@ -145,7 +146,17 @@ const getPatronProfile = async (req, res) => {
   const { _id } = req.patronData;
 
   try {
-    const patron = await Patron.findOne({ _id });
+    const patron = await Patron.findOne(
+      { _id },
+      {
+        name: 1,
+        email: 1,
+        phone: 1,
+        address: 1,
+        postcode: 1,
+        role: 1,
+      }
+    );
     res.send({ patron });
   } catch (err) {
     res.status(500).send({ errorMsg: "Couldn't find profile" });
