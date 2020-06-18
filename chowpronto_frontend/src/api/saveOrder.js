@@ -1,7 +1,8 @@
 function saveOrder(token, patronId, formObject, basketItemsArray) {
-  const cart = basketItemsArray.map(({ _id, quantity }) => ({
-    menuItemId: _id,
+  const cart = basketItemsArray.map(({ _id, quantity, unitPrice }) => ({
+    _id,
     quantity,
+    unitPrice,
   }));
   const { name, phone, address, postcode, deliveryDate, email } = formObject;
   return fetch("/api/orders/order", {

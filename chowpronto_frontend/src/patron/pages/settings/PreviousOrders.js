@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState } from "react";
 import OptionsSvg from "../../../assets/svgs/settingsPage/index";
 import {
   Title,
@@ -10,9 +10,11 @@ import formatEuro from "../../../helpers/parseMoney";
 import usePreviousOrders from "../../../hooks/usePreviousOrders";
 
 export default function PreviousOrders() {
-  const orders = usePreviousOrders();
-  console.log(orders);
-  return !orders ? (
+  const [errMsg, setErrMsg] = useState(null);
+  const orders = usePreviousOrders(setErrMsg);
+  return errMsg ? (
+    <p>{errMsg}</p>
+  ) : !orders ? (
     <></>
   ) : orders.length === 0 ? (
     <Title>You don't have any previous orders</Title>
