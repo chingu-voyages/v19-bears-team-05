@@ -7,6 +7,7 @@ import {
   Grid,
 } from "./components/styledComponents";
 import formatEuro from "../../../helpers/parseMoney";
+import { formatDate } from "../../../helpers/formatDate";
 import usePreviousOrders from "../../../hooks/usePreviousOrders";
 
 export default function PreviousOrders() {
@@ -29,12 +30,10 @@ export default function PreviousOrders() {
   );
 }
 
-function parseDate(date) {}
-
 function OrdersList({ orders }) {
   return orders.map(({ date, total }, index) => (
     <Grid key={index}>
-      <div style={{ justifySelf: "flex-start" }}>{date}</div>
+      <div style={{ justifySelf: "flex-start" }}>{formatDate(date)}</div>
       <div style={{ justifySelf: "flex-start", padding: "1em 1.2em" }}>
         {formatEuro(total)}
       </div>
