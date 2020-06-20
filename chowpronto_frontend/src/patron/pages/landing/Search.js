@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { MenuContext } from "../../../state/MenuContext";
@@ -9,25 +9,26 @@ export function Search({ input, onChange }) {
   const history = useHistory();
   const { state, dispatch } = useContext(MenuContext);
   return (
-    <ElevatedContainer>
+    // <ElevatedContainer>
+    <Fragment>
       <Flex>
         <InputParent>
           <Input placeholder="Location" value={input} onChange={onChange} />
           <Label>Location</Label>
+          <Grid>
+            <SearchSVG />
+            <SearchButton
+              onClick={() => {
+                dispatch({ type: "set_delivery_postcode", postcode: input });
+                history.push({
+                  pathname: "/menu",
+                });
+              }}
+            >
+              Search
+            </SearchButton>
+          </Grid>
         </InputParent>
-        <Grid>
-          <SearchSVG />
-          <SearchButton
-            onClick={() => {
-              dispatch({ type: "set_delivery_postcode", postcode: input });
-              history.push({
-                pathname: "/menu",
-              });
-            }}
-          >
-            Search
-          </SearchButton>
-        </Grid>
       </Flex>
       <div
         style={{
@@ -50,16 +51,17 @@ export function Search({ input, onChange }) {
           Berlin?
         </span>
       </div>
-    </ElevatedContainer>
+    </Fragment>
+    // </ElevatedContainer>
   );
 }
 
 // OverLays button and SVG on same level with grid-area: 1 / 1;
 export const Grid = styled.div`
-  display: grid;
+  /* display: grid;
   > * {
     grid-area: 1 / 1;
-  }
+  } */
 `;
 
 // Aligns button and input

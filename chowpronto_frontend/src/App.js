@@ -15,6 +15,7 @@ import useOnInitialisation from "./hooks/useOnInitialisation";
 import BasketPage from "./patron/pages/basketPage";
 import OrderConfirmationPage from "./patron/pages/orderConfirmation";
 import Layout from "./style/Layout";
+import TempLandingPage from "./patron/pages/tempLanding";
 
 function App() {
   // function to run only on initial render of site
@@ -49,6 +50,9 @@ function App() {
                   </Route>
                   <Route path="/orderConfirmation">
                     <OrderConfirmationPage />
+                  </Route>
+                  <Route path="/tempLanding">
+                    <TempLandingPage />
                   </Route>
                 </Switch>
               </Layout>
