@@ -15,20 +15,20 @@ export function Search({ input, onChange }) {
         <InputParent>
           <Input placeholder="Location" value={input} onChange={onChange} />
           <Label>Location</Label>
-          <Grid>
-            <SearchSVG />
-            <SearchButton
-              onClick={() => {
-                dispatch({ type: "set_delivery_postcode", postcode: input });
-                history.push({
-                  pathname: "/menu",
-                });
-              }}
-            >
-              Search
-            </SearchButton>
-          </Grid>
         </InputParent>
+        <Grid>
+          <SearchSVG />
+          <SearchButton
+            onClick={() => {
+              dispatch({ type: "set_delivery_postcode", postcode: input });
+              history.push({
+                pathname: "/menu",
+              });
+            }}
+          >
+            Search
+          </SearchButton>
+        </Grid>
       </Flex>
       <div
         style={{
@@ -58,10 +58,10 @@ export function Search({ input, onChange }) {
 
 // OverLays button and SVG on same level with grid-area: 1 / 1;
 export const Grid = styled.div`
-  /* display: grid;
+  display: grid;
   > * {
     grid-area: 1 / 1;
-  } */
+  }
 `;
 
 // Aligns button and input
