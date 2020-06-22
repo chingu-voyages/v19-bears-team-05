@@ -11,7 +11,7 @@ const MenuPage = () => {
   const location = useLocation();
   return (
     <PageLayout>
-      <MenuSidebar {...location} />
+      <MenuSidebar {...location} className="hidden" />
       <MenuMain />
       {location.search === "?loginModal=true" && <LoginModal />}
       {location.search === "?deliverySelect=true" && <DeliverySelect />}
