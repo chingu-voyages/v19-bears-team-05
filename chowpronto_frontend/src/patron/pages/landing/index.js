@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Logo from "../../../shared_components/Logo";
-import { SearchSVG } from "../old_landing/SearchSVG";
+import { SearchSVG } from "./components/SearchSVG";
 import { useContext } from "react";
 import { MenuContext } from "../../../state/MenuContext";
 import { useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import { LandingInput } from "./components/LandingInput";
+import { Button } from "./components/Button";
 
 export default function TempLandingPage() {
   const [location, setLocation] = useState("");
@@ -30,7 +32,11 @@ export default function TempLandingPage() {
       </ImgContainer>
       <StuffContainer>
         <Logo />
-        <LandingInput label="search">
+        <LandingInput
+          label="search"
+          onChange={(e) => onChange(e)}
+          value={location}
+        >
           <Button
             onClick={() => {
               dispatch({ type: "set_delivery_postcode", postcode: location });
@@ -58,7 +64,6 @@ export default function TempLandingPage() {
             <LoginContainer
               action="POST"
               onSubmit={(e) => {
-                console.log("Hey Ho");
                 e.preventDefault();
                 login(formData.email, formData.password);
                 history.push({
@@ -170,68 +175,6 @@ const StuffContainer = styled.div`
   }
 `;
 
-function LandingInput(props) {
-  return (
-    <React.Fragment>
-      <InputParentContainer>
-        <Input placeholder={props.label} type={props.type} />
-        {/* <Label>{props.label}</Label> */}
-        {props.children}
-      </InputParentContainer>
-    </React.Fragment>
-  );
-}
-
-const InputParentContainer = styled.div`
-  border: 2px solid #545e97;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: flex;
-  padding: 10px;
-  height: 67px;
-  position: relative;
-  @media screen and (max-width: 530px) {
-    background: white;
-    box-shadow: none;
-    margin: 20px;
-  }
-`;
-
-const Input = styled.input`
-  border: none;
-  outline: none;
-  flex: 3;
-  font-family: inherit;
-  text-align: left;
-  margin-left: 10px;
-`;
-
-function Button(props) {
-  console.log("props", props);
-  return (
-    <StyledButton role="button" type={props.type} {...props}>
-      {props.children}
-      {props.buttonLegend}
-    </StyledButton>
-  );
-}
-const StyledButton = styled.button`
-  flex: 1;
-  font-weight: 500;
-  font-size: 17px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  letter-spacing: 0.02em;
-  background: #3949ab;
-  border-radius: 3px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 10px;
-`;
-
 const AnimatedLogin = keyframes`
   0% {
     opacity: 0;
@@ -267,8 +210,9 @@ const LoginContainer = styled.form`
 const StyledList = styled.ul`
   list-style-type: none;
   position: absolute;
-  bottom: 15%;
+  bottom: 10%;
   opacity: 1;
+  line-height: 2rem;
   animation: ${ReverseLogin} 1s;
   animation-timing-function: ease;
   animation-direction: reverse;
