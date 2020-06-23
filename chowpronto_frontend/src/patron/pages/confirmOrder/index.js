@@ -40,7 +40,6 @@ const ConfirmOrderPage = (props) => {
     } else if (password !== passwordConfirm) {
       setErrMsg("Password should match");
     } else if (!/^\+\d{2}\W\d{4}\W\d{4}$/.test(phone)) {
-      console.log("No Match");
       setErrMsg("Phone number should be in the format +12 3456 7890");
     } else {
       checkout();
