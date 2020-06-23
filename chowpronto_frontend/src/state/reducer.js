@@ -46,6 +46,11 @@ export function reducer(state, action) {
         ...state,
         formState: { ...state.formState, [action.field]: action.value },
       };
+    case "delete_passwords":
+      return {
+        ...state,
+        formState: { ...state.formState, password: "", passwordConfirm: "" },
+      };
     case "prefill_form":
       return {
         ...state,
