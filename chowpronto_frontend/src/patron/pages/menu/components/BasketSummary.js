@@ -11,7 +11,6 @@ export default function BasketSummary() {
     (acc, val) => val.unitPrice * val.quantity + acc,
     0
   );
-  console.log("totalPrice", totalPrice);
   return (
     <BasketList title="basket" active={basketItems.length > 0}>
       {basketItems.length > 0 ? (
