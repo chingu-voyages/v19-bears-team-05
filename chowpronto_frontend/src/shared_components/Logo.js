@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 function Icon() {
+  const history = useHistory();
   return (
     <StyledSvg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +11,7 @@ function Icon() {
       height="50"
       fill="none"
       viewBox="0 0 160 50"
+      onClick={() => history.push("/")}
     >
       <rect
         width="81.997"

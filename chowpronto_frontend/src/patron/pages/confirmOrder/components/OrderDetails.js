@@ -8,21 +8,16 @@ import { Link } from "react-router-dom";
 
 export default function OrderDetails() {
   const { state } = useContext(MenuContext);
-  const { basketItems } = state;
-  const deliveryAddress = "AB12 3EY";
-  const deliveryDate = new Date(2020, 4, 29, 18, 30);
+  const { basketItems, formState, deliveryDate } = state;
+  const { address, postcode } = formState;
+  const delivery = new Date(deliveryDate);
   return (
     <StyledOrderDetails>
       <h3>Order Details</h3>
       {basketItems.map((val) => {
         return (
           <p key={val._id}>
-            {val.name} x {val.quantity}{" "}
-            {"."
-              .repeat
-              // 30 - val.name.length
-              //  - Math.floor(Math.log10(val.quantity))
-              ()}{" "}
+            {val.name} x {val.quantity} {".".repeat()}{" "}
             {parseMoney(val.unitPrice * val.quantity)}
           </p>
         );
@@ -39,8 +34,10 @@ export default function OrderDetails() {
           )}
         </strong>
       </p>
-      <h4>Delivering to: {deliveryAddress}</h4>
-      <h4>{parseTime(deliveryDate)}</h4>
+      <h4>Delivering to:</h4>
+      <h4>{address}</h4>
+      <h4>{postcode}</h4>
+      <h4>{parseTime(delivery)}</h4>
       <br />
       <div className="change-order">
         <div className="label">
