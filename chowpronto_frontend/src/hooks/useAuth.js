@@ -9,7 +9,7 @@ function useAuth() {
     const storageData = await getFromStorage();
     if (storageData && storageData.length > 0) {
       const userDetails = await getUserById(storageData);
-      if (userDetails.patron) {
+      if (userDetails && userDetails.patron) {
         setUserDetailsToContext({ ...userDetails, token: storageData });
       } else {
         logout();

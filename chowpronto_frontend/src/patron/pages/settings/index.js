@@ -13,7 +13,6 @@ function Settings() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
       }}
     >
       <Container>

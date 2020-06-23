@@ -29,21 +29,34 @@ const MenuSidebar = () => {
     <StyledSidebar>
       <UserBanner>
         {user && Object.keys(user).length > 0 ? (
-          <span>
-            Welcome back <span>{user.patron.name}</span>{" "}
-            <Link
-              onClick={() => {
-                logout();
-              }}
-              to={(location) => {
-                return `${location.pathname}?loginModal=true`;
-              }}
-              style={{ cursor: "pointer" }}
-              // todo Figure out why the message is not updating on logout
-            >
-              Not me?
-            </Link>
-          </span>
+          <>
+            <span>
+              Welcome back <span>{user.patron.name}</span>{" "}
+              <Link
+                onClick={() => {
+                  logout();
+                }}
+                to={(location) => {
+                  return `${location.pathname}?loginModal=true`;
+                }}
+                style={{ cursor: "pointer" }}
+                // todo Figure out why the message is not updating on logout
+              >
+                Not me?
+              </Link>
+            </span>
+            <p>
+              <Link
+                /* onClick={() => {
+                  alert("delete");
+                }} */
+                to="/settings"
+                style={{ cursor: "pointer" }}
+              >
+                Settings
+              </Link>
+            </p>
+          </>
         ) : (
           <Link
             to={(location) => {
