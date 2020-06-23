@@ -29,6 +29,7 @@ const MenuSidebar = () => {
     <StyledSidebar>
       <UserBanner>
         {user && Object.keys(user).length > 0 ? (
+
           <>
             <span>
               Welcome back <span>{user.patron.name}</span>{" "}

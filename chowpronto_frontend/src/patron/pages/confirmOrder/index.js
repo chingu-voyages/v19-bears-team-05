@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
@@ -10,6 +9,7 @@ import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 import useCheckout from "../../../hooks/useCheckout";
 import { useHistory } from "react-router-dom";
 import { MenuContext } from "../../../../src/state/MenuContext";
+import Logo from "../../../shared_components/Logo";
 
 const ConfirmOrderPage = (props) => {
   const { checkout } = useCheckout();
@@ -48,7 +48,8 @@ const ConfirmOrderPage = (props) => {
 
   return (
     <PageLayout>
-      <StyledSidebar style={{ flex: 1.5 }}>
+      <StyledSidebar>
+        <Logo />
         <OrderDetails />
         <Login />
       </StyledSidebar>

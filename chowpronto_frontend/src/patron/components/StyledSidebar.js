@@ -4,6 +4,5 @@ export const StyledSidebar = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
-  border-right: ${({ theme }) => theme.bd200u};
   padding: ${({ theme }) => theme.pd900};
 `;
