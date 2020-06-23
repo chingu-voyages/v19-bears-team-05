@@ -39,7 +39,6 @@ const MenuSidebar = () => {
                 return `${location.pathname}?loginModal=true`;
               }}
               style={{ cursor: "pointer" }}
-              // todo Figure out why the message is not updating on logout
             >
               Not me?
             </Link>

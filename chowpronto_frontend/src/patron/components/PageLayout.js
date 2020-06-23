@@ -7,12 +7,14 @@ export const PageLayout = styled.div`
   margin: 0 auto;
   flex-wrap: wrap;
   position: relative;
+  height: max(100vh, max-content);
   & > div:nth-child(1) {
     flex: 1.5;
     height: 100%;
   }
   & > div:nth-child(2) {
     border-left: ${({ theme }) => theme.bd200u};
+    height: max(100vh, 100%);
   }
   @media screen and (max-width: 700px) {
     & > div:nth-child(1) {

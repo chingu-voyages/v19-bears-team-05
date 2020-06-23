@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { PageLayout } from "../../components/PageLayout";
 import { StyledSidebar } from "../../components/StyledSidebar";
 import { StyledPageMain } from "../../components/StyledPageMain";
@@ -10,12 +11,16 @@ import { CheckoutButton } from "../../../shared_components/CheckoutButton";
 import useCheckout from "../../../hooks/useCheckout";
 import { useHistory } from "react-router-dom";
 import { MenuContext } from "../../../../src/state/MenuContext";
+import useAuth from "../../../hooks/useAuth";
+import Logo from "../../../shared_components/Logo";
 
 const ConfirmOrderPage = (props) => {
   const { checkout } = useCheckout();
   const history = useHistory();
   let { state: ctx } = useContext(MenuContext);
   const [errMsg, setErrMsg] = useState("");
+  const { getUser, logout } = useAuth();
+  const user = getUser();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -48,7 +53,8 @@ const ConfirmOrderPage = (props) => {
 
   return (
     <PageLayout>
-      <StyledSidebar style={{ flex: 1.5 }}>
+      <StyledSidebar>
+        <Logo />
         <OrderDetails />
         <Login />
       </StyledSidebar>
@@ -66,5 +72,10 @@ const ConfirmOrderPage = (props) => {
     </PageLayout>
   );
 };
+
+const UserBanner = styled.div`
+  margin-bottom: ${({ theme }) => theme.mg600};
+  font-size: ${({ theme }) => theme.fz300};
+`;
 
 export default ConfirmOrderPage;
