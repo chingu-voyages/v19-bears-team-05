@@ -33,7 +33,7 @@ export default function TempLandingPage() {
       <StuffContainer>
         <Logo />
         <LandingInput
-          label="search"
+          label="please enter your postcode"
           onChange={(e) => onChange(e)}
           value={location}
         >
