@@ -16,7 +16,6 @@ const ConfirmOrderPage = (props) => {
   const history = useHistory();
   let { state: ctx } = useContext(MenuContext);
   const [errMsg, setErrMsg] = useState("");
-
   function handleSubmit(e) {
     e.preventDefault();
     const {
@@ -40,6 +39,9 @@ const ConfirmOrderPage = (props) => {
       setErrMsg("Please, fill in all fields");
     } else if (password !== passwordConfirm) {
       setErrMsg("Password should match");
+    } else if (!/^\+\d{2}\W\d{4}\W\d{4}$/.test(phone)) {
+      console.log("No Match");
+      setErrMsg("Phone number should be in the format +12 3456 7890");
     } else {
       checkout();
       history.push("/orderConfirmation");

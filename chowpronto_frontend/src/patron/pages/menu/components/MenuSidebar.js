@@ -29,7 +29,6 @@ const MenuSidebar = () => {
     <StyledSidebar>
       <UserBanner>
         {user && Object.keys(user).length > 0 ? (
-
           <>
             <span>
               Welcome back <span>{user.patron.name}</span>{" "}
@@ -41,19 +40,12 @@ const MenuSidebar = () => {
                   return `${location.pathname}?loginModal=true`;
                 }}
                 style={{ cursor: "pointer" }}
-                // todo Figure out why the message is not updating on logout
               >
                 Not me?
               </Link>
             </span>
             <p>
-              <Link
-                /* onClick={() => {
-                  alert("delete");
-                }} */
-                to="/settings"
-                style={{ cursor: "pointer" }}
-              >
+              <Link to="/settings" style={{ cursor: "pointer" }}>
                 Settings
               </Link>
             </p>

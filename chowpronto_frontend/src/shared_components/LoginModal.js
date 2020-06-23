@@ -32,6 +32,7 @@ const LoginModal = (props) => {
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
+            autoComplete="username"
           />
           <label htmlFor="password">password</label>
           <input
@@ -40,6 +41,7 @@ const LoginModal = (props) => {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
+            autoComplete="current-password"
           />
           <button type="submit">Go!</button>
         </form>
