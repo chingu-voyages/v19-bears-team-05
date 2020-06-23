@@ -3,7 +3,7 @@ import TextDisplayBox from "../../shared_components/TextDisplayBox";
 import { MenuContext } from "../../state/MenuContext";
 
 const DeliveryAddress = (props) => {
-  const { state, dispatch } = useContext(MenuContext);
+  const { state } = useContext(MenuContext);
   return (
     <TextDisplayBox
       title="delivery address"

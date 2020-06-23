@@ -12,7 +12,7 @@ import { Button } from "./components/Button";
 export default function TempLandingPage() {
   const [location, setLocation] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
-  const { state, dispatch } = useContext(MenuContext);
+  const { dispatch } = useContext(MenuContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
