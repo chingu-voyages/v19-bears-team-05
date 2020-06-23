@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 
 export default function OrderDetails() {
   const { state } = useContext(MenuContext);
-  const { basketItems, formState } = state;
+  const { basketItems, formState, deliveryDate } = state;
   console.log("state", state);
   const { address, postcode } = formState;
-  const deliveryDate = new Date(2020, 4, 29, 18, 30);
+  const delivery = new Date(deliveryDate);
   return (
     <StyledOrderDetails>
       <h3>Order Details</h3>
@@ -38,7 +38,7 @@ export default function OrderDetails() {
       <h4>Delivering to:</h4>
       <h4>{address}</h4>
       <h4>{postcode}</h4>
-      <h4>{parseTime(deliveryDate)}</h4>
+      <h4>{parseTime(delivery)}</h4>
       <br />
       <div className="change-order">
         <div className="label">
