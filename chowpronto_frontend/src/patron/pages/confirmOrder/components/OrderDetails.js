@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 export default function OrderDetails() {
   const { state } = useContext(MenuContext);
   const { basketItems, formState, deliveryDate } = state;
-  console.log("state", state);
   const { address, postcode } = formState;
   const delivery = new Date(deliveryDate);
   return (
