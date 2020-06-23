@@ -12,8 +12,12 @@ const Order = new mongoose.Schema({
 
   cart: [
     {
-      menuItemId: { type: mongoose.Schema.ObjectId, ref: "MenuItem" },
-      quantity: { type: Number },
+      menuItemId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "MenuItem",
+        required: true,
+      },
+      quantity: { type: Number, required: true },
     },
   ],
 
