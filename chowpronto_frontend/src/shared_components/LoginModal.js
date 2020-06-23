@@ -19,11 +19,11 @@ const LoginModal = (props) => {
         <CloseButton onClick={() => history.goBack()}>close</CloseButton>
         <form
           action="POST"
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-          //   login(formData.email, formData.password);
-          //   history.goBack();
-          // }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            login(formData.email, formData.password);
+            history.goBack();
+          }}
         >
           <label htmlFor="email">email</label>
           <input
