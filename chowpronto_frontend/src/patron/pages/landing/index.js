@@ -8,22 +8,26 @@ import { useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { LandingInput } from "./components/LandingInput";
 import { Button } from "./components/Button";
+import GeoLocation from "../../../shared_components/GeoLocation";
 
 export default function TempLandingPage() {
-  const [location, setLocation] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
-  const { dispatch } = useContext(MenuContext);
+  const { state, dispatch } = useContext(MenuContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [modal, setModal] = useState(false);
   const history = useHistory();
   function onChange(e) {
-    setLocation(e.target.value);
+    dispatch({ type: "set_delivery_postcode", postcode: e.target.value });
   }
+  // TODO create loading state
   const { login } = useAuth();
+  console.log("state", state);
   return (
     <PageContainer>
+      {modal ? <h1>Modal</h1> : ""}
       <ImgContainer>
         <Img
           src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
@@ -35,19 +39,28 @@ export default function TempLandingPage() {
         <LandingInput
           label="please enter your postcode"
           onChange={(e) => onChange(e)}
-          value={location}
+          value={state.formState.postcode}
         >
           <Button
             onClick={() => {
-              dispatch({ type: "set_delivery_postcode", postcode: location });
               history.push({
                 pathname: "/menu",
               });
             }}
+            disabled={
+              !/^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(
+                state.formState.postcode
+              )
+            }
           >
             <SearchSVG />
             Search
           </Button>
+          <GeoLocation
+            onClick={(e) => {
+              dispatch({ type: "set_delivery_location", location: e });
+            }}
+          />
         </LandingInput>
         <div>
           Already Registered?
@@ -87,7 +100,14 @@ export default function TempLandingPage() {
                   setFormData({ ...formData, password: e.target.value })
                 }
               >
-                <Button type="submit">Login</Button>
+                <Button
+                  type="submit"
+                  disabled={
+                    formData.email.length < 1 || formData.password.length < 1
+                  }
+                >
+                  Login
+                </Button>
               </LandingInput>
             </LoginContainer>
           ) : (

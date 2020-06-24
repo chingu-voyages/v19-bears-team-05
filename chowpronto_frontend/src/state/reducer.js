@@ -74,6 +74,15 @@ export function reducer(state, action) {
           postcode: action.postcode,
         },
       };
+    case "set_delivery_location":
+      return {
+        ...state,
+        deliveryLocation: action.location,
+        formState: {
+          ...state.formState,
+          postcode: action.location.postcode,
+        },
+      };
     default:
       throw new Error();
   }

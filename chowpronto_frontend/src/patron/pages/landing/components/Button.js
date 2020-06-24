@@ -21,6 +21,7 @@ const StyledButton = styled.button`
   border-radius: 3px;
   border: none;
   color: white;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   padding: 10px;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
 `;
