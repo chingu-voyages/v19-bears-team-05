@@ -1,15 +1,15 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext, useState, useEffect } from "react";
 import styled from "styled-components";
+import { StyledBoxContainer } from "../../../shared_components/BoxContainer"; //"../../shared_components/BoxContainer";
 import {
   Title,
   BorderedContainer,
   InnerTitle,
   Grid,
 } from "./components/styledComponents";
+import ChowButton from "../../../shared_components/ChowButton";
 
-// ----------------------
-// Personal Details Container
-//-----------------------
+import UserContext from "../../../state/UserContext";
 
 export default function PersonalDetails() {
   return (
@@ -18,10 +18,134 @@ export default function PersonalDetails() {
       <BorderedContainer>
         <InnerTitle>Personal Details</InnerTitle>
         <InputList />
+        <Details />
       </BorderedContainer>
     </article>
   );
 }
+
+function Details() {
+  const { user } = useContext(UserContext);
+  const [patron, setPatron] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (user.patron) {
+      console.log(user);
+      setPatron(user.patron);
+    }
+  }, [user]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert("submit");
+  }
+
+  function handleChange(e) {
+    setPatron({ ...patron, [e.target.name]: e.target.value });
+  }
+
+  return !patron ? null : !isEdit ? (
+    <div style={{ textAlign: "start" }}>
+      <div>
+        <span>name</span> <span>{patron.name}</span>
+      </div>
+      <div>
+        <span>email</span> <span>{patron.email}</span>
+      </div>
+      <div>
+        <span>address</span> <span>{patron.address}</span>
+      </div>
+      <div>
+        <span>post code</span> <span>{patron.postcode}</span>
+      </div>
+      <div>
+        <span>phone</span> <span>{patron.phone}</span>
+      </div>
+      <ChowButton
+        secondary
+        title="edit"
+        style={{ margin: "5px", padding: "15px" }}
+        onClick={() => {
+          setIsEdit(true);
+          setPatron(user.patron);
+        }}
+      />
+    </div>
+  ) : (
+    <form onSubmit={handleSubmit}>
+      <StyledInputContainer>
+        <input
+          type="text"
+          placeholder="name"
+          name="name"
+          value={patron.name}
+          onChange={(e) => handleChange(e)}
+        />
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <input
+          type="text"
+          placeholder="address"
+          name="address"
+          value={patron.address}
+          onChange={(e) => handleChange(e)}
+        />
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <input
+          type="text"
+          placeholder="postcode"
+          name="postcode"
+          value={patron.postcode}
+          onChange={(e) => handleChange(e)}
+        />
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <input
+          type="tel"
+          placeholder="phone"
+          name="phone"
+          value={patron.phone}
+          onChange={(e) => handleChange(e)}
+        />
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <input
+          type="email"
+          placeholder="email"
+          name="email"
+          value={patron.email}
+          onChange={(e) => handleChange(e)}
+        />
+      </StyledInputContainer>
+      <ChowButton
+        primary
+        title="save"
+        style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+      />
+      <ChowButton
+        secondary
+        title="cancel"
+        style={{ margin: "5px", padding: "15px" }}
+        onClick={() => setIsEdit(false)}
+      />
+    </form>
+  );
+}
+
+const StyledInputContainer = styled(StyledBoxContainer)`
+  input {
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    font-size: ${({ theme }) => theme.fz300};
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+`;
+
 function InputList() {
   // initialize reducer with state: 'idle', items, and openID: null
   const [data, send] = useReducer(inputReducer, {
@@ -35,6 +159,7 @@ function InputList() {
     ],
     openId: null,
   });
+
   function handleTextInputClick(state, id) {
     if (state === "idle") {
       send({ type: "editing", payload: { id } });
