@@ -29,7 +29,6 @@ function Details() {
 
   useEffect(() => {
     if (user.patron) {
-      console.log(user);
       setPatron(user.patron);
     }
   }, [user]);

@@ -2,16 +2,23 @@ import React, { useState, useContext } from "react";
 import ChowButton from "../../../shared_components/ChowButton";
 import deleteAccount from "../../../api/deleteAccount";
 import UserContext from "../../../state/UserContext";
+import useAuth from "../../../hooks/useAuth";
+import { useHistory } from "react-router-dom";
 
 export default function DeleteAccount() {
   const { user } = useContext(UserContext);
   const [isEdit, setIsEdit] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  console.log(user);
+  const { logout } = useAuth();
+  const history = useHistory();
+
   function handleSubmit(e) {
     e.preventDefault();
     deleteAccount(user.token, user.patron._id)
-      .then((res) => console.log(res))
+      .then((res) => {
+        logout();
+        history.push("/");
+      })
       .catch((err) => {
         console.log(err);
         setErrMsg("Sorry, fail to delete account");

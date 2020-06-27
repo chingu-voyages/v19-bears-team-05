@@ -3,7 +3,6 @@ import { StyledBoxContainer } from "../../shared_components/BoxContainer";
 import styled from "styled-components";
 
 export function PasswordFields({ handleChange, passwordInput }) {
-  console.log("passwordInput", passwordInput);
   return (
     <>
       <StyledInputContainer>
