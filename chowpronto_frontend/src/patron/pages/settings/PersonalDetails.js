@@ -19,9 +19,9 @@ export default function PersonalDetails() {
     <article>
       <Title>You can change your personal details here</Title>
       <BorderedContainer>
-        <InputList />
         <Details />
         <ChangePassword />
+        <DeleteAccount />
       </BorderedContainer>
     </article>
   );
@@ -56,7 +56,12 @@ function Details() {
           <ChowButton
             secondary
             title="edit"
-            style={{ margin: "5px", padding: "0 15px", height: "40px" }}
+            style={{
+              margin: "5px",
+              padding: "0 15px",
+              height: "40px",
+              width: "80px",
+            }}
             onClick={() => {
               setIsEdit(true);
               setPatron(user.patron);
@@ -66,22 +71,18 @@ function Details() {
       </div>
 
       {!patron ? null : !isEdit ? (
-        <div style={{ textAlign: "start" }}>
-          <div>
-            <span>name</span> <span>{patron.name}</span>
-          </div>
-          <div>
-            <span>email</span> <span>{patron.email}</span>
-          </div>
-          <div>
-            <span>address</span> <span>{patron.address}</span>
-          </div>
-          <div>
-            <span>post code</span> <span>{patron.postcode}</span>
-          </div>
-          <div>
-            <span>phone</span> <span>{patron.phone}</span>
-          </div>
+        <div
+          style={{
+            textAlign: "start",
+            display: "grid",
+            gridTemplateColumns: "0.4fr 1fr",
+          }}
+        >
+          <span>name: </span> <span>{patron.name}</span>
+          <span>email:</span> <span>{patron.email}</span>
+          <span>address:</span> <span>{patron.address}</span>
+          <span>post code:</span> <span>{patron.postcode}</span>
+          <span>phone:</span> <span>{patron.phone}</span>
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -124,8 +125,13 @@ function ChangePassword() {
         {!isEdit && (
           <ChowButton
             secondary
-            title="edit"
-            style={{ margin: "5px", padding: "0 15px", height: "40px" }}
+            title="change"
+            style={{
+              margin: "5px",
+              padding: "0 15px",
+              height: "40px",
+              width: "80px",
+            }}
             onClick={() => {
               setIsEdit(true);
             }}
@@ -141,6 +147,57 @@ function ChangePassword() {
           <ChowButton
             primary
             title="save"
+            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+          />
+          <ChowButton
+            secondary
+            title="cancel"
+            style={{ margin: "5px", padding: "15px" }}
+            onClick={() => setIsEdit(false)}
+          />
+        </form>
+      )}
+    </div>
+  );
+}
+
+function DeleteAccount() {
+  const [isEdit, setIsEdit] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert("submit");
+  }
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Account</h3>
+        {!isEdit && (
+          <ChowButton
+            secondary
+            title="Delete"
+            style={{
+              margin: "5px",
+              padding: "0 15px",
+              height: "40px",
+              width: "80px",
+            }}
+            onClick={() => {
+              setIsEdit(true);
+            }}
+          />
+        )}
+      </div>
+      {isEdit && (
+        <form onSubmit={handleSubmit}>
+          <p>
+            By clicking delete you will delete your account and all details
+            about it. You will not be able to restore it.
+          </p>
+          <ChowButton
+            primary
+            title="Delete"
             style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
           />
           <ChowButton

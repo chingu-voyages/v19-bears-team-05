@@ -21,7 +21,7 @@ export default function PreviousOrders() {
     <Title>You don't have any previous orders</Title>
   ) : (
     <article>
-      <Title>See your previous orders</Title>
+      <Title>See your order history</Title>
       <BorderedContainer>
         <InnerTitle>Previous Orders</InnerTitle>
         <OrdersList orders={orders} />
