@@ -109,25 +109,31 @@ function ChangePassword() {
     password: "",
     passwordConfirm: "",
   });
-
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert("submit");
+  }
   function handleChange(e) {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <h3>Password</h3>
-      {!isEdit ? (
-        <ChowButton
-          secondary
-          title="edit"
-          style={{ margin: "5px", padding: "0 15px", height: "40px" }}
-          onClick={() => {
-            setIsEdit(true);
-          }}
-        />
-      ) : (
-        <>
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Password</h3>
+        {!isEdit && (
+          <ChowButton
+            secondary
+            title="edit"
+            style={{ margin: "5px", padding: "0 15px", height: "40px" }}
+            onClick={() => {
+              setIsEdit(true);
+            }}
+          />
+        )}
+      </div>
+      {isEdit && (
+        <form onSubmit={handleSubmit}>
           <PasswordFields
             handleChange={handleChange}
             passwordInput={passwords}
@@ -143,7 +149,7 @@ function ChangePassword() {
             style={{ margin: "5px", padding: "15px" }}
             onClick={() => setIsEdit(false)}
           />
-        </>
+        </form>
       )}
     </div>
   );
