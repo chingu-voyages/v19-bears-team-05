@@ -8,17 +8,20 @@ import {
   Grid,
 } from "./components/styledComponents";
 import ChowButton from "../../../shared_components/ChowButton";
-
 import UserContext from "../../../state/UserContext";
+import {
+  PasswordFields,
+  UserDataFields,
+} from "../../../../src/patron/components/FormFields";
 
 export default function PersonalDetails() {
   return (
     <article>
-      <Title>You can change your private data here</Title>
+      <Title>You can change your personal details here</Title>
       <BorderedContainer>
-        <InnerTitle>Personal Details</InnerTitle>
         <InputList />
         <Details />
+        <ChangePassword />
       </BorderedContainer>
     </article>
   );
@@ -45,106 +48,106 @@ function Details() {
     setPatron({ ...patron, [e.target.name]: e.target.value });
   }
 
-  return !patron ? null : !isEdit ? (
-    <div style={{ textAlign: "start" }}>
-      <div>
-        <span>name</span> <span>{patron.name}</span>
+  return (
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Personal Details</h3>
+        {!isEdit && (
+          <ChowButton
+            secondary
+            title="edit"
+            style={{ margin: "5px", padding: "0 15px", height: "40px" }}
+            onClick={() => {
+              setIsEdit(true);
+              setPatron(user.patron);
+            }}
+          />
+        )}
       </div>
-      <div>
-        <span>email</span> <span>{patron.email}</span>
-      </div>
-      <div>
-        <span>address</span> <span>{patron.address}</span>
-      </div>
-      <div>
-        <span>post code</span> <span>{patron.postcode}</span>
-      </div>
-      <div>
-        <span>phone</span> <span>{patron.phone}</span>
-      </div>
-      <ChowButton
-        secondary
-        title="edit"
-        style={{ margin: "5px", padding: "15px" }}
-        onClick={() => {
-          setIsEdit(true);
-          setPatron(user.patron);
-        }}
-      />
-    </div>
-  ) : (
-    <form onSubmit={handleSubmit}>
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="name"
-          name="name"
-          value={patron.name}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="address"
-          name="address"
-          value={patron.address}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="postcode"
-          name="postcode"
-          value={patron.postcode}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="tel"
-          placeholder="phone"
-          name="phone"
-          value={patron.phone}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="email"
-          placeholder="email"
-          name="email"
-          value={patron.email}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <ChowButton
-        primary
-        title="save"
-        style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
-      />
-      <ChowButton
-        secondary
-        title="cancel"
-        style={{ margin: "5px", padding: "15px" }}
-        onClick={() => setIsEdit(false)}
-      />
-    </form>
+
+      {!patron ? null : !isEdit ? (
+        <div style={{ textAlign: "start" }}>
+          <div>
+            <span>name</span> <span>{patron.name}</span>
+          </div>
+          <div>
+            <span>email</span> <span>{patron.email}</span>
+          </div>
+          <div>
+            <span>address</span> <span>{patron.address}</span>
+          </div>
+          <div>
+            <span>post code</span> <span>{patron.postcode}</span>
+          </div>
+          <div>
+            <span>phone</span> <span>{patron.phone}</span>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <UserDataFields onChange={handleChange} formInput={patron} />
+          <ChowButton
+            primary
+            title="save"
+            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+          />
+          <ChowButton
+            secondary
+            title="cancel"
+            style={{ margin: "5px", padding: "15px" }}
+            onClick={() => setIsEdit(false)}
+          />
+        </form>
+      )}
+    </>
   );
 }
 
-const StyledInputContainer = styled(StyledBoxContainer)`
-  input {
-    width: 100%;
-    height: 100%;
-    font-family: inherit;
-    font-size: ${({ theme }) => theme.fz300};
-    border: none;
-    outline: none;
-    background: transparent;
+function ChangePassword() {
+  const [isEdit, setIsEdit] = useState(false);
+  const [passwords, setPasswords] = useState({
+    password: "",
+    passwordConfirm: "",
+  });
+
+  function handleChange(e) {
+    setPasswords({ ...passwords, [e.target.name]: e.target.value });
   }
-`;
+
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <h3>Password</h3>
+      {!isEdit ? (
+        <ChowButton
+          secondary
+          title="edit"
+          style={{ margin: "5px", padding: "0 15px", height: "40px" }}
+          onClick={() => {
+            setIsEdit(true);
+          }}
+        />
+      ) : (
+        <>
+          <PasswordFields
+            handleChange={handleChange}
+            passwordInput={passwords}
+          />
+          <ChowButton
+            primary
+            title="save"
+            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
+          />
+          <ChowButton
+            secondary
+            title="cancel"
+            style={{ margin: "5px", padding: "15px" }}
+            onClick={() => setIsEdit(false)}
+          />
+        </>
+      )}
+    </div>
+  );
+}
 
 function InputList() {
   // initialize reducer with state: 'idle', items, and openID: null
