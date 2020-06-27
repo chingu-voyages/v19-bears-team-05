@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ChowButton from "../../../shared_components/ChowButton";
+import deleteAccount from "../../../api/deleteAccount";
+import UserContext from "../../../state/UserContext";
 
 export default function DeleteAccount() {
+  const { user } = useContext(UserContext);
   const [isEdit, setIsEdit] = useState(false);
-
+  const [errMsg, setErrMsg] = useState("");
+  console.log(user);
   function handleSubmit(e) {
     e.preventDefault();
-    alert("submit");
+    deleteAccount(user.token, user.patron._id)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+        setErrMsg("Sorry, fail to delete account");
+        setIsEdit(false);
+      });
   }
 
   return (
@@ -24,11 +34,13 @@ export default function DeleteAccount() {
               width: "80px",
             }}
             onClick={() => {
+              setErrMsg("");
               setIsEdit(true);
             }}
           />
         )}
       </div>
+      {errMsg && <p style={{ color: "red" }}>{errMsg}</p>}
       {isEdit && (
         <form onSubmit={handleSubmit}>
           <p>
