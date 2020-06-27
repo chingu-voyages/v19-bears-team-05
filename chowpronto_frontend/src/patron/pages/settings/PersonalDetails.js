@@ -80,7 +80,7 @@ function Details() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <UserDataFields onChange={handleChange} formInput={patron} />
+          <UserDataFields handleChange={handleChange} formInput={patron} />
           <ChowButton
             primary
             title="save"

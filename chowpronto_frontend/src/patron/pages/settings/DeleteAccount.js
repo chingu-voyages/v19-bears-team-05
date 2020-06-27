@@ -20,7 +20,6 @@ export default function DeleteAccount() {
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
         setErrMsg("Sorry, fail to delete account");
         setIsEdit(false);
       });
