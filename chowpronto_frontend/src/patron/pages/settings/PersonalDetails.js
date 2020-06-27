@@ -8,6 +8,7 @@ import {
   UserDataFields,
 } from "../../../../src/patron/components/FormFields";
 import DeleteAccount from "./DeleteAccount";
+import ChangePassword from "./ChangePassword";
 
 export default function PersonalDetails() {
   return (
@@ -95,62 +96,5 @@ function Details() {
         </form>
       )}
     </>
-  );
-}
-
-function ChangePassword() {
-  const [isEdit, setIsEdit] = useState(false);
-  const [passwords, setPasswords] = useState({
-    password: "",
-    passwordConfirm: "",
-  });
-  function handleSubmit(e) {
-    e.preventDefault();
-    alert("submit");
-  }
-  function handleChange(e) {
-    setPasswords({ ...passwords, [e.target.name]: e.target.value });
-  }
-
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3>Password</h3>
-        {!isEdit && (
-          <ChowButton
-            secondary
-            title="change"
-            style={{
-              margin: "5px",
-              padding: "0 15px",
-              height: "40px",
-              width: "80px",
-            }}
-            onClick={() => {
-              setIsEdit(true);
-            }}
-          />
-        )}
-      </div>
-      {isEdit && (
-        <form onSubmit={handleSubmit}>
-          <PasswordFields
-            handleChange={handleChange}
-            passwordInput={passwords}
-          />
-          <ChowButton
-            primary
-            title="save"
-            style={{ margin: "5px", fontWeight: 700, padding: "15px" }}
-          />
-          <ChowButton
-            secondary
-            title="cancel"
-            style={{ margin: "5px", padding: "15px" }}
-            onClick={() => setIsEdit(false)}
-          />
-        </form>
-      )}
-    </div>
   );
 }
