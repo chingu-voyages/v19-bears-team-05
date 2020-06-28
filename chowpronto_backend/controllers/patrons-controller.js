@@ -163,7 +163,25 @@ const getPatronProfile = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const { patronId } = req.params;
+  if (req.body.password) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      passwordToSave = { password: hashedPassword };
+      delete password;
+      delete salt;
+      await Patron.findOneAndUpdate({ _id: patronId }, passwordToSave);
+      res.send({ message: "Your password was changed!" });
+    } catch (err) {
+      res.status(500).send({ errorMsg: "Couldn't update password" });
+    }
+  }
+};
+
 exports.signup = signup;
 exports.login = login;
 exports.deleteProfile = deleteProfile;
 exports.getPatronProfile = getPatronProfile;
+exports.updateProfile = updateProfile;
