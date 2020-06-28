@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import OptionsSvg from "../../../assets/svgs/settingsPage/index";
-import {
-  Title,
-  BorderedContainer,
-  InnerTitle,
-  Grid,
-} from "./components/styledComponents";
+import { Title, BorderedContainer, Grid } from "./components/styledComponents";
 import formatEuro from "../../../helpers/parseMoney";
 import { formatDate } from "../../../helpers/formatDate";
 import usePreviousOrders from "../../../hooks/usePreviousOrders";
