@@ -2,11 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import ChowButton from "../../../shared_components/ChowButton";
 import UserContext from "../../../state/UserContext";
 import { UserDataFields } from "../../../../src/patron/components/FormFields";
+import updateAccount from "../../../api/updateAccount";
 
 export default function ChangeDetails() {
   const { user } = useContext(UserContext);
   const [patron, setPatron] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   useEffect(() => {
     if (user.patron) {
@@ -16,7 +19,31 @@ export default function ChangeDetails() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    alert("submit");
+    if (
+      patron.name.length === 0 ||
+      patron.email.length === 0 ||
+      patron.postcode.length === 0 ||
+      patron.address.length === 0 ||
+      patron.phone.length === 0
+    ) {
+      setErrMsg("Please, fill in all details");
+    } else if (!/^\+\d{2}\W\d{4}\W\d{4}$/.test(patron.phone)) {
+      setErrMsg("Phone number should be in the format +12 3456 7890");
+    } else {
+      updateAccount(user.token, user.patron._id, { patron })
+        .then((res) => {
+          setSuccessMsg(res.message);
+          setIsEdit(false);
+          setErrMsg("");
+          console.log(res);
+        })
+
+        .catch((err) => {
+          err.json().then((json) => {
+            setErrMsg(json.errorMsg);
+          });
+        });
+    }
   }
 
   function handleChange(e) {
@@ -40,11 +67,13 @@ export default function ChangeDetails() {
             onClick={() => {
               setIsEdit(true);
               setPatron(user.patron);
+              setErrMsg("");
+              setSuccessMsg("");
             }}
           />
         )}
       </div>
-
+      {successMsg && <p style={{ color: "#3949ab" }}>{successMsg}</p>}
       {!patron ? null : !isEdit ? (
         <div
           style={{
@@ -62,6 +91,7 @@ export default function ChangeDetails() {
       ) : (
         <form onSubmit={handleSubmit}>
           <UserDataFields handleChange={handleChange} formInput={patron} />
+          {errMsg && <p style={{ color: "red" }}>{errMsg}</p>}
           <ChowButton
             primary
             title="save"
@@ -71,7 +101,10 @@ export default function ChangeDetails() {
             secondary
             title="cancel"
             style={{ margin: "5px", padding: "15px" }}
-            onClick={() => setIsEdit(false)}
+            onClick={() => {
+              setIsEdit(false);
+              setErrMsg("");
+            }}
           />
         </form>
       )}
