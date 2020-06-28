@@ -23,7 +23,9 @@ export default function PreviousOrders() {
     <article>
       <Title>See your order history</Title>
       <BorderedContainer>
-        <InnerTitle>Previous Orders</InnerTitle>
+        <h3 style={{ textAlign: "left", marginBottom: "0" }}>
+          Previous Orders
+        </h3>
         <OrdersList orders={orders} />
       </BorderedContainer>
     </article>
