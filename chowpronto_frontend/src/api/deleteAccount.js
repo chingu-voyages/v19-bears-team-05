@@ -1,5 +1,3 @@
-//pi / patrons / deleteprofile /:id
-
 function deleteAccount(token, _id) {
   return fetch(`/api/patrons/profile/${_id}`, {
     method: "DELETE",

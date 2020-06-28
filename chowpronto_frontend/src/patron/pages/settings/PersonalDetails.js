@@ -3,10 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Title, BorderedContainer } from "./components/styledComponents";
 import ChowButton from "../../../shared_components/ChowButton";
 import UserContext from "../../../state/UserContext";
-import {
-  PasswordFields,
-  UserDataFields,
-} from "../../../../src/patron/components/FormFields";
+import { UserDataFields } from "../../../../src/patron/components/FormFields";
 import DeleteAccount from "./DeleteAccount";
 import ChangePassword from "./ChangePassword";
 
