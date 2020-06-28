@@ -5,7 +5,7 @@ import { UserDataFields } from "../../../../src/patron/components/FormFields";
 import updateAccount from "../../../api/updateAccount";
 
 export default function ChangeDetails() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [patron, setPatron] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -35,9 +35,9 @@ export default function ChangeDetails() {
           setSuccessMsg(res.message);
           setIsEdit(false);
           setErrMsg("");
-          console.log(res);
+          setPatron(patron);
+          setUser({ type: "update_user", patron });
         })
-
         .catch((err) => {
           err.json().then((json) => {
             setErrMsg(json.errorMsg);
@@ -66,7 +66,6 @@ export default function ChangeDetails() {
             }}
             onClick={() => {
               setIsEdit(true);
-              setPatron(user.patron);
               setErrMsg("");
               setSuccessMsg("");
             }}
