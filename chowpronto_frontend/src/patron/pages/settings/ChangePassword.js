@@ -1,26 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ChowButton from "../../../shared_components/ChowButton";
 import { PasswordFields } from "../../../../src/patron/components/FormFields";
+import updateAccount from "../../../api/updateAccount";
+import UserContext from "../../../state/UserContext";
 
 export default function ChangePassword() {
   const initialPasswords = {
     password: "",
     passwordConfirm: "",
   };
+  const { user } = useContext(UserContext);
   const [isEdit, setIsEdit] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [passwords, setPasswords] = useState(initialPasswords);
+  const [successMsg, setSuccessMsg] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      passwords.password.length === 0 &&
-      passwords.passwordConfirm.length === 0
-    ) {
-      setErrMsg("You can't save empty fields");
-    }
-    passwords.password !== passwords.passwordConfirm &&
+    if (passwords.password.length < 8 && passwords.passwordConfirm.length < 8) {
+      setErrMsg("The password must have at least 8 characters");
+    } else if (passwords.password !== passwords.passwordConfirm) {
       setErrMsg("Password and confirm password should match");
+    } else {
+      updateAccount(user.token, user.patron._id, {
+        password: passwords.password,
+      })
+        .then((res) => {
+          setSuccessMsg("Your password was changed!");
+          setIsEdit(false);
+          setPasswords(initialPasswords);
+        })
+        .catch((err) => {
+          setErrMsg("Something went wrong, couldn't update password");
+          setPasswords(initialPasswords);
+        });
+    }
   }
+
   function handleChange(e) {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   }
@@ -41,10 +56,13 @@ export default function ChangePassword() {
             }}
             onClick={() => {
               setIsEdit(true);
+              setErrMsg("");
+              setSuccessMsg("");
             }}
           />
         )}
       </div>
+      {successMsg && <p style={{ color: "#3949ab" }}>{successMsg}</p>}
       {isEdit && (
         <form onSubmit={handleSubmit}>
           <PasswordFields
