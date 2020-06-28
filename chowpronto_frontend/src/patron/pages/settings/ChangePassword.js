@@ -25,7 +25,7 @@ export default function ChangePassword() {
         password: passwords.password,
       })
         .then((res) => {
-          setSuccessMsg("Your password was changed!");
+          setSuccessMsg(res.message);
           setIsEdit(false);
           setPasswords(initialPasswords);
         })
