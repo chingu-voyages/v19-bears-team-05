@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const Patron = require("../models/Patron");
 const jwt = require("jsonwebtoken");
-const { validate } = require("./validation");
+const { validate, validateDeliveryData } = require("./validation");
 const { GUEST_PATRON, REGISTER_PATRON } = require("../utils/roles");
 
 const signup = async (req, res) => {
@@ -163,7 +163,72 @@ const getPatronProfile = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const { patronId } = req.params;
+  if (req.body.password) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      passwordToSave = { password: hashedPassword };
+      delete password;
+      delete salt;
+      await Patron.findOneAndUpdate({ _id: patronId }, passwordToSave);
+      res.send({ message: "Your password was changed successfully!" });
+    } catch (err) {
+      res.status(500).send({ errorMsg: "Couldn't update password" });
+    }
+  }
+  if (req.body.patron) {
+    const { patron } = req.body;
+    const errorMessages = validateDeliveryData(
+      patron.name,
+      patron.email,
+      patron.phone,
+      patron.address,
+      patron.postcode
+    );
+    if (errorMessages.length !== 0) {
+      return res.status(400).send({ errorMsg: errorMessages });
+    }
+    try {
+      const { name, email, phone, address, postcode } = patron;
+      const existingUser = await Patron.findOne({
+        email: email,
+        role: REGISTER_PATRON,
+      });
+
+      if (
+        existingUser &&
+        existingUser._id &&
+        existingUser._id.toString() !== patronId
+      ) {
+        return res
+          .status(500)
+          .send({ errorMsg: "Please provide different email" });
+      }
+      await Patron.findOneAndUpdate(
+        { _id: patronId },
+        {
+          name,
+          email,
+          phone,
+          address,
+          postcode,
+        }
+      );
+
+      return res.send({
+        message: "Your personal details were changed successfully!",
+      });
+    } catch (err) {
+      return res.status(500).send({ errorMsg: "Couldn't update data" });
+    }
+  }
+  return res.status(500).send({ errorMsg: "Sorry, Couldn't update data" });
+};
+
 exports.signup = signup;
 exports.login = login;
 exports.deleteProfile = deleteProfile;
 exports.getPatronProfile = getPatronProfile;
+exports.updateProfile = updateProfile;

@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import OptionsSvg from "../../../assets/svgs/settingsPage/index";
-import {
-  Title,
-  BorderedContainer,
-  InnerTitle,
-  Grid,
-} from "./components/styledComponents";
+import { Title, BorderedContainer, Grid } from "./components/styledComponents";
 import formatEuro from "../../../helpers/parseMoney";
 import { formatDate } from "../../../helpers/formatDate";
 import usePreviousOrders from "../../../hooks/usePreviousOrders";
@@ -21,9 +16,11 @@ export default function PreviousOrders() {
     <Title>You don't have any previous orders</Title>
   ) : (
     <article>
-      <Title>See your previous orders</Title>
+      <Title>See your order history</Title>
       <BorderedContainer>
-        <InnerTitle>Previous Orders</InnerTitle>
+        <h3 style={{ textAlign: "left", marginBottom: "0" }}>
+          Previous Orders
+        </h3>
         <OrdersList orders={orders} />
       </BorderedContainer>
     </article>

@@ -12,6 +12,12 @@ router.delete(
   checkPatronParamsId,
   patronsControllers.deleteProfile
 );
+router.put(
+  "/profile/:patronId",
+  verifyToken,
+  checkPatronParamsId,
+  patronsControllers.updateProfile
+);
 router.get("/patron", verifyToken, patronsControllers.getPatronProfile);
 
 module.exports = router;

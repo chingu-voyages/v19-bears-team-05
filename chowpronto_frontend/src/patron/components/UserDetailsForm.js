@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyledBoxContainer } from "../../shared_components/BoxContainer";
-import styled from "styled-components";
 import { MenuContext } from "../../state/MenuContext";
 import useAuth from "../../hooks/useAuth";
+import { PasswordFields, UserDataFields } from "./FormFields";
 
 export default function UserDetailsForm() {
   let { state: ctx, dispatch } = useContext(MenuContext);
@@ -31,51 +30,7 @@ export default function UserDetailsForm() {
 
   return (
     <form action="POST">
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="name"
-          name="name"
-          value={ctx.formState.name}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="address"
-          name="address"
-          value={ctx.formState.address}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="text"
-          placeholder="postcode"
-          name="postcode"
-          value={ctx.formState.postcode}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="tel"
-          placeholder="phone"
-          name="phone"
-          value={ctx.formState.phone}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <input
-          type="email"
-          placeholder="email"
-          name="email"
-          value={ctx.formState.email}
-          onChange={(e) => handleChange(e)}
-        />
-      </StyledInputContainer>
+      <UserDataFields handleChange={handleChange} formInput={ctx.formState} />
       {!user.token && (
         <label htmlFor="register">
           Would you like to register?
@@ -91,39 +46,11 @@ export default function UserDetailsForm() {
       )}
 
       {registerDialog && (
-        <>
-          <StyledInputContainer>
-            <input
-              type="password"
-              placeholder="password"
-              name="password"
-              value={ctx.formState.password || ""}
-              onChange={(e) => handleChange(e)}
-            />
-          </StyledInputContainer>
-          <StyledInputContainer>
-            <input
-              type="password"
-              placeholder="password confirmation"
-              name="passwordConfirm"
-              value={ctx.formState.passwordConfirm || ""}
-              onChange={(e) => handleChange(e)}
-            />
-          </StyledInputContainer>
-        </>
+        <PasswordFields
+          handleChange={handleChange}
+          passwordInput={ctx.formState}
+        />
       )}
     </form>
   );
 }
-
-const StyledInputContainer = styled(StyledBoxContainer)`
-  input {
-    width: 100%;
-    height: 100%;
-    font-family: inherit;
-    font-size: ${({ theme }) => theme.fz300};
-    border: none;
-    outline: none;
-    background: transparent;
-  }
-`;
