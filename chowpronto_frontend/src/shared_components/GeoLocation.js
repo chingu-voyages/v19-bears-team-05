@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
 export function GeoButton(props) {
   function getLocation() {
     if ("geolocation" in navigator) {
+      props.setLoading(true);
       navigator.geolocation.getCurrentPosition((position) => {
         fetch(
           `https://api.postcodes.io/postcodes?lon=${position.coords.longitude.toString()}&lat=${position.coords.latitude.toString()}&radius=250`,
@@ -12,7 +14,10 @@ export function GeoButton(props) {
           }
         )
           .then((res) => res.json())
-          .then(({ result }) => props.onClick(result[0]))
+          .then(({ result }) => {
+            props.onClick(result[0]);
+            props.setLoading(false);
+          })
           .catch((err) => console.log("err", err));
       });
     }

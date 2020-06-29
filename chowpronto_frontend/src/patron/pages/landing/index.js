@@ -17,29 +17,29 @@ export default function TempLandingPage() {
     email: "",
     password: "",
   });
-  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   function onChange(e) {
     dispatch({ type: "set_delivery_postcode", postcode: e.target.value });
   }
-  // TODO create loading state
-  const { login } = useAuth();
-  console.log("state", state);
+  const { login, getUser } = useAuth();
+  console.log("getUser()", getUser());
   return (
     <PageContainer>
-      {modal ? <h1>Modal</h1> : ""}
       <ImgContainer>
         <Img
           src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
           alt="pizza-image"
         />
       </ImgContainer>
-      <StuffContainer>
+      <StuffContainer isLoading={loading}>
         <Logo />
         <LandingInput
           label="please enter your postcode"
           onChange={(e) => onChange(e)}
-          value={state.formState.postcode}
+          value={
+            loading ? "Please wait, searching..." : state.formState.postcode
+          }
         >
           <Button
             onClick={() => {
@@ -60,6 +60,7 @@ export default function TempLandingPage() {
             onClick={(e) => {
               dispatch({ type: "set_delivery_location", location: e });
             }}
+            setLoading={setLoading}
           />
         </LandingInput>
         <div>
@@ -161,11 +162,16 @@ const Img = styled.img`
 `;
 
 const ContainerAnimation = keyframes`
-  from {
+  0% {
+    visibility: hidden;
     opacity: 0;
   }
-  to {
+  1% {
+    visibility: visible
+  }
+  100% {
     opacity: 1;
+    visibility: visible;
   }
 `;
 
@@ -174,7 +180,7 @@ const StuffContainer = styled.div`
   background: white;
   padding: ${({ theme }) => theme.pd600};
   border-radius: ${({ theme }) => theme.br100};
-  opacity: 0;
+  visibility: hidden;
   box-shadow: ${({ theme }) => theme.sh400};
   animation: ${ContainerAnimation} 1s 1s;
   animation-fill-mode: forwards;
@@ -187,6 +193,7 @@ const StuffContainer = styled.div`
   min-width: 530px;
   min-height: 500px;
   position: relative;
+  opacity: ${(props) => (props.isLoading ? 0.2 : 1)};
   @media screen and (max-width: 530px) {
     background: none;
     box-shadow: none;
