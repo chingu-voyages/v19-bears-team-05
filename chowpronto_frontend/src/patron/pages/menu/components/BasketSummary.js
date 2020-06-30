@@ -18,7 +18,15 @@ export default function BasketSummary() {
           <ul>
             {basketItems.map((v, i) => (
               <li key={i}>
-                {v.quantity} x {v.name}
+                <span>{v.quantity} x</span>
+                <span>{v.name}</span>
+                <span>
+                  {" "}
+                  {".".repeat(
+                    8 - Math.floor(Math.log10(v.quantity * v.unitPrice))
+                  )}{" "}
+                  {parseMoney(v.quantity * v.unitPrice)}
+                </span>
               </li>
             ))}
           </ul>
@@ -40,9 +48,29 @@ const BasketList = styled(BoxContainer)`
   li {
     list-style-type: none;
     font-size: ${({ theme }) => theme.fz300};
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    span {
+      white-space: nowrap;
+    }
+    span:nth-child(2) {
+      white-space: normal;
+      text-align: left;
+      margin-left: 10px;
+      margin-right: 10px;
+      flex: 2;
+    }
+    span:nth-child(3) {
+      align-self: flex-end;
+    }
+  }
+  * {
+    color: black;
   }
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   p {
     align-self: flex-end;
   }
