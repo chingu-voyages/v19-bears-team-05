@@ -4,11 +4,12 @@ import Logo from "../../../shared_components/Logo";
 import { SearchSVG } from "./components/SearchSVG";
 import { useContext } from "react";
 import { MenuContext } from "../../../state/MenuContext";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { LandingInput } from "./components/LandingInput";
 import { Button } from "./components/Button";
 import GeoLocation from "../../../shared_components/GeoLocation";
+import { useEffect } from "react";
 
 export default function TempLandingPage() {
   const [loginVisible, setLoginVisible] = useState(false);
@@ -19,32 +20,58 @@ export default function TempLandingPage() {
   });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [nearestPostcodes, setNearestPostcodes] = useState([]);
   function onChange(e) {
     dispatch({ type: "set_delivery_postcode", postcode: e.target.value });
   }
-  const { login, getUser } = useAuth();
+  const { login, getUser, logout } = useAuth();
   const user = getUser();
+  useEffect(() => {
+    if (user.patron) {
+      dispatch({
+        type: "set_delivery_postcode",
+        postcode: user.patron.postcode,
+      });
+    }
+  }, [user]);
+  console.log("nearestPostcodes", nearestPostcodes);
   return (
     <React.Fragment>
-      {Object.keys(user).includes("userId") ? (
-        <Redirect to="/menu" />
-      ) : (
-        <PageContainer>
-          <ImgContainer>
-            <Img
-              src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
-              alt="pizza-image"
-            />
-          </ImgContainer>
-          <StuffContainer isLoading={loading}>
-            <Logo />
-            <LandingInput
-              label="please enter your postcode"
-              onChange={(e) => onChange(e)}
-              value={
-                loading ? "Please wait, searching..." : state.formState.postcode
-              }
-            >
+      <PageContainer>
+        <ImgContainer>
+          <Img
+            src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
+            alt="pizza-image"
+          />
+        </ImgContainer>
+        <StuffContainer isLoading={loading}>
+          <Logo />
+          <LandingInput
+            label="please enter your postcode"
+            onChange={(e) => onChange(e)}
+            value={
+              loading ? "Please wait, searching..." : state.formState.postcode
+            }
+          >
+            {nearestPostcodes.length > 0 ? (
+              <StyledSelect
+                id="postcodes"
+                onChange={(e) => {
+                  dispatch({
+                    type: "set_delivery_postcode",
+                    postcode: e.target.value,
+                  });
+                  setNearestPostcodes([]);
+                }}
+              >
+                {nearestPostcodes.map((val) => (
+                  <option value={val.postcode} key={val.postcode}>
+                    {val.postcode}
+                  </option>
+                ))}
+                <option value="">cancel...</option>
+              </StyledSelect>
+            ) : (
               <Button
                 onClick={() => {
                   history.push({
@@ -60,13 +87,30 @@ export default function TempLandingPage() {
                 <SearchSVG />
                 Search
               </Button>
-              <GeoLocation
-                onClick={(e) => {
-                  dispatch({ type: "set_delivery_location", location: e });
-                }}
-                setLoading={setLoading}
-              />
-            </LandingInput>
+            )}
+
+            <GeoLocation
+              onClick={(e) => {
+                setNearestPostcodes(e);
+              }}
+              setLoading={setLoading}
+            />
+          </LandingInput>
+          {user.patron ? (
+            <div>
+              Welcome back, {user.patron.name}
+              <p>
+                <a
+                  href="#"
+                  onClick={() => {
+                    logout();
+                  }}
+                >
+                  Not me?
+                </a>
+              </p>
+            </div>
+          ) : (
             <div>
               Already Registered?
               <input
@@ -75,60 +119,60 @@ export default function TempLandingPage() {
                 id="registered"
                 checked={loginVisible}
                 onChange={() => setLoginVisible(!loginVisible)}
+                disabled={user.patron}
               />
             </div>
-            <LoginParent>
-              {loginVisible ? (
-                <LoginContainer
-                  action="POST"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    login(formData.email, formData.password);
-                    history.push({
-                      pathname: "/menu",
-                    });
-                  }}
+          )}
+          <LoginParent>
+            {loginVisible ? (
+              <LoginContainer
+                action="POST"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  login(formData.email, formData.password);
+                  history.push({
+                    pathname: "/menu",
+                  });
+                }}
+              >
+                <LandingInput
+                  label="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+                <LandingInput
+                  label="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 >
-                  <LandingInput
-                    label="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                  <LandingInput
-                    label="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
+                  <Button
+                    type="submit"
+                    disabled={
+                      formData.email.length < 1 || formData.password.length < 1
                     }
                   >
-                    <Button
-                      type="submit"
-                      disabled={
-                        formData.email.length < 1 ||
-                        formData.password.length < 1
-                      }
-                    >
-                      Login
-                    </Button>
-                  </LandingInput>
-                </LoginContainer>
-              ) : (
-                <StyledList>
-                  <li>
-                    Choose the food that <strong>you</strong> want
-                  </li>
-                  <li>Signup as a registered user or guest checkout</li>
-                  <li>Easy payment & quick delivery</li>
-                </StyledList>
-              )}
-            </LoginParent>
-          </StuffContainer>
-        </PageContainer>
-      )}
+                    Login
+                  </Button>
+                </LandingInput>
+              </LoginContainer>
+            ) : (
+              <StyledList>
+                <li>
+                  Choose the food that <strong>you</strong> want
+                </li>
+                <li>Signup as a registered user or guest checkout</li>
+                <li>Easy payment & quick delivery</li>
+              </StyledList>
+            )}
+          </LoginParent>
+        </StuffContainer>
+      </PageContainer>
     </React.Fragment>
   );
 }
@@ -158,6 +202,7 @@ const ImgContainer = styled.div`
   width: 100%;
   position: fixed;
   background-color: #d9dfe5;
+  opacity: 0;
   animation: ${ImageAnimation} 2s;
   animation-fill-mode: forwards;
 `;
@@ -254,4 +299,22 @@ const StyledList = styled.ul`
 
 const LoginParent = styled.div`
   height: 30%;
+`;
+
+const StyledSelect = styled.select`
+  flex: 1;
+  font-weight: 500;
+  font-size: 17px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  letter-spacing: 0.02em;
+  background: #3949ab;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  padding: 10px;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
 `;

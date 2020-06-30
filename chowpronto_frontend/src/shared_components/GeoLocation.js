@@ -15,7 +15,7 @@ export function GeoButton(props) {
         )
           .then((res) => res.json())
           .then(({ result }) => {
-            props.onClick(result[0]);
+            props.onClick(result);
             props.setLoading(false);
           })
           .catch((err) => console.log("err", err));
