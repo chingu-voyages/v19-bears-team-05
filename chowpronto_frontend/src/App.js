@@ -11,6 +11,7 @@ import SettingsPage from "./patron/pages/settings";
 import Theme from "./style/Theme";
 import Context from "./state/Context";
 import LoginPage from "./patron/pages/login";
+import Error404 from "./patron/pages/error404";
 import useOnInitialisation from "./hooks/useOnInitialisation";
 import BasketPage from "./patron/pages/basketPage";
 import OrderConfirmationPage from "./patron/pages/orderConfirmation";
@@ -49,6 +50,9 @@ function App() {
                   </Route>
                   <Route path="/orderConfirmation">
                     <OrderConfirmationPage />
+                  </Route>
+                  <Route path="/">
+                    <Error404 />
                   </Route>
                 </Switch>
               </Layout>
