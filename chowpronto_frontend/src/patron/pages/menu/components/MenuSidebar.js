@@ -24,7 +24,7 @@ const MenuSidebar = () => {
       });
     }
   }, [user, state]);
-
+  console.log("state", state);
   return (
     <StyledSidebar>
       <UserBanner>
@@ -86,7 +86,12 @@ const MenuSidebar = () => {
           return `/confirmOrder`;
         }}
       >
-        <CheckoutButton title="Proceed To Checkout" primary elevated />
+        <CheckoutButton
+          title="Proceed To Checkout"
+          primary
+          elevated
+          disabled={state.basketItems.length < 1}
+        />
       </Link>
     </StyledSidebar>
   );
