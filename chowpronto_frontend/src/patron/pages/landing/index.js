@@ -4,7 +4,7 @@ import Logo from "../../../shared_components/Logo";
 import { SearchSVG } from "./components/SearchSVG";
 import { useContext } from "react";
 import { MenuContext } from "../../../state/MenuContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { LandingInput } from "./components/LandingInput";
 import { Button } from "./components/Button";
@@ -23,106 +23,113 @@ export default function TempLandingPage() {
     dispatch({ type: "set_delivery_postcode", postcode: e.target.value });
   }
   const { login, getUser } = useAuth();
-  console.log("getUser()", getUser());
+  const user = getUser();
   return (
-    <PageContainer>
-      <ImgContainer>
-        <Img
-          src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
-          alt="pizza-image"
-        />
-      </ImgContainer>
-      <StuffContainer isLoading={loading}>
-        <Logo />
-        <LandingInput
-          label="please enter your postcode"
-          onChange={(e) => onChange(e)}
-          value={
-            loading ? "Please wait, searching..." : state.formState.postcode
-          }
-        >
-          <Button
-            onClick={() => {
-              history.push({
-                pathname: "/menu",
-              });
-            }}
-            disabled={
-              !/^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(
-                state.formState.postcode
-              )
-            }
-          >
-            <SearchSVG />
-            Search
-          </Button>
-          <GeoLocation
-            onClick={(e) => {
-              dispatch({ type: "set_delivery_location", location: e });
-            }}
-            setLoading={setLoading}
-          />
-        </LandingInput>
-        <div>
-          Already Registered?
-          <input
-            type="checkbox"
-            name="registered"
-            id="registered"
-            checked={loginVisible}
-            onChange={() => setLoginVisible(!loginVisible)}
-          />
-        </div>
-        <LoginParent>
-          {loginVisible ? (
-            <LoginContainer
-              action="POST"
-              onSubmit={(e) => {
-                e.preventDefault();
-                login(formData.email, formData.password);
-                history.push({
-                  pathname: "/menu",
-                });
-              }}
+    <React.Fragment>
+      {Object.keys(user).includes("userId") ? (
+        <Redirect to="/menu" />
+      ) : (
+        <PageContainer>
+          <ImgContainer>
+            <Img
+              src="https://d1ralsognjng37.cloudfront.net/f3e697ff-8ff4-45a4-89f7-90e51dd3bb08.jpeg"
+              alt="pizza-image"
+            />
+          </ImgContainer>
+          <StuffContainer isLoading={loading}>
+            <Logo />
+            <LandingInput
+              label="please enter your postcode"
+              onChange={(e) => onChange(e)}
+              value={
+                loading ? "Please wait, searching..." : state.formState.postcode
+              }
             >
-              <LandingInput
-                label="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-              <LandingInput
-                label="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
+              <Button
+                onClick={() => {
+                  history.push({
+                    pathname: "/menu",
+                  });
+                }}
+                disabled={
+                  !/^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(
+                    state.formState.postcode
+                  )
                 }
               >
-                <Button
-                  type="submit"
-                  disabled={
-                    formData.email.length < 1 || formData.password.length < 1
-                  }
+                <SearchSVG />
+                Search
+              </Button>
+              <GeoLocation
+                onClick={(e) => {
+                  dispatch({ type: "set_delivery_location", location: e });
+                }}
+                setLoading={setLoading}
+              />
+            </LandingInput>
+            <div>
+              Already Registered?
+              <input
+                type="checkbox"
+                name="registered"
+                id="registered"
+                checked={loginVisible}
+                onChange={() => setLoginVisible(!loginVisible)}
+              />
+            </div>
+            <LoginParent>
+              {loginVisible ? (
+                <LoginContainer
+                  action="POST"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    login(formData.email, formData.password);
+                    history.push({
+                      pathname: "/menu",
+                    });
+                  }}
                 >
-                  Login
-                </Button>
-              </LandingInput>
-            </LoginContainer>
-          ) : (
-            <StyledList>
-              <li>
-                Choose the food that <strong>you</strong> want
-              </li>
-              <li>Signup as a registered user or guest checkout</li>
-              <li>Easy payment & quick delivery</li>
-            </StyledList>
-          )}
-        </LoginParent>
-      </StuffContainer>
-    </PageContainer>
+                  <LandingInput
+                    label="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                  />
+                  <LandingInput
+                    label="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                  >
+                    <Button
+                      type="submit"
+                      disabled={
+                        formData.email.length < 1 ||
+                        formData.password.length < 1
+                      }
+                    >
+                      Login
+                    </Button>
+                  </LandingInput>
+                </LoginContainer>
+              ) : (
+                <StyledList>
+                  <li>
+                    Choose the food that <strong>you</strong> want
+                  </li>
+                  <li>Signup as a registered user or guest checkout</li>
+                  <li>Easy payment & quick delivery</li>
+                </StyledList>
+              )}
+            </LoginParent>
+          </StuffContainer>
+        </PageContainer>
+      )}
+    </React.Fragment>
   );
 }
 
