@@ -30,7 +30,8 @@ const Filter = (props) => {
         }}
         allListItem={minimised ? tags.filter((v, i) => i < 5) : tags}
         selectedListItem={state.tags}
-        additionalAction={() => setMinimised(false)}
+        additionalAction={() => setMinimised(!minimised)}
+        minimised={minimised}
       />
     </div>
   );
