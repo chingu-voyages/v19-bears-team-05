@@ -11,9 +11,11 @@ const MenuMain = (props) => {
   return (
     <>
       <StyledPageMain>
-        {menuItems.map((v) => (
-          <MenuItem {...v} key={v._id} />
-        ))}
+        {menuItems.length < 1 ? (
+          <h1>Please wait whilst we build a custom menu for you</h1>
+        ) : (
+          menuItems.map((v) => <MenuItem {...v} key={v._id} />)
+        )}
       </StyledPageMain>
     </>
   );
