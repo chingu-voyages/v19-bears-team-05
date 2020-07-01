@@ -37,8 +37,9 @@ export default function InputBox(props) {
         <AdditionalActionButton
           type="button"
           onClick={() => props.additionalAction()}
+          style={{ width: "100%", textAlign: "left" }}
         >
-          more...
+          {props.minimised ? "more..." : "less..."}
         </AdditionalActionButton>
       </form>
     </BoxContainer>

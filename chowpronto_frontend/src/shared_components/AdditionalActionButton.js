@@ -9,4 +9,5 @@ export const AdditionalActionButton = styled.button`
     color: ${({ theme }) => theme.colors.active};
   }
   cursor: pointer;
+  text-align: right;
 `;
