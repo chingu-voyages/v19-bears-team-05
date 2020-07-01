@@ -34,7 +34,6 @@ export default function TempLandingPage() {
       });
     }
   }, [user]);
-  console.log("nearestPostcodes", nearestPostcodes);
   return (
     <React.Fragment>
       <PageContainer>
@@ -94,6 +93,7 @@ export default function TempLandingPage() {
                 setNearestPostcodes(e);
               }}
               setLoading={setLoading}
+              cancel={state.formState.postcode > 0}
             />
           </LandingInput>
           {user.patron ? (

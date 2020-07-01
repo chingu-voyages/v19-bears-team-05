@@ -6,6 +6,7 @@ export function GeoButton(props) {
   function getLocation() {
     if ("geolocation" in navigator) {
       props.setLoading(true);
+      setTimeout(() => props.setLoading(false), 3000);
       navigator.geolocation.getCurrentPosition((position) => {
         fetch(
           `https://api.postcodes.io/postcodes?lon=${position.coords.longitude.toString()}&lat=${position.coords.latitude.toString()}&radius=250`,
