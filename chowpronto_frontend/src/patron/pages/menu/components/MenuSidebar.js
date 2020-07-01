@@ -24,7 +24,6 @@ const MenuSidebar = () => {
       });
     }
   }, [user, state]);
-  console.log("state", state);
   return (
     <StyledSidebar>
       <UserBanner>
