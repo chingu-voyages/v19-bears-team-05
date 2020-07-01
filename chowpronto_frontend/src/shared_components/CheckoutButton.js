@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ChowButton from "./ChowButton";
+import { theme } from "../style/global";
 export const CheckoutButton = styled(ChowButton)`
   position: fixed;
   bottom: ${({ theme }) => theme.pd900};
@@ -8,5 +9,6 @@ export const CheckoutButton = styled(ChowButton)`
   padding: ${({ theme }) => theme.pd600};
   backdrop-filter: blur(2px);
   z-index: 10;
-  opacity: 0.9;
+  transform: translateX(${(props) => (props.disabled ? "150%" : "0")});
+  transition: transform 0.3s ease-out;
 `;
