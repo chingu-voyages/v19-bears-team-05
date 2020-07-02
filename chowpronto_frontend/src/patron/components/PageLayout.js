@@ -9,6 +9,7 @@ export const PageLayout = styled.div`
   position: relative;
   height: max(100vh, max-content);
   & > div:nth-child(1) {
+    border-right: ${({ theme }) => theme.bd200ui};
     flex: 1.5;
     height: 100%;
   }
