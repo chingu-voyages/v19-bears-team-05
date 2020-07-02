@@ -8,6 +8,7 @@ export function LandingInput(props) {
           placeholder={props.label}
           type={props.type}
           onChange={props.onChange}
+          value={props.value}
         />
         {props.children}
       </InputParentContainer>
